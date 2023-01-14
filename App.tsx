@@ -1,5 +1,5 @@
-import { Titlebar } from "@components/Titlebar";
-import { Home } from "@screens/Home";
+import { Titlebar } from "@components";
+import { Home, Splash } from "@screens";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 
@@ -7,6 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Home />
+      <Splash />
       <Titlebar />
       <StatusBar style="auto" />
     </View>
