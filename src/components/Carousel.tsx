@@ -36,7 +36,7 @@ export const Carousel = () => {
       renderItem={({ item }) => (
         <Image
           source={item.img_src}
-          style={[tw`h-full aspect-auto`, { width: windowWidth }]}
+          style={[tw`h-full`, { width: windowWidth }]}
         />
       )}
       showsHorizontalScrollIndicator={false}
