@@ -1,24 +1,17 @@
-import { Titlebar } from "@components";
-import { Home, Splash } from "@screens";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { darkNavy } from "@assets";
+import { ActivitiesMenu, Titlebar } from "@components";
+import { ThemeProvider } from "@rneui/themed";
+import { StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Home />
-      <Splash />
-      <Titlebar />
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider>
+      <SafeAreaView>
+        <Titlebar currentCity="Pune" />
+        <ActivitiesMenu />
+        <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
+      </SafeAreaView>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
