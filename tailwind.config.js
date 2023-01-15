@@ -7,6 +7,12 @@ module.exports = {
         "fade-navy": "#333545",
         "dark-navy": "#222539",
       },
+      fontFamily: {
+        "roboto-regular": ["Roboto-Regular", "sans-serif"],
+        "roboto-bold": ["Roboto-Bold", "sans-serif"],
+        "roboto-medium": ["Roboto-Medium", "sans-serif"],
+        "roboto-italic": ["Roboto-Italic", "sans-serif"],
+      },
     },
   },
   plugins: [],
