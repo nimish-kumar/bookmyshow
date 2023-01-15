@@ -11,7 +11,7 @@ import {
 import { tw } from "@lib";
 import { Image } from "@rneui/themed";
 import React from "react";
-import { FlatList } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 
 import { IActivity } from "./types";
 
@@ -65,12 +65,13 @@ export const ActivitiesMenu = () => {
       keyExtractor={({ id }) => id}
       data={activitiesList}
       style={tw`h-20`}
-      numColumns={1}
+      showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
         <Image
           style={tw`aspect-square flex-1 w-19 h-19`}
           source={item.img_src}
           onPress={item.pressHandler}
+          PlaceholderContent={<ActivityIndicator />}
         />
       )}
     />
