@@ -1,13 +1,11 @@
-const { fadeNavy, darkNavy } = require("@assets");
-
-// /** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.tsx"],
+  content: ["./src/**/*.{tsx, ts}"],
   theme: {
     extend: {
       colors: {
-        "fade-navy": fadeNavy,
-        "dark-navy": darkNavy,
+        "fade-navy": "#333545",
+        "dark-navy": "#222539",
       },
     },
   },
