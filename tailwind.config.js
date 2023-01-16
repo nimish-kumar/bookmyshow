@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         "fade-navy": "#333545",
         "dark-navy": "#222539",
+        "pink": "#DC3558",
       },
       fontFamily: {
         "roboto-regular": ["Roboto-Regular", "sans-serif"],
