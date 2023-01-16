@@ -16,11 +16,11 @@ export const Titlebar = ({
       style={tw`bg-fade-navy w-full h-18 flex flex-row justify-between items-center`}
     >
       <View style={tw`flex-col justify-around h-12 pl-4`}>
-        <Text style={tw`text-white text-lg font-medium`}>
+        <Text style={tw`text-white text-lg font-roboto-medium`}>
           It All Starts Here
         </Text>
         <Text
-          style={tw`text-white text-xs font-normal`}
+          style={tw`text-white text-xs font-roboto-regular`}
         >{`${currentCity} > `}</Text>
       </View>
       <View style={tw`flex flex-row justify-around w-40`}>

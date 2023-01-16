@@ -9,7 +9,9 @@ export interface ITitlebarProps {
 
 export interface IActivity {
   id: string;
-  name: string;
-  img_src: any;
+  imgSrc: any;
+  title: string;
   pressHandler?: (event: GestureResponderEvent) => void;
+  description?: string;
+  additionalInfo?: string;
 }

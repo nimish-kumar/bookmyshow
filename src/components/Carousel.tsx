@@ -29,8 +29,7 @@ export const Carousel = () => {
   return (
     <FlatList
       horizontal
-      pagingEnabled
-      style={tw`border border-black h-50`}
+      style={tw`h-50`}
       data={banners}
       keyExtractor={({ id }) => `${id}`}
       renderItem={({ item }) => (

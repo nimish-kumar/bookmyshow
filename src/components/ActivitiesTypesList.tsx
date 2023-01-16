@@ -15,61 +15,61 @@ import { ActivityIndicator, FlatList } from "react-native";
 
 import { IActivity } from "./types";
 
-const activitiesList: IActivity[] = [
+const activitiesTypesList: IActivity[] = [
   {
     id: "movies",
-    name: "Movies",
-    img_src: MoviesIcon,
+    title: "Movies",
+    imgSrc: MoviesIcon,
   },
   {
     id: "stream",
-    name: "Stream",
-    img_src: StreamIcon,
+    title: "Stream",
+    imgSrc: StreamIcon,
   },
   {
     id: "sports",
-    name: "Sports",
-    img_src: SportsIcon,
+    title: "Sports",
+    imgSrc: SportsIcon,
   },
   {
     id: "music-shows",
-    name: "Music shows",
-    img_src: MusicShowsIcon,
+    title: "Music shows",
+    imgSrc: MusicShowsIcon,
   },
   {
     id: "plays",
-    name: "Plays",
-    img_src: PlaysIcon,
+    title: "Plays",
+    imgSrc: PlaysIcon,
   },
   {
     id: "comedy",
-    name: "Comedy shows",
-    img_src: ComedyShowsIcon,
+    title: "Comedy shows",
+    imgSrc: ComedyShowsIcon,
   },
   {
     id: "amusement-park",
-    name: "Amusement park",
-    img_src: AmusementParkIcon,
+    title: "Amusement park",
+    imgSrc: AmusementParkIcon,
   },
   {
     id: "all",
-    name: "See all",
-    img_src: SeeAllIcon,
+    title: "See all",
+    imgSrc: SeeAllIcon,
   },
 ];
 
-export const ActivitiesMenu = () => {
+export const ActivitiesTypesList = () => {
   return (
     <FlatList
       horizontal
       keyExtractor={({ id }) => id}
-      data={activitiesList}
+      data={activitiesTypesList}
       style={tw`h-20`}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
         <Image
           style={tw`aspect-square flex-1 w-19 h-19`}
-          source={item.img_src}
+          source={item.imgSrc}
           onPress={item.pressHandler}
           PlaceholderContent={<ActivityIndicator />}
         />

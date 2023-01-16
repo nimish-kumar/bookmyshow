@@ -1,5 +1,10 @@
 import { darkNavy } from "@assets";
-import { ActivitiesMenu, Carousel, Titlebar } from "@components";
+import {
+  ActivitiesTypesList,
+  ActivityList,
+  Carousel,
+  Titlebar,
+} from "@components";
 import { tw } from "@lib";
 import { Text, ThemeProvider } from "@rneui/themed";
 import { useFonts } from "expo-font";
@@ -20,13 +25,19 @@ export default function App() {
     <ThemeProvider>
       <SafeAreaView>
         <Titlebar currentCity="Pune" />
-        <ActivitiesMenu />
+        <ActivitiesTypesList />
         <Carousel />
-        <View style={tw`mt-8`}>
-          <Text style={tw`font-roboto-medium font-normal text-lg`}>
-            Recommended movies
-          </Text>
-          <Text>List of movie</Text>
+        <View style={tw`mt-4 mx-4`}>
+          <View style={tw`flex-row justify-between items-center`}>
+            <Text style={tw`font-roboto-medium font-normal text-lg`}>
+              Recommended Movies
+            </Text>
+            <Text style={tw`font-roboto-regular text-pink text-sm`}>
+              {"See All >"}
+            </Text>
+          </View>
+
+          <ActivityList />
         </View>
         <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
       </SafeAreaView>
