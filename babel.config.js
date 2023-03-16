@@ -11,6 +11,7 @@ module.exports = function (api) {
             "@screens": "./src/screens",
             "@components": "./src/components",
             "@lib": "./src/lib",
+            "@navigation": "./src/navigation",
           },
         },
       ],
