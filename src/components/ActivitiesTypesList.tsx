@@ -70,7 +70,7 @@ export const ActivitiesTypesList = () => {
         <Image
           style={tw`aspect-square flex-1 w-19 h-19`}
           source={item.imgSrc}
-          onPress={item.pressHandler}
+          onPress={() => item.clickHandler?.(item.id)}
           PlaceholderContent={<ActivityIndicator />}
         />
       )}

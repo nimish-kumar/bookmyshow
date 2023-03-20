@@ -8,7 +8,7 @@ import {
 import { tw } from "@lib";
 import { Image } from "@rneui/themed";
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 import { IActivity } from "./types";
 
@@ -41,40 +41,47 @@ const movieTiles: IActivity[] = [
   },
 ];
 const ActivityTile = (activityDetail: IActivity) => (
-  <View style={tw`h-full w-30 mr-2 flex-col`}>
-    <Image
-      style={tw`h-50 w-auto rounded-lg`}
-      resizeMode="contain"
-      source={activityDetail.imgSrc}
-    />
-    <View style={tw`px-1`}>
-      <Text
-        style={tw`flex-wrap font-roboto-regular text-sm max-h-12 h-auto`}
-        numberOfLines={2}
-        ellipsizeMode="tail"
-      >
-        {activityDetail.title}
-      </Text>
-      {activityDetail?.description && (
+  <View style={tw`h-full w-32 mr-2 flex-col`}>
+    <TouchableOpacity
+      onPress={() => activityDetail.clickHandler?.(activityDetail.id)}
+    >
+      <Image
+        style={tw`h-54 w-auto rounded-lg`}
+        resizeMode="contain"
+        source={activityDetail.imgSrc}
+      />
+      <View style={tw`px-1`}>
         <Text
-          style={tw`font-roboto-regular text-slate-500 text-sm`}
-          numberOfLines={1}
+          style={tw`flex-wrap font-roboto-regular text-sm max-h-12 h-auto`}
+          numberOfLines={2}
+          ellipsizeMode="tail"
         >
-          {activityDetail.description}
+          {activityDetail.title}
         </Text>
-      )}
-      {activityDetail?.additionalInfo && (
-        <Text
-          style={tw`font-roboto-regular text-slate-500 text-xs`}
-          numberOfLines={1}
-        >
-          {activityDetail.additionalInfo}
-        </Text>
-      )}
-    </View>
+        {activityDetail?.description && (
+          <Text
+            style={tw`font-roboto-regular text-slate-500 text-sm`}
+            numberOfLines={1}
+          >
+            {activityDetail.description}
+          </Text>
+        )}
+        {activityDetail?.additionalInfo && (
+          <Text
+            style={tw`font-roboto-regular text-slate-500 text-xs`}
+            numberOfLines={1}
+          >
+            {activityDetail.additionalInfo}
+          </Text>
+        )}
+      </View>
+    </TouchableOpacity>
   </View>
 );
-export const ActivityList = () => {
+
+export const ActivityList = ({
+  clickHandler,
+}: Pick<IActivity, "clickHandler">) => {
   return (
     <FlatList
       horizontal
@@ -82,7 +89,7 @@ export const ActivityList = () => {
       showsHorizontalScrollIndicator={false}
       style={tw`h-auto mt-4`}
       renderItem={({ item: movie }) => (
-        <ActivityTile key={movie.id} {...movie} />
+        <ActivityTile key={movie.id} {...movie} clickHandler={clickHandler} />
       )}
     />
   );

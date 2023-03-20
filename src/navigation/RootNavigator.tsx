@@ -6,8 +6,12 @@ const AppStack = createNativeStackNavigator();
 
 export const RootNavigator = () => {
   return (
-    <AppStack.Navigator>
-      <AppStack.Screen name="Home" component={Home} />
+    <AppStack.Navigator initialRouteName="Home">
+      <AppStack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
     </AppStack.Navigator>
   );
 };

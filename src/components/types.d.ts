@@ -11,7 +11,7 @@ export interface IActivity {
   id: string;
   imgSrc: any;
   title: string;
-  pressHandler?: (event: GestureResponderEvent) => void;
+  clickHandler?: (id: string | number) => void;
   description?: string;
   additionalInfo?: string;
 }

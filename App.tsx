@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "@rneui/themed";
 import { useFonts } from "expo-font";
 import { StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,12 +17,10 @@ export default function App() {
   }
   return (
     <ThemeProvider>
-      <SafeAreaView>
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
-        <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
-      </SafeAreaView>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+      <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
     </ThemeProvider>
   );
 }
