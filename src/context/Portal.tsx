@@ -24,12 +24,12 @@ export const PortalProvider = ({ children }: PropsWithChildren<object>) => {
     </PortalContext.Provider>
   );
 };
-interface IPortalFromGate {
+interface IPortalFrom {
   children?: (
     gateSetter: (gateName: string, element: JSX.Element) => void
   ) => JSX.Element;
 }
-const PortalFromGate = ({ children }: IPortalFromGate) => {
+const PortalFrom = ({ children }: IPortalFrom) => {
   return (
     <PortalContext.Consumer>
       {({ gateSetter }) => {
@@ -38,10 +38,10 @@ const PortalFromGate = ({ children }: IPortalFromGate) => {
     </PortalContext.Consumer>
   );
 };
-interface IPortalToGate {
+interface IPortalTo {
   activeGateName: string;
 }
-const PortalToGate = ({ activeGateName }: IPortalToGate) => {
+const PortalTo = ({ activeGateName }: IPortalTo) => {
   return (
     <PortalContext.Consumer>
       {({ gates }) => {
@@ -50,4 +50,4 @@ const PortalToGate = ({ activeGateName }: IPortalToGate) => {
     </PortalContext.Consumer>
   );
 };
-export { PortalFromGate, PortalToGate };
+export { PortalFrom, PortalTo };

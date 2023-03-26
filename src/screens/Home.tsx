@@ -4,6 +4,7 @@ import {
   MoviesList,
   Titlebar,
 } from "@components";
+import { PortalTo } from "@context";
 import { tw } from "@lib";
 import React from "react";
 import { Text, View } from "react-native";
@@ -13,6 +14,7 @@ export const Home = () => {
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center`}>
+        <PortalTo activeGateName="format-selector" />
         <Titlebar currentCity="Pune" />
         <ActivitiesTypesList />
         <Carousel />

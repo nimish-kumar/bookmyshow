@@ -1,18 +1,26 @@
-import { BottomSheet } from "@rneui/themed";
 import React from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
+
+import { Backdrop } from "../Backdrop";
 
 interface IFormatSelectorProps {
-  isOpen: boolean;
-  closeModal: () => void;
+  isVisible: boolean;
+  closeBackdrop: () => void;
 }
 export const FormatSelector = ({
-  isOpen,
-  closeModal,
+  isVisible,
+  closeBackdrop,
 }: IFormatSelectorProps) => {
   return (
-    <BottomSheet isVisible={isOpen} onBackdropPress={closeModal}>
-      <Text>FormatSelector</Text>
-    </BottomSheet>
+    <Backdrop closeBackdrop={closeBackdrop} isVisible={isVisible}>
+      <Text style={styles.backdropText}>FormatSelector</Text>
+    </Backdrop>
   );
 };
+
+const styles = StyleSheet.create({
+  backdropText: {
+    color: "white",
+    backgroundColor: "white",
+  },
+});

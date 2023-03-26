@@ -1,4 +1,5 @@
 import { darkNavy } from "@assets";
+import { PortalProvider } from "@context";
 import { RootNavigator } from "@navigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "@rneui/themed";
@@ -16,11 +17,13 @@ export default function App() {
     return null;
   }
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
-      <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
-    </ThemeProvider>
+    <PortalProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+        <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
+      </ThemeProvider>
+    </PortalProvider>
   );
 }
