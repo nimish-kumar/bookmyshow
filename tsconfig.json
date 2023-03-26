@@ -8,7 +8,8 @@
       "@components": ["./src/components"],
       "@screens": ["./src/screens"],
       "@lib": ["./src/lib"],
-      "@navigation": ["./src/navigation"]
+      "@navigation": ["./src/navigation"],
+      "@context": ["./src/context"]
     }
   }
 }
