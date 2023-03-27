@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface IBackdropProps extends PropsWithChildren {
   isVisible: boolean;
@@ -14,8 +15,10 @@ export const Backdrop = ({
   // Unmount component if not visible
   return isVisible ? (
     <View style={styles.sheetContainer}>
-      <TouchableOpacity style={{ flex: 1 }} onPress={closeBackdrop} />
-      {children}
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={closeBackdrop} />
+        {children}
+      </GestureHandlerRootView>
     </View>
   ) : null;
 };

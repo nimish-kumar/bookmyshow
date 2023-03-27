@@ -4,3 +4,4 @@ export * from "./Carousel";
 export * from "./Titlebar";
 export * from "./popups";
 export * from "./MoviesList";
+export * from "./Badge";
