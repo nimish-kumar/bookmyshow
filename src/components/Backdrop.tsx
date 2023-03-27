@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface IBackdropProps extends PropsWithChildren {
   isVisible: boolean;
@@ -13,19 +13,19 @@ export const Backdrop = ({
 }: IBackdropProps) => {
   // Unmount component if not visible
   return isVisible ? (
-    <TouchableOpacity style={styles.sheetContainer} onPress={closeBackdrop}>
+    <View style={styles.sheetContainer}>
+      <TouchableOpacity style={{ flex: 1 }} onPress={closeBackdrop} />
       {children}
-    </TouchableOpacity>
+    </View>
   ) : null;
 };
 const styles = StyleSheet.create({
   sheetContainer: {
     height: SCREEN_HEIGHT,
     width: "100%",
-    backgroundColor: "black",
+    backgroundColor: "rgba(0,0,0,0.8)",
     position: "absolute",
     top: 0,
     zIndex: 1,
-    opacity: 0.8,
   },
 });
