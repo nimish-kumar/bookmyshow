@@ -1,8 +1,13 @@
 import { tw } from "@lib";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
+  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -24,39 +29,39 @@ interface IFormatSelectorProps {
   isVisible: boolean;
   closeBackdrop: () => void;
 }
+type ContextType = {
+  translateY: number;
+};
 export const FormatSelector = ({
   isVisible,
   closeBackdrop,
 }: IFormatSelectorProps) => {
   const translateY = useSharedValue(0);
-  const context = useSharedValue({ y: 0 });
-  const gesture = Gesture.Pan()
-    .onStart(() => {
-      context.value = { y: translateY.value };
-    })
-    .onUpdate((e) => {
-      console.log("e.translationY", e.translationY);
-      translateY.value = e.translationY + context.value.y;
-      translateY.value = Math.max(translateY.value, 0);
-    });
-  const animatedBottomSheetStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateY: withSpring(translateY.value, {
-            stiffness: 500,
-            velocity: 1,
-          }),
-        },
-      ],
-    };
+  const panGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    ContextType
+  >({
+    onStart: (event, ctx) => {
+      ctx.translateY = event.translationY;
+    },
+    onActive: (event, ctx) => {
+      translateY.value = Math.max(event.translationY + ctx.translateY, 0);
+    },
+    onEnd: (event) => {
+      if (event.translationY > 100) {
+        runOnJS(closeBackdrop)();
+      } else {
+        translateY.value = withSpring(0);
+      }
+    },
   });
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
   return (
     <Backdrop closeBackdrop={closeBackdrop} isVisible={isVisible}>
-      {/* TODO: Use PanGestureHandler component as GestureDetector doesn't registers
-      all gestures */}
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.bottomSheet, animatedBottomSheetStyle]}>
+      <PanGestureHandler onGestureEvent={panGestureEvent}>
+        <Animated.View style={[styles.bottomSheet, animatedStyle]}>
           <>
             {/* line */}
             <View
@@ -86,7 +91,7 @@ export const FormatSelector = ({
             </View>
           </>
         </Animated.View>
-      </GestureDetector>
+      </PanGestureHandler>
     </Backdrop>
   );
 };
