@@ -5,3 +5,5 @@ export * from "./Titlebar";
 export * from "./popups";
 export * from "./MoviesList";
 export * from "./Badge";
+export * from "./SlotTile";
+export * from "./AppBar";
