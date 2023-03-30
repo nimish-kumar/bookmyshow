@@ -7,3 +7,4 @@ export * from "./MoviesList";
 export * from "./Badge";
 export * from "./SlotTile";
 export * from "./AppBar";
+export * from "./CalendarDateTile";
