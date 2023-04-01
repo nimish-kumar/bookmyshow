@@ -17,10 +17,12 @@ import { Backdrop } from "../Backdrop";
 import { Badge } from "../Badge";
 const langAndFormat = [
   {
+    code: "HI",
     lang: "Hindi",
     format: ["2D"],
   },
   {
+    code: "EN",
     lang: "English",
     format: ["2D", "3D", "4DX"],
   },
@@ -28,6 +30,7 @@ const langAndFormat = [
 interface IFormatSelectorProps {
   isVisible: boolean;
   closeBackdrop: () => void;
+  langFormatHandler?: (code: string, format: string) => void;
 }
 type ContextType = {
   translateY: number;
@@ -35,6 +38,7 @@ type ContextType = {
 export const FormatSelector = ({
   isVisible,
   closeBackdrop,
+  langFormatHandler,
 }: IFormatSelectorProps) => {
   const translateY = useSharedValue(0);
   const panGestureEvent = useAnimatedGestureHandler<
@@ -82,7 +86,13 @@ export const FormatSelector = ({
                   <View style={tw`flex-row mx-4 py-3`}>
                     {e.format.map((format) => (
                       <View key={format} style={tw`mr-4`}>
-                        <Badge badgeText={format} />
+                        <Badge
+                          badgeText={format}
+                          onPress={() => {
+                            if (langFormatHandler)
+                              langFormatHandler(e.code, format);
+                          }}
+                        />
                       </View>
                     ))}
                   </View>
