@@ -2,13 +2,15 @@ import {
   AppBar,
   Badge,
   CalendarDateTile,
+  FormatSelector,
   ICalendarTile,
   ISlotTile,
   SlotTile,
 } from "@components";
+import { PortalFrom, PortalTo } from "@context";
 import { tw } from "@lib";
-import React from "react";
-import { ScrollView, View } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -249,15 +251,31 @@ const priceRange = [
     high: 300,
   },
 ];
+const langAndFormatArray = [
+  {
+    code: "HI",
+    lang: "Hindi",
+    format: ["2D"],
+  },
+  {
+    code: "EN",
+    lang: "English",
+    format: ["2D", "3D", "4DX"],
+  },
+];
 
 export const SlotSelector = () => {
+  const [popupVisibility, setPopupVisibility] = useState(true);
+  const [langFormat, setLangFormat] = useState({ code: "EN", format: "2D" });
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
+        <PortalTo activeGateName="format-selector" />
         <AppBar title="Movie name" backButton />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
-          {dateData.map((e) => (
+          {dateData.map((e, idx) => (
             <CalendarDateTile
+              key={idx}
               date={e.date}
               day={e.day}
               month={e.month}
@@ -265,9 +283,43 @@ export const SlotSelector = () => {
             />
           ))}
         </ScrollView>
+        <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
+          <View style={tw`flex-row w-4/5`}>
+            <Text style={tw`font-roboto-bold mr-1`}>
+              {langAndFormatArray.find((e) => e.code === langFormat.code)?.lang}
+            </Text>
+            <Text style={tw`self-center`}>{"\u2B24"}</Text>
+            <Text style={tw`font-roboto-bold ml-1`}>{langFormat.format}</Text>
+          </View>
+          <PortalFrom>
+            {(portal) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    setPopupVisibility(true);
+                    portal(
+                      "format-selector",
+                      <FormatSelector
+                        isVisible={popupVisibility}
+                        closeBackdrop={() => portal("format-selector", <></>)}
+                        langFormatHandler={(code, format) =>
+                          setLangFormat({ code, format })
+                        }
+                      />
+                    );
+                  }}
+                >
+                  <Text style={tw`text-pink font-roboto-regular`}>
+                    {"Change >"}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+          </PortalFrom>
+        </View>
         <FlatList
           horizontal
-          style={tw`bg-white pl-2 shadow-xl shadow-black border-b border-gray-200`}
+          style={tw`bg-white pl-2 border-b border-gray-200`}
           data={priceRange}
           renderItem={({ item: e }) => (
             <View style={tw`mr-2 mt-2 mb-5`}>
@@ -277,7 +329,7 @@ export const SlotSelector = () => {
         />
 
         <FlatList
-          contentContainerStyle={tw`pt-2 pb-55`}
+          contentContainerStyle={tw`pt-2 pb-65`}
           data={data}
           renderItem={({ index, item }) => {
             return (
