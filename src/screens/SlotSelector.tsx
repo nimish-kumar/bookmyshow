@@ -1,7 +1,14 @@
-import { AppBar, ISlotTile, SlotTile } from "@components";
+import {
+  AppBar,
+  Badge,
+  CalendarDateTile,
+  ICalendarTile,
+  ISlotTile,
+  SlotTile,
+} from "@components";
 import { tw } from "@lib";
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -217,21 +224,70 @@ const data: ISlotTile[] = [
   },
 ];
 
+const dateData: ICalendarTile[] = [
+  {
+    day: "SUN",
+    date: 28,
+    month: "DEC",
+    mode: "selected",
+  },
+  ...Array(6).fill({
+    day: "SUN",
+    date: 28,
+    month: "DEC",
+    mode: "default",
+  }),
+];
+
+const priceRange = [
+  {
+    low: 0,
+    high: 100,
+  },
+  {
+    low: 200,
+    high: 300,
+  },
+];
+
 export const SlotSelector = () => {
   return (
     <SafeAreaView>
-      <AppBar title="Movie name" backButton />
-      <View style={tw`flex justify-center bg-neutral-200 min-h-full mt-12`}>
+      <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
+        <AppBar title="Movie name" backButton />
+        <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
+          {dateData.map((e) => (
+            <CalendarDateTile
+              date={e.date}
+              day={e.day}
+              month={e.month}
+              mode={e.mode}
+            />
+          ))}
+        </ScrollView>
         <FlatList
+          horizontal
+          style={tw`bg-white pl-2 shadow-xl shadow-black border-b border-gray-200`}
+          data={priceRange}
+          renderItem={({ item: e }) => (
+            <View style={tw`mr-2 mt-2 mb-5`}>
+              <Badge badgeText={`${`₹${e.low} - ₹${e.high}`}`} />
+            </View>
+          )}
+        />
+
+        <FlatList
+          contentContainerStyle={tw`pt-2 pb-55`}
           data={data}
           renderItem={({ index, item }) => {
             return (
-              <SlotTile
-                key={index}
-                areaName={item.areaName}
-                slots={item.slots}
-                theatreName={item.theatreName}
-              />
+              <View key={index} style={tw`mt-2`}>
+                <SlotTile
+                  areaName={item.areaName}
+                  slots={item.slots}
+                  theatreName={item.theatreName}
+                />
+              </View>
             );
           }}
         />
