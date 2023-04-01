@@ -79,9 +79,9 @@ export const FormatSelector = ({
                       {e.lang.toUpperCase()}
                     </Text>
                   </View>
-                  <View style={tw`flex-row mx-4`}>
+                  <View style={tw`flex-row mx-4 py-3`}>
                     {e.format.map((format) => (
-                      <View key={format} style={tw`mr-2`}>
+                      <View key={format} style={tw`mr-4`}>
                         <Badge badgeText={format} />
                       </View>
                     ))}
