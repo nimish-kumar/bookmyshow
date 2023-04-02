@@ -20,7 +20,7 @@ export const SlotTile = ({
   cancellationAvailable = false,
 }: ISlotTile) => {
   return (
-    <View style={tw`mx-3 px-4 py-4 bg-white`}>
+    <View style={tw`px-4 py-4 bg-white`}>
       <View style={tw`flex-row mb-2`}>
         <Text
           numberOfLines={2}

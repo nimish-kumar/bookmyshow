@@ -344,7 +344,7 @@ export const SlotSelector = () => {
         />
 
         <FlatList
-          contentContainerStyle={tw`pt-2 pb-65`}
+          contentContainerStyle={tw`pt-4 pb-65 px-2`}
           data={data}
           renderItem={({ index, item }) => {
             return (
