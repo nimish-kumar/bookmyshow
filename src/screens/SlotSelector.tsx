@@ -285,11 +285,11 @@ export const SlotSelector = () => {
         </ScrollView>
         <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
           <View style={tw`flex-row w-4/5`}>
-            <Text style={tw`font-roboto-bold mr-1`}>
+            <Text style={tw`font-roboto-medium mr-1`}>
               {langAndFormatArray.find((e) => e.code === langFormat.code)?.lang}
             </Text>
             <Text style={tw`self-center`}>{"\u2B24"}</Text>
-            <Text style={tw`font-roboto-bold ml-1`}>{langFormat.format}</Text>
+            <Text style={tw`font-roboto-medium ml-1`}>{langFormat.format}</Text>
           </View>
           <PortalFrom>
             {(portal) => {
@@ -302,9 +302,10 @@ export const SlotSelector = () => {
                       <FormatSelector
                         isVisible={popupVisibility}
                         closeBackdrop={() => portal("format-selector", <></>)}
-                        langFormatHandler={(code, format) =>
-                          setLangFormat({ code, format })
-                        }
+                        langFormatHandler={(code, format) => {
+                          setLangFormat({ code, format });
+                          portal("format-selector", <></>);
+                        }}
                       />
                     );
                   }}
