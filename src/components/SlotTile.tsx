@@ -25,7 +25,7 @@ export const SlotTile = ({
         <Text
           numberOfLines={2}
           ellipsizeMode="tail"
-          style={tw`w-4/5 font-roboto-medium text-sm`}
+          style={tw`w-4/5 font-roboto-medium text-sm text-slate-700`}
         >
           {areaName ? `${theatreName}, ${areaName}` : `${theatreName}`}
         </Text>
