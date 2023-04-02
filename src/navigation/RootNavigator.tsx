@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SlotSelector } from "@screens";
+import { SeatSelector } from "@screens";
 import React from "react";
 
 const AppStack = createNativeStackNavigator();
@@ -9,7 +9,7 @@ export const RootNavigator = () => {
     <AppStack.Navigator initialRouteName="Home">
       <AppStack.Screen
         name="Home"
-        component={SlotSelector}
+        component={SeatSelector}
         options={{ headerShown: false }}
       />
     </AppStack.Navigator>
