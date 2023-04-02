@@ -9,7 +9,8 @@
       "@screens": ["./src/screens"],
       "@lib": ["./src/lib"],
       "@navigation": ["./src/navigation"],
-      "@context": ["./src/context"]
+      "@context": ["./src/context"],
+      "@utils": ["./src/utils"]
     }
   }
 }

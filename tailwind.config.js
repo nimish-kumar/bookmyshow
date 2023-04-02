@@ -8,6 +8,7 @@ module.exports = {
         "dark-navy": "#222539",
         "light-navy": "#323653",
         "pink": "#DC3558",
+        "green": "#1EA38C"
       },
       fontFamily: {
         "roboto-regular": ["Roboto-Regular", "sans-serif"],

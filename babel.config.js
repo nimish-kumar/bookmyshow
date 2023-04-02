@@ -13,6 +13,7 @@ module.exports = function (api) {
             "@lib": "./src/lib",
             "@navigation": "./src/navigation",
             "@context": "./src/context",
+            "@utils": "./src/utils",
           },
         },
       ],
