@@ -18,19 +18,19 @@ const NonTouchableCalendarTile = ({
 }: ICalendarTile) => {
   return (
     <View
-      style={tw`px-3.7 pt-2 pb-5 items-center ${
+      style={tw`px-4 pt-2 pb-8 items-center ${
         mode === "selected" ? "bg-pink" : ""
       }`}
     >
       <Text
-        style={tw`text-sm ${
+        style={tw`text-xs ${
           mode === "selected" ? "text-white" : "text-gray-500"
         }`}
       >
         {day}
       </Text>
       <Text
-        style={tw`text-xl font-roboto-regular ${
+        style={tw`text-xl  ${
           mode === "disabled"
             ? "text-gray-500"
             : mode === "selected"
@@ -43,7 +43,7 @@ const NonTouchableCalendarTile = ({
       <Text
         style={tw`${
           mode === "selected" ? "text-white" : "text-gray-500"
-        } text-sm `}
+        } text-xs `}
       >
         {month}
       </Text>
