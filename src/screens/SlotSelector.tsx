@@ -334,7 +334,7 @@ export const SlotSelector = () => {
           data={data}
           renderItem={({ index, item }) => {
             return (
-              <View key={index} style={tw`mt-2`}>
+              <View key={index}>
                 <SlotTile
                   areaName={item.areaName}
                   slots={item.slots}
