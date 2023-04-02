@@ -297,11 +297,11 @@ export const SlotSelector = () => {
         </ScrollView>
         <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
           <View style={tw`flex-row w-4/5 items-center`}>
-            <Text style={tw`font-roboto-regular mr-2 text-sm`}>
+            <Text style={tw`font-roboto-medium mr-2 text-xs`}>
               {langAndFormatArray.find((e) => e.code === langFormat.code)?.lang}
             </Text>
             <Text style={[tw`self-center`, { fontSize: 5 }]}>{"\u2B24"}</Text>
-            <Text style={tw`font-roboto-regular ml-2 text-sm`}>
+            <Text style={tw`font-roboto-medium ml-2 text-xs`}>
               {langFormat.format}
             </Text>
           </View>
