@@ -35,7 +35,7 @@ export const SlotTile = ({
           return (
             <TouchableOpacity style={tw`mr-2`} key={idx}>
               <View
-                style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-25`}
+                style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-24.66`}
               >
                 <Text style={tw`font-roboto-bold text-green-500`}>
                   {slot.time}
