@@ -17,24 +17,24 @@ export const AppBar = ({
   extras,
 }: IAppBarProps) => {
   return (
-    <View style={tw`h-14 bg-fade-navy px-4 flex-row items-center`}>
+    <View style={tw`h-14 bg-light-navy px-4 flex-row items-center`}>
       {backButton ? (
         <Icon
-          name="chevron-back-outline"
-          type="ionicon"
+          name="arrow-left"
+          type="simple-line-icon"
           color="#fff"
-          size={28}
+          size={14}
           onPress={backFunction}
         />
       ) : null}
       <Text
-        style={tw`text-lg text-white font-roboto-regular ml-6 w-2/3`}
+        style={tw`text-base text-white ml-6 w-2/3`}
         numberOfLines={1}
         ellipsizeMode="tail"
       >
         {title}
       </Text>
-      <View>{extras}</View>
+      <View style={tw`items-center flex-row`}>{extras}</View>
     </View>
   );
 };

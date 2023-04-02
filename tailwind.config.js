@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         "fade-navy": "#333545",
         "dark-navy": "#222539",
+        "light-navy": "#323653",
         "pink": "#DC3558",
       },
       fontFamily: {
