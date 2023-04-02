@@ -8,3 +8,4 @@ export * from "./Badge";
 export * from "./SlotTile";
 export * from "./AppBar";
 export * from "./CalendarDateTile";
+export * from "./seats";
