@@ -56,3 +56,8 @@ export const extractGroupsDetails = (
   }
   return null;
 };
+
+export const isAisle = (boxString: string): boolean => {
+  const regex = /^[A-Z]+0\+0$/;
+  return regex.test(boxString);
+};
