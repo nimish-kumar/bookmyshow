@@ -1,12 +1,7 @@
 import { tw } from "@lib";
+import { SeatStatus } from "@utils";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-export const SeatStatusCode = {
-  sold: 0,
-  available: 1,
-  selected: 2,
-} as const;
-export type SeatStatus = keyof typeof SeatStatusCode;
 
 interface ISeatProps {
   seatNumber: number;
