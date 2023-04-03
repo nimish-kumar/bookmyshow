@@ -1,4 +1,9 @@
-import { SeatStatus, SeatStatusCode } from "@components";
+export const SeatStatusCode = {
+  sold: 0,
+  available: 1,
+  selected: 2,
+} as const;
+export type SeatStatus = keyof typeof SeatStatusCode;
 
 export const seatGenerator = (
   groupCode: string,
@@ -10,6 +15,13 @@ export const seatGenerator = (
   const status = SeatStatusCode[statusCode];
   return `${status}${groupCode}&${row}${col}+${seatNumber}`;
 };
+
+export const prependSeatRow = (
+  grpIndex: number,
+  rowHead: string,
+  grpCode: string,
+  rowString: string
+) => `${grpIndex}:${rowHead}:${grpCode}000:${rowString}`;
 
 export const aisleGenerator = (grpCode: string) => `${grpCode}0+0`;
 // '4D&AA99+16'
@@ -31,6 +43,7 @@ export const getSeatDetails = (seatString: string) => {
       seatNumber: parseInt(seatDetailsArray[0][5], 10),
     };
   } catch (err) {
+    console.error("Caught error while extracting seat details", err);
     return null;
   }
 };
@@ -105,9 +118,12 @@ export const isAisle = (boxString: string): boolean => {
   return regex.test(boxString);
 };
 
-export const getUpdatedRow = (row: string[], index: number) => {
+export const getUpdatedRow = (row: string[], index: number, reverse = true) => {
   let updatedRow: string[] = [...row];
-
+  if (reverse) {
+    updatedRow = updatedRow.reverse();
+    index = updatedRow.length - (index + 1);
+  }
   const selectedSeat = getSeatDetails(updatedRow[index]);
   if (selectedSeat) {
     let updatedSeat = "";
@@ -131,6 +147,9 @@ export const getUpdatedRow = (row: string[], index: number) => {
       );
     }
     updatedRow = immutableInsertArray(updatedRow, index, updatedSeat);
+  }
+  if (reverse) {
+    updatedRow = [...updatedRow].reverse();
   }
 
   return updatedRow;
