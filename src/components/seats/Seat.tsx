@@ -9,7 +9,7 @@ export const SeatStatusCode = {
 export type SeatStatus = keyof typeof SeatStatusCode;
 
 interface ISeatProps {
-  seatNumber: string;
+  seatNumber: number;
   status: SeatStatus;
   seatSelectHandler?: () => void;
 }
