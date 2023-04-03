@@ -1,3 +1,46 @@
+import { SeatStatus, SeatStatusCode } from "@components";
+
+export const seatGenerator = (
+  groupCode: string,
+  row: string,
+  col: number,
+  seatNumber: number,
+  statusCode: SeatStatus = "available"
+) => {
+  const status = SeatStatusCode[statusCode];
+  return `${status}${groupCode}&${row}${col}+${seatNumber}`;
+};
+
+export const aisleGenerator = (grpCode: string) => `${grpCode}0+0`;
+// '4D&AA99+16'
+// {STATUS_CODE}{GRP_CODE}{&}{ROW}{COL}+SEAT_NO
+export const getSeatDetails = (seatString: string) => {
+  const regex = /^([0-9]+)([A-Z]+)&([A-Z]+)([0-9]+)\+([0-9]+)$/gm;
+  const matches = seatString.matchAll(regex);
+  const seatDetailsArray = [];
+  for (const match of matches) {
+    seatDetailsArray.push(match);
+  }
+  try {
+    return {
+      inputString: seatDetailsArray[0][0],
+      seatStatusCode: seatDetailsArray[0][1],
+      seatGrpCode: seatDetailsArray[0][2],
+      seatRow: seatDetailsArray[0][3],
+      seatCol: parseInt(seatDetailsArray[0][4], 10),
+      seatNumber: parseInt(seatDetailsArray[0][5], 10),
+    };
+  } catch (err) {
+    return null;
+  }
+};
+
+export const immutableInsertArray = <T>(row: T[], index: number, obj: T) => [
+  ...row.slice(0, index),
+  obj,
+  ...row.slice(index + 1),
+];
+
 export interface IRowDetails {
   inputString: string;
   grpRowIndex: number;
@@ -60,4 +103,35 @@ export const extractGroupsDetails = (
 export const isAisle = (boxString: string): boolean => {
   const regex = /^[A-Z]+0\+0$/;
   return regex.test(boxString);
+};
+
+export const getUpdatedRow = (row: string[], index: number) => {
+  let updatedRow: string[] = [...row];
+
+  const selectedSeat = getSeatDetails(updatedRow[index]);
+  if (selectedSeat) {
+    let updatedSeat = "";
+    if (
+      parseInt(selectedSeat.seatStatusCode, 10) === SeatStatusCode["available"]
+    ) {
+      updatedSeat = seatGenerator(
+        selectedSeat.seatGrpCode,
+        selectedSeat.seatRow,
+        selectedSeat.seatCol,
+        selectedSeat.seatNumber,
+        "selected"
+      );
+    } else {
+      updatedSeat = seatGenerator(
+        selectedSeat.seatGrpCode,
+        selectedSeat.seatRow,
+        selectedSeat.seatCol,
+        selectedSeat.seatNumber,
+        "available"
+      );
+    }
+    updatedRow = immutableInsertArray(updatedRow, index, updatedSeat);
+  }
+
+  return updatedRow;
 };
