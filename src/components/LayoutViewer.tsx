@@ -5,7 +5,7 @@ import {
   hasRowStarted,
   immutableInsertArray,
 } from "@utils";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 import { SeatRow, SeatRowHeader } from "./seats";
@@ -20,17 +20,25 @@ export const LayoutViewer = ({
   selectedSeatChangeHandler,
 }: ILayoutViewerProps) => {
   const [grps, rows] = layout.split("||");
-  const rowsArray = rows
-    .split("|")
-    .map((row) => hasRowStarted(row))
-    .sort((a, b) => (a?.grpRowIndex ?? 0) - (b?.grpRowIndex ?? 0))
-    .filter((n) => !!n) as IRowDetails[];
+  const rowsArray = useMemo(
+    () =>
+      rows
+        .split("|")
+        .map((row) => hasRowStarted(row))
+        .sort((a, b) => (a?.grpRowIndex ?? 0) - (b?.grpRowIndex ?? 0))
+        .filter((n) => !!n) as IRowDetails[],
+    [layout]
+  );
 
-  const grpsArray = grps
-    .split("|")
-    .map((grp) => extractGroupsDetails(grp))
-    .sort((a, b) => (a?.grpOrder ?? 0) - (b?.grpOrder ?? 0))
-    .filter((x) => !!x) as IGrpDetails[];
+  const grpsArray = useMemo(
+    () =>
+      grps
+        .split("|")
+        .map((grp) => extractGroupsDetails(grp))
+        .sort((a, b) => (a?.grpOrder ?? 0) - (b?.grpOrder ?? 0))
+        .filter((x) => !!x) as IGrpDetails[],
+    [layout]
+  );
 
   const updatedGrpWithRows = grpsArray.map((g) => {
     const grpCode = g.grpCode;
