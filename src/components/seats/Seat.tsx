@@ -29,7 +29,7 @@ export const Seat = ({ seatNumber, status, seatSelectHandler }: ISeatProps) => {
       </Text>
     </View>
   );
-  if (status === "available") {
+  if (status !== "sold") {
     return (
       <TouchableOpacity onPress={seatSelectHandler}>{seat}</TouchableOpacity>
     );
