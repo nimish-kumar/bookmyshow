@@ -49,8 +49,8 @@ const Row = ({
     statuses[parseInt(index, 10)];
 
   return (
-    <View style={tw`flex-row`}>
-      <Text style={tw`text-lg text-gray-500 w-4 items-center`}>{rowHead}</Text>
+    <View style={tw`flex-row mt-1 items-center`}>
+      <Text style={tw`text-sm text-gray-500 w-4`}>{rowHead}</Text>
       {seatsArray.map((seat, idx) => {
         if (isAisle(seat)) {
           return <Gap key={`gap-${idx}`} />;
