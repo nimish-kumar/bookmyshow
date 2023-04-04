@@ -30,7 +30,7 @@ export const aisleGenerator = (grpCode: string) => `${grpCode}0+0`;
 // '4D&AA99+16'
 // {STATUS_CODE}{GRP_CODE}{&}{ROW}{COL}+SEAT_NO
 export const getSeatDetails = (seatString: string) => {
-  const regex = /^([0-9]+)([A-Z]+)&([A-Z]+)([0-9]+)\+([0-9]+)$/gm;
+  const regex = /^([0-9]?)([A-Z]+)&([A-Z]+)([0-9]+)\+([0-9]+)$/gm;
   const matches = seatString.matchAll(regex);
   const seatDetailsArray = [];
   for (const match of matches) {
@@ -155,4 +155,26 @@ export const getUpdatedRow = (row: string[], index: number, reverse = true) => {
     updatedRow = [...updatedRow].reverse();
   }
   return updatedRow;
+};
+
+export const calculateTotalCost = (
+  grpDetails: IGrpDetails[],
+  seats: string[]
+): number => {
+  let cost = 0;
+  for (let i = 0; i < seats.length; i++) {
+    const seatDetails = getSeatDetails(seats[i]);
+    if (seatDetails) {
+      const grpCode = seatDetails.seatGrpCode;
+      const grp = grpDetails.find((grp) => grp.grpCode === grpCode);
+      if (grp) {
+        cost += grp.cost;
+      } else {
+        throw Error(`ParseError: Could not parse seat ${seats[i]}`);
+      }
+    } else {
+      throw Error(`ParseError: Could not parse seat ${seats[i]}`);
+    }
+  }
+  return cost;
 };
