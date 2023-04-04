@@ -1,8 +1,8 @@
 import { AppBar, LayoutViewer } from "@components";
 import { tw } from "@lib";
 import { Button } from "@rneui/themed";
-import { calculateTotalCost } from "@utils";
-import React, { useEffect, useState } from "react";
+import { IGrpDetails, calculateTotalCost, extractGroupsDetails } from "@utils";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 export interface ISeatSelectorProps {
@@ -57,9 +57,19 @@ export const SeatSelector = () => {
     setSelectedSeats([]);
     setTotalCost(0);
   }, [selectedTimeSlotIdx]);
-
+  const groupDetailsArray = useMemo(() => {
+    const grps = layout.split("||")[0].split("|");
+    const grpDetails: IGrpDetails[] = [];
+    for (let i = 0; i < grps.length; i++) {
+      const grp = extractGroupsDetails(grps[i]);
+      if (grp) {
+        grpDetails.push(grp);
+      }
+    }
+    return grpDetails;
+  }, [layout]);
   useEffect(() => {
-    console.log("Selected seats --> ", selectedSeats);
+    setTotalCost(calculateTotalCost(groupDetailsArray, selectedSeats));
   }, [selectedSeats]);
 
   return (
