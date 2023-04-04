@@ -3,12 +3,10 @@ import {
   IGrpDetails,
   IRowDetails,
   extractGroupsDetails,
-  getUpdatedRow,
   hasRowStarted,
   immutableInsertArray,
-  prependSeatRow,
 } from "@utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 export interface ISeatSelectorProps {
@@ -40,6 +38,10 @@ export const SeatSelector = () => {
   const [theatreGrps, setTheatreGrps] =
     useState<IGrpDetails[]>(updatedGrpWithRows);
 
+  useEffect(() => {
+    console.log("After update theatre grp", theatreGrps);
+  }, [theatreGrps]);
+
   return (
     <ScrollView horizontal>
       <View style={[{ display: "flex", flex: 1 }]}>
@@ -48,25 +50,11 @@ export const SeatSelector = () => {
           return (
             <SeatRowHeader grpName={grp.grpName} cost={grp.cost} key={grpIndex}>
               {rows.map((row, rowIndex) => {
-                const seatsArray = row.seatsString.split(":");
-                const updateRow = (seatIndex: number) => {
-                  const updatedRow = getUpdatedRow(seatsArray, seatIndex).join(
-                    ":"
-                  );
-                  const updatedRowDetails = hasRowStarted(
-                    prependSeatRow(
-                      row.grpRowIndex,
-                      row.rowHead,
-                      row.seatGrpCode,
-                      updatedRow
-                    )
-                  );
-                  if (updatedRowDetails === null) {
-                    throw Error(
-                      "ParsingError: Error while parsing updated row"
-                    );
-                  }
-                  setTheatreGrps(
+                function updateTheatreGrps(
+                  updatedRowDetails: IRowDetails,
+                  grpIndex: number
+                ) {
+                  setTheatreGrps((theatreGrps) =>
                     immutableInsertArray(theatreGrps, grpIndex, {
                       ...theatreGrps[grpIndex],
                       rows: immutableInsertArray(
@@ -76,12 +64,16 @@ export const SeatSelector = () => {
                       ),
                     })
                   );
-                };
+                }
                 return (
                   <SeatRow
                     rowHead={row.rowHead}
                     seatsString={row.seatsString}
-                    seatSelectHandler={updateRow}
+                    grpCode={row.seatGrpCode}
+                    grpRowIndex={row.grpRowIndex}
+                    updateRowDetails={(rowDetails) =>
+                      updateTheatreGrps(rowDetails, grpIndex)
+                    }
                     key={rowIndex}
                   />
                 );

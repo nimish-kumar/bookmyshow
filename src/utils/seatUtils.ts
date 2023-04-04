@@ -151,6 +151,7 @@ export const getUpdatedRow = (row: string[], index: number, reverse = true) => {
   if (reverse) {
     updatedRow = [...updatedRow].reverse();
   }
+  console.log("Updated row--->", updatedRow);
 
   return updatedRow;
 };
