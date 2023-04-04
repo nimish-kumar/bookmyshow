@@ -1,3 +1,4 @@
+import { tw } from "@lib";
 import {
   IGrpDetails,
   IRowDetails,
@@ -6,7 +7,7 @@ import {
   immutableInsertArray,
 } from "@utils";
 import React, { useEffect, useMemo, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 import { SeatRow, SeatRowHeader } from "./seats";
 
@@ -55,8 +56,8 @@ export const LayoutViewer = ({
 
   return (
     <View>
-      <ScrollView horizontal>
-        <View style={[{ display: "flex", flex: 1 }]}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View style={[{ display: "flex", flex: 1, alignItems: "center" }]}>
           {theatreGrps.map((grp, grpIndex) => {
             const rows = grp.rows;
             return (
@@ -101,6 +102,12 @@ export const LayoutViewer = ({
               </SeatRowHeader>
             );
           })}
+          <View
+            style={tw`w-1/3 h-5 shadow-lg shadow-red-600 my-4 border-red-600`}
+          />
+          <Text style={tw`text-xs font-roboto-regular text-gray-500`}>
+            All eyes this way please!
+          </Text>
         </View>
       </ScrollView>
     </View>
