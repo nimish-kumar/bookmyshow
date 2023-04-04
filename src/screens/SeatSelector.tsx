@@ -57,6 +57,9 @@ export const SeatSelector = () => {
     setSelectedSeats([]);
     setTotalCost(0);
   }, [selectedTimeSlotIdx]);
+
+  // Memoize group details as it will not change
+  // unless the layout is changed
   const groupDetailsArray = useMemo(() => {
     const grps = layout.split("||")[0].split("|");
     const grpDetails: IGrpDetails[] = [];
@@ -107,12 +110,32 @@ export const SeatSelector = () => {
           });
         }}
       />
-      <View style={tw`z-1 absolute bottom-0 px-2 py-2`}>
-        <Button
-          buttonStyle={tw`min-w-full bg-pink rounded-md h-12 items-center justify-center`}
+      <View style={tw`z-1 absolute bottom-0 bg-white items-center flex-col`}>
+        <View
+          style={tw`py-2 flex-row min-w-full justify-around items-center px-8`}
         >
-          <Text style={tw`text-white text-base`}>Pay ₹ {totalCost}</Text>
-        </Button>
+          <View style={tw`flex-row items-center w-1/4`}>
+            <View style={tw`bg-gray-200 h-6 w-6 mr-2 rounded-sm`} />
+            <Text style={tw`text-xs`}>Sold</Text>
+          </View>
+          <View style={tw`flex-row items-center w-1/4`}>
+            <View
+              style={tw`border border-dark-green h-6 w-6 mr-2 rounded-sm`}
+            />
+            <Text style={tw`text-xs`}>Available</Text>
+          </View>
+          <View style={tw`flex-row items-center w-1/4`}>
+            <View style={tw`bg-dark-green h-6 w-6 mr-2 rounded-sm`} />
+            <Text style={tw`text-xs`}>Selected</Text>
+          </View>
+        </View>
+        <View style={tw`min-w-full`}>
+          <Button
+            buttonStyle={tw`bg-pink rounded-md h-12 items-center justify-center`}
+          >
+            <Text style={tw`text-white text-base`}>Pay ₹ {totalCost}</Text>
+          </Button>
+        </View>
       </View>
     </View>
   );
