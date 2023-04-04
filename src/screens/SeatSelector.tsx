@@ -1,6 +1,7 @@
 import { AppBar, LayoutViewer } from "@components";
 import { tw } from "@lib";
 import { Button } from "@rneui/themed";
+import { calculateTotalCost } from "@utils";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -50,10 +51,11 @@ export const SeatSelector = () => {
   const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(0);
   const layout = timings[selectedTimeSlotIdx].layout;
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-
+  const [totalCost, setTotalCost] = useState(0);
   // Reset selected seats if time slot is changed
   useEffect(() => {
     setSelectedSeats([]);
+    setTotalCost(0);
   }, [selectedTimeSlotIdx]);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export const SeatSelector = () => {
   }, [selectedSeats]);
 
   return (
-    <View>
+    <View style={tw`min-h-full`}>
       <AppBar title="Movie name" subtitle="Viman Nagar" backButton />
       <View style={tw`bg-gray-200 h-25 pl-4`}>
         <Text style={tw`text-sm my-3`}>Tue, 04 Apr</Text>
@@ -95,6 +97,13 @@ export const SeatSelector = () => {
           });
         }}
       />
+      <View style={tw`z-1 absolute bottom-0 px-2 py-2`}>
+        <Button
+          buttonStyle={tw`min-w-full bg-pink rounded-md h-12 items-center justify-center`}
+        >
+          <Text style={tw`text-white text-base`}>Pay ₹ {totalCost}</Text>
+        </Button>
+      </View>
     </View>
   );
 };
