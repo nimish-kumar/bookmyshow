@@ -170,7 +170,9 @@ export const calculateTotalCost = (
       if (grp) {
         cost += grp.cost;
       } else {
-        throw Error(`ParseError: Could not parse seat ${seats[i]}`);
+        throw Error(
+          `ParseError: Could not find group code ${grpCode} in ${grpDetails}`
+        );
       }
     } else {
       throw Error(`ParseError: Could not parse seat ${seats[i]}`);
