@@ -9,3 +9,4 @@ export * from "./SlotTile";
 export * from "./AppBar";
 export * from "./CalendarDateTile";
 export * from "./seats";
+export * from "./LayoutViewer";
