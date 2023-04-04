@@ -6,7 +6,7 @@ import {
   hasRowStarted,
   immutableInsertArray,
 } from "@utils";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 export interface ISeatSelectorProps {
@@ -37,10 +37,6 @@ export const SeatSelector = () => {
   });
   const [theatreGrps, setTheatreGrps] =
     useState<IGrpDetails[]>(updatedGrpWithRows);
-
-  useEffect(() => {
-    console.log("After update theatre grp", theatreGrps);
-  }, [theatreGrps]);
 
   return (
     <ScrollView horizontal>

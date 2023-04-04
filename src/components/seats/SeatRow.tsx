@@ -28,7 +28,6 @@ const Row = ({
   grpRowIndex,
   grpCode,
 }: ISeatRowProps) => {
-  console.log("Row");
   const seatsArray = seatsString.split(":");
   const updatedRow = (seatIndex: number) => {
     const updatedRow = getUpdatedRow(seatsArray, seatIndex).join(":");
