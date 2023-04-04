@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 
 interface IAppBarProps {
   title: string;
+  subtitle?: string;
   backButton?: boolean;
   backFunction?: () => void;
   extras?: JSX.Element;
@@ -12,6 +13,7 @@ interface IAppBarProps {
 
 export const AppBar = ({
   title,
+  subtitle,
   backButton,
   backFunction,
   extras,
@@ -27,13 +29,16 @@ export const AppBar = ({
           onPress={backFunction}
         />
       ) : null}
-      <Text
-        style={tw`text-base text-white ml-6 w-2/3`}
-        numberOfLines={1}
-        ellipsizeMode="tail"
-      >
-        {title}
-      </Text>
+      <View style={tw`justify-center ml-6 w-2/3`}>
+        <Text
+          style={tw`text-base text-white `}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {title}
+        </Text>
+        {subtitle && <Text style={tw`text-gray-400 text-xs`}>{subtitle}</Text>}
+      </View>
       <View style={tw`items-center flex-row`}>{extras}</View>
     </View>
   );
