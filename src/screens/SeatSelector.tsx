@@ -66,7 +66,7 @@ export const SeatSelector = () => {
                       "ParsingError: Error while parsing updated row"
                     );
                   }
-                  setTheatreGrps(
+                  setTheatreGrps((theatreGrps) =>
                     immutableInsertArray(theatreGrps, grpIndex, {
                       ...theatreGrps[grpIndex],
                       rows: immutableInsertArray(
