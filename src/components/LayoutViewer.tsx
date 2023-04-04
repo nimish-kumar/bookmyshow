@@ -12,9 +12,13 @@ import { SeatRow, SeatRowHeader } from "./seats";
 
 interface ILayoutViewerProps {
   layout: string;
+  selectedSeatChangeHandler?: (seat: string) => void;
 }
 
-export const LayoutViewer = ({ layout }: ILayoutViewerProps) => {
+export const LayoutViewer = ({
+  layout,
+  selectedSeatChangeHandler,
+}: ILayoutViewerProps) => {
   const [grps, rows] = layout.split("||");
   const rowsArray = rows
     .split("|")
@@ -77,6 +81,10 @@ export const LayoutViewer = ({ layout }: ILayoutViewerProps) => {
                       grpRowIndex={row.grpRowIndex}
                       updateRowDetails={(rowDetails) =>
                         updateTheatreGrps(rowDetails, grpIndex)
+                      }
+                      changeSelectedSeats={(seat) =>
+                        selectedSeatChangeHandler &&
+                        selectedSeatChangeHandler(seat)
                       }
                       key={rowIndex}
                     />

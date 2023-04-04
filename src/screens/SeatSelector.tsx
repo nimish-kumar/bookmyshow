@@ -1,7 +1,7 @@
 import { AppBar, LayoutViewer } from "@components";
 import { tw } from "@lib";
 import { Button } from "@rneui/themed";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 export interface ISeatSelectorProps {
@@ -49,6 +49,16 @@ const TimingBtn = ({ time, setTimeSlot, type = "default" }: ITimingBtnProp) => {
 export const SeatSelector = () => {
   const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(0);
   const layout = timings[selectedTimeSlotIdx].layout;
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+
+  // Reset selected seats if time slot is changed
+  useEffect(() => {
+    setSelectedSeats([]);
+  }, [selectedTimeSlotIdx]);
+
+  useEffect(() => {
+    console.log("Selected seats --> ", selectedSeats);
+  }, [selectedSeats]);
 
   return (
     <View>
@@ -70,7 +80,21 @@ export const SeatSelector = () => {
           })}
         </ScrollView>
       </View>
-      <LayoutViewer layout={layout} />
+      <LayoutViewer
+        layout={layout}
+        selectedSeatChangeHandler={(seat) => {
+          setSelectedSeats((prevSelectedSeats) => {
+            if (prevSelectedSeats.includes(seat)) {
+              const seatIndex = prevSelectedSeats.indexOf(seat);
+              return [
+                ...prevSelectedSeats.slice(0, seatIndex),
+                ...prevSelectedSeats.slice(seatIndex + 1),
+              ];
+            }
+            return [...prevSelectedSeats, seat];
+          });
+        }}
+      />
     </View>
   );
 };

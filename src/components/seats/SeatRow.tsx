@@ -8,6 +8,7 @@ import {
   hasRowStarted,
   isAisle,
   prependSeatRow,
+  seatGenerator,
 } from "@utils";
 import React from "react";
 import { Text, View } from "react-native";
@@ -20,11 +21,13 @@ interface ISeatRowProps {
   rowHead: string;
   seatsString: string;
   updateRowDetails: (rowDetails: IRowDetails) => void;
+  changeSelectedSeats?: (seat: string) => void;
 }
 const Row = ({
   rowHead,
   seatsString,
   updateRowDetails,
+  changeSelectedSeats,
   grpRowIndex,
   grpCode,
 }: ISeatRowProps) => {
@@ -67,6 +70,16 @@ const Row = ({
                 )}
                 seatSelectHandler={() => {
                   updateRowDetails(updatedRow(idx));
+                  if (changeSelectedSeats) {
+                    changeSelectedSeats(
+                      seatGenerator(
+                        seatDetails.seatGrpCode,
+                        seatDetails.seatRow,
+                        seatDetails.seatCol,
+                        seatDetails.seatNumber
+                      )
+                    );
+                  }
                 }}
               />
             );
