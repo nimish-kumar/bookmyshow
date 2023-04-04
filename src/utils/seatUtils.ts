@@ -10,10 +10,13 @@ export const seatGenerator = (
   row: string,
   col: number,
   seatNumber: number,
-  statusCode: SeatStatus = "available"
+  statusCode?: SeatStatus
 ) => {
-  const status = SeatStatusCode[statusCode];
-  return `${status}${groupCode}&${row}${col}+${seatNumber}`;
+  if (statusCode) {
+    const status = SeatStatusCode[statusCode];
+    return `${status}${groupCode}&${row}${col}+${seatNumber}`;
+  }
+  return `${groupCode}&${row}${col}+${seatNumber}`;
 };
 
 export const prependSeatRow = (
