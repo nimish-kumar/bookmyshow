@@ -8,10 +8,21 @@ import {
 } from "@components";
 import { tw } from "@lib";
 import { RootStackParamList } from "@navigation";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  BackHandler,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -282,6 +293,23 @@ export const SlotSelector = () => {
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, "SlotSelector">
     >();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        navigation.navigate("Home");
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+
+      return () => subscription.remove();
+    }, [])
+  );
+
   const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
   const { format, lang, movieId } = route.params;
   const [langFormat] = useState({ code: lang, format });
