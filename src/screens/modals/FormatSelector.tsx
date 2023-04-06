@@ -13,8 +13,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import { Backdrop } from "../Backdrop";
-import { Badge } from "../Badge";
+import { Backdrop } from "../../components/Backdrop";
+import { Badge } from "../../components/Badge";
 const langAndFormat = [
   {
     code: "HI",
@@ -27,7 +27,7 @@ const langAndFormat = [
     format: ["2D", "3D", "4DX"],
   },
 ];
-interface IFormatSelectorProps {
+export interface IFormatSelectorProps {
   isVisible: boolean;
   closeBackdrop: () => void;
   langFormatHandler?: (code: string, format: string) => void;
