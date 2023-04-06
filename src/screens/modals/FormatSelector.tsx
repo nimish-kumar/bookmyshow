@@ -55,7 +55,6 @@ export const FormatSelector = () => {
   const [langFormat, setLangFormat] = useState<LangFormatType | null>(null);
   useEffect(() => {
     if (langFormat) {
-      console.log("Clicked on format");
       navigation.navigate("SlotSelector", {
         movieId,
         format: langFormat.format,
@@ -110,7 +109,6 @@ export const FormatSelector = () => {
                         <Badge
                           badgeText={format}
                           onPress={() => {
-                            console.log("Badge clicked");
                             setLangFormat({
                               lang: e.code,
                               format,
