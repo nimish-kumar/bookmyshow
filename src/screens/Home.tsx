@@ -6,11 +6,22 @@ import {
 } from "@components";
 import { PortalTo } from "@context";
 import { tw } from "@lib";
-import React from "react";
+import { RootStackParamList } from "@navigation";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useLayoutEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList>;
+
 export const Home = () => {
+  const navigation = useNavigation<HomeNavigationProps>();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center`}>
@@ -27,7 +38,7 @@ export const Home = () => {
               {"See All >"}
             </Text>
           </View>
-          <MoviesList />
+          <MoviesList navigation={navigation} />
         </View>
       </View>
     </SafeAreaView>

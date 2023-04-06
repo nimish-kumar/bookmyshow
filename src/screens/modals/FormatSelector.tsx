@@ -1,5 +1,8 @@
 import { tw } from "@lib";
-import React from "react";
+import { RootStackParamList } from "@navigation";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   PanGestureHandler,
@@ -27,20 +30,39 @@ const langAndFormat = [
     format: ["2D", "3D", "4DX"],
   },
 ];
-export interface IFormatSelectorProps {
-  isVisible: boolean;
-  closeBackdrop: () => void;
-  langFormatHandler?: (code: string, format: string) => void;
-}
 type ContextType = {
   translateY: number;
 };
-export const FormatSelector = ({
-  isVisible,
-  closeBackdrop,
-  langFormatHandler,
-}: IFormatSelectorProps) => {
+type LangFormatType = {
+  lang: string;
+  format: string;
+};
+export const FormatSelector = () => {
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, "FormatSelector">
+    >();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, []);
+  const route = useRoute<RouteProp<RootStackParamList, "FormatSelector">>();
+  const { movieId } = route.params;
   const translateY = useSharedValue(0);
+  const closeBackdrop = () => navigation.goBack();
+
+  const [langFormat, setLangFormat] = useState<LangFormatType | null>(null);
+  useEffect(() => {
+    if (langFormat) {
+      console.log("Clicked on format");
+      navigation.navigate("SlotSelector", {
+        movieId,
+        format: langFormat.format,
+        lang: langFormat.lang,
+      });
+    }
+  }, [langFormat]);
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     ContextType
@@ -63,11 +85,10 @@ export const FormatSelector = ({
     transform: [{ translateY: translateY.value }],
   }));
   return (
-    <Backdrop closeBackdrop={closeBackdrop} isVisible={isVisible}>
+    <Backdrop closeBackdrop={closeBackdrop} isVisible>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
         <Animated.View style={[styles.bottomSheet, animatedStyle]}>
           <>
-            {/* line */}
             <View
               style={tw`self-center h-1 w-24 rounded-3xl bg-gray-400 mt-2 mb-6`}
             />
@@ -84,13 +105,16 @@ export const FormatSelector = ({
                     </Text>
                   </View>
                   <View style={tw`flex-row mx-4 py-3`}>
-                    {e.format.map((format) => (
+                    {e.format.map((format, formatIdx) => (
                       <View key={format} style={tw`mr-4`}>
                         <Badge
                           badgeText={format}
                           onPress={() => {
-                            if (langFormatHandler)
-                              langFormatHandler(e.code, format);
+                            console.log("Badge clicked");
+                            setLangFormat({
+                              lang: e.code,
+                              format,
+                            });
                           }}
                         />
                       </View>

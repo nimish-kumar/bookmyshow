@@ -8,10 +8,9 @@ export interface ITitlebarProps {
 }
 
 export interface IActivity {
-  id: string;
+  id: number;
   imgSrc: any;
   title: string;
-  clickHandler?: (id: string | number) => void;
   description?: string;
   additionalInfo?: string;
 }

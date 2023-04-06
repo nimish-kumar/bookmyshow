@@ -2,13 +2,14 @@ import {
   AppBar,
   Badge,
   CalendarDateTile,
-  FormatSelector,
   ICalendarTile,
   ISlotTile,
   SlotTile,
 } from "@components";
-import { PortalFrom, PortalTo } from "@context";
 import { tw } from "@lib";
+import { RootStackParamList } from "@navigation";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -277,12 +278,16 @@ const langAndFormatArray = [
 ];
 
 export const SlotSelector = () => {
-  const [popupVisibility, setPopupVisibility] = useState(true);
-  const [langFormat, setLangFormat] = useState({ code: "EN", format: "2D" });
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, "SlotSelector">
+    >();
+  const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
+  const { format, lang, movieId } = route.params;
+  const [langFormat] = useState({ code: lang, format });
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
-        <PortalTo activeGateName="format-selector" />
         <AppBar title="Movie name" backButton />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
           {dateData.map((e, idx) => (
@@ -305,32 +310,15 @@ export const SlotSelector = () => {
               {langFormat.format}
             </Text>
           </View>
-          <PortalFrom>
-            {(portal) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    setPopupVisibility(true);
-                    portal(
-                      "format-selector",
-                      <FormatSelector
-                        isVisible={popupVisibility}
-                        closeBackdrop={() => portal("format-selector", <></>)}
-                        langFormatHandler={(code, format) => {
-                          setLangFormat({ code, format });
-                          portal("format-selector", <></>);
-                        }}
-                      />
-                    );
-                  }}
-                >
-                  <Text style={tw`text-pink font-roboto-regular`}>
-                    {"Change >"}
-                  </Text>
-                </TouchableOpacity>
-              );
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("FormatSelector", {
+                movieId,
+              });
             }}
-          </PortalFrom>
+          >
+            <Text style={tw`text-pink font-roboto-regular`}>{"Change >"}</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           horizontal
@@ -353,6 +341,14 @@ export const SlotSelector = () => {
                   areaName={item.areaName}
                   slots={item.slots}
                   theatreName={item.theatreName}
+                  slotSelectHandler={() => {
+                    navigation.navigate("SeatSelector", {
+                      movieId,
+                      format: langFormat.format,
+                      lang: langFormat.code,
+                      slotId: 0,
+                    });
+                  }}
                 />
               </View>
             );

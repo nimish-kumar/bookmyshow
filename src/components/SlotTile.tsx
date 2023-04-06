@@ -11,6 +11,7 @@ export interface ISlotTile {
   areaName?: string;
   cancellationAvailable?: boolean;
   slots: ITimeSlot[];
+  slotSelectHandler?: () => void;
 }
 
 export const SlotTile = ({
@@ -18,10 +19,11 @@ export const SlotTile = ({
   areaName,
   slots,
   cancellationAvailable = false,
+  slotSelectHandler,
 }: ISlotTile) => {
   return (
     <View style={tw`px-4 py-4 bg-white`}>
-      <View style={tw`flex-row mb-2`}>
+      <View style={tw`flex-col mb-2 justify-center`}>
         <Text
           numberOfLines={2}
           ellipsizeMode="tail"
@@ -29,11 +31,18 @@ export const SlotTile = ({
         >
           {areaName ? `${theatreName}, ${areaName}` : `${theatreName}`}
         </Text>
+        <Text style={tw`text-xs text-slate-400`}>
+          {cancellationAvailable ? "Cancellation Available" : "Non-cancellable"}
+        </Text>
       </View>
       <View style={tw`flex flex-wrap flex-row`}>
         {slots.map((slot, idx) => {
           return (
-            <TouchableOpacity style={tw`mr-2`} key={idx}>
+            <TouchableOpacity
+              style={tw`mr-2`}
+              key={idx}
+              onPress={slotSelectHandler}
+            >
               <View
                 style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-24.66`}
               >

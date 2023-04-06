@@ -1,5 +1,8 @@
 import { AppBar, LayoutViewer } from "@components";
 import { tw } from "@lib";
+import { RootStackParamList } from "@navigation";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "@rneui/themed";
 import { IGrpDetails, calculateTotalCost, extractGroupsDetails } from "@utils";
 import React, { useEffect, useMemo, useState } from "react";
@@ -48,6 +51,13 @@ const TimingBtn = ({ time, setTimeSlot, type = "default" }: ITimingBtnProp) => {
 };
 
 export const SeatSelector = () => {
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, "SeatSelector">
+    >();
+
+  const route = useRoute<RouteProp<RootStackParamList, "SeatSelector">>();
+  const { format, lang, movieId, slotId } = route.params;
   const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(0);
   const layout = timings[selectedTimeSlotIdx].layout;
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
