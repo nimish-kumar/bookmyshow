@@ -340,7 +340,7 @@ export const SlotSelector = () => {
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("FormatSelector", {
+              navigation.push("FormatSelector", {
                 movieId,
               });
             }}
