@@ -2,7 +2,8 @@ import { tw } from "@lib";
 import { RootStackParamList } from "@navigation";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { notify } from "@utils";
+import React, { useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   PanGestureHandler,
@@ -33,14 +34,11 @@ const langAndFormat = [
 type ContextType = {
   translateY: number;
 };
-type LangFormatType = {
-  lang: string;
-  format: string;
-};
+
 export const FormatSelector = () => {
   const navigation =
     useNavigation<
-      NativeStackNavigationProp<RootStackParamList, "FormatSelector">
+      NativeStackNavigationProp<RootStackParamList, "Home" | "FormatSelector">
     >();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -51,17 +49,6 @@ export const FormatSelector = () => {
   const { movieId } = route.params;
   const translateY = useSharedValue(0);
   const closeBackdrop = () => navigation.goBack();
-
-  const [langFormat, setLangFormat] = useState<LangFormatType | null>(null);
-  useEffect(() => {
-    if (langFormat) {
-      navigation.navigate("SlotSelector", {
-        movieId,
-        format: langFormat.format,
-        lang: langFormat.lang,
-      });
-    }
-  }, [langFormat]);
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     ContextType
@@ -73,10 +60,12 @@ export const FormatSelector = () => {
       translateY.value = Math.max(event.translationY + ctx.translateY, 0);
     },
     onEnd: (event) => {
-      if (event.translationY > 100) {
+      if (event.translationY > 20) {
         runOnJS(closeBackdrop)();
       } else {
-        translateY.value = withSpring(0);
+        translateY.value = withSpring(0, {
+          damping: 100,
+        });
       }
     },
   });
@@ -109,9 +98,11 @@ export const FormatSelector = () => {
                         <Badge
                           badgeText={format}
                           onPress={() => {
-                            setLangFormat({
-                              lang: e.code,
+                            notify("OnLangFormatChange", e.code, format);
+                            navigation.navigate("SlotSelector", {
+                              movieId,
                               format,
+                              lang: e.code,
                             });
                           }}
                         />
