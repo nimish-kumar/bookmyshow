@@ -1,7 +1,7 @@
 import { tw } from "@lib";
 import { Icon } from "@rneui/themed";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface IAppBarProps {
   title: string;
@@ -19,15 +19,23 @@ export const AppBar = ({
   extras,
 }: IAppBarProps) => {
   return (
-    <View style={tw`h-14 bg-light-navy px-4 flex-row items-center`}>
+    <View
+      style={tw`h-14 bg-light-navy flex-row items-center ${
+        !backButton ? "px-4" : ""
+      }`}
+    >
       {backButton ? (
-        <Icon
-          name="arrow-left"
-          type="simple-line-icon"
-          color="#fff"
-          size={14}
+        <TouchableOpacity
           onPress={backFunction}
-        />
+          style={tw`h-full justify-center w-13`}
+        >
+          <Icon
+            name="arrow-left"
+            type="simple-line-icon"
+            color="#fff"
+            size={14}
+          />
+        </TouchableOpacity>
       ) : null}
       <View style={tw`justify-center ml-6 w-2/3`}>
         <Text
