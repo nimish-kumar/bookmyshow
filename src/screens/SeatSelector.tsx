@@ -87,7 +87,12 @@ export const SeatSelector = () => {
 
   return (
     <View style={tw`min-h-full`}>
-      <AppBar title="Movie name" subtitle="Viman Nagar" backButton />
+      <AppBar
+        title="Movie name"
+        subtitle="Viman Nagar"
+        backButton
+        backFunction={navigation.goBack}
+      />
       <View style={tw`bg-gray-200 h-25 pl-4`}>
         <Text style={tw`text-sm my-3`}>Tue, 04 Apr</Text>
         <ScrollView horizontal>
