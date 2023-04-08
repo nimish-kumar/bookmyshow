@@ -10,8 +10,14 @@ export type RootStackParamList = {
     format: string;
     slotId: number;
   };
-  SlotSelector: { movieId: number; lang: string; format: string };
-  FormatSelector: { movieId: number };
+  SlotSelector: {
+    movieId: number;
+    lang: string;
+    format: string;
+  };
+  FormatSelector: {
+    movieId: number;
+  };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
