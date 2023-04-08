@@ -15,7 +15,8 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import { addListener, removeListener } from "@utils";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
   ScrollView,
@@ -295,7 +296,7 @@ export const SlotSelector = () => {
     >();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const onBackPress = () => {
         navigation.navigate("Home");
         return true;
@@ -305,18 +306,30 @@ export const SlotSelector = () => {
         "hardwareBackPress",
         onBackPress
       );
-
       return () => subscription.remove();
     }, [])
   );
 
   const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
   const { format, lang, movieId } = route.params;
-  const [langFormat] = useState({ code: lang, format });
+  const [langFormat, setLangFormat] = useState({ code: lang, format });
+
+  useEffect(() => {
+    const changeLangFormat = (lang: string, movieFormat: string) =>
+      setLangFormat({ code: lang, format: movieFormat });
+    addListener("OnLangFormatChange", changeLangFormat);
+    return () => {
+      removeListener("OnLangFormatChange", changeLangFormat);
+    };
+  }, []);
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
-        <AppBar title="Movie name" backButton />
+        <AppBar
+          title="Movie name"
+          backButton
+          backFunction={() => navigation.navigate("Home")}
+        />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
           {dateData.map((e, idx) => (
             <CalendarDateTile
