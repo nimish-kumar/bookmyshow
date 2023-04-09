@@ -21,7 +21,7 @@ export const AppBar = ({
   return (
     <View
       style={tw`h-14 bg-light-navy flex-row items-center ${
-        !backButton ? "px-4" : ""
+        !backButton ? "pl-8" : ""
       }`}
     >
       {backButton ? (
