@@ -6,10 +6,10 @@ import {
   VedTile,
 } from "@assets";
 import { HomeNavigationProps } from "@screens";
+import { IActivity } from "@types";
 import React from "react";
 
 import { ActivityList } from "./ActivityList";
-import { IActivity } from "./types";
 
 const movies: IActivity[] = [
   {

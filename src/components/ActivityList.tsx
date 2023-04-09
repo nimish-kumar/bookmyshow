@@ -1,9 +1,8 @@
-import { tw } from "@lib";
 import { Image } from "@rneui/themed";
+import { tw } from "@tailwind";
+import { IActivity } from "@types";
 import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-
-import { IActivity } from "./types";
 
 interface IActivityProps {
   activityDetail: IActivity;

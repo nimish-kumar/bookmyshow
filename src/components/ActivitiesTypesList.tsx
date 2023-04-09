@@ -8,51 +8,50 @@ import {
   SportsIcon,
   StreamIcon,
 } from "@assets";
-import { tw } from "@lib";
 import { Image } from "@rneui/themed";
+import { tw } from "@tailwind";
+import { IActivity } from "@types";
 import React from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 
-import { IActivity } from "./types";
-
 const activitiesTypesList: IActivity[] = [
   {
-    id: "movies",
+    id: 1,
     title: "Movies",
     imgSrc: MoviesIcon,
   },
   {
-    id: "stream",
+    id: 2,
     title: "Stream",
     imgSrc: StreamIcon,
   },
   {
-    id: "sports",
+    id: 3,
     title: "Sports",
     imgSrc: SportsIcon,
   },
   {
-    id: "music-shows",
+    id: 4,
     title: "Music shows",
     imgSrc: MusicShowsIcon,
   },
   {
-    id: "plays",
+    id: 5,
     title: "Plays",
     imgSrc: PlaysIcon,
   },
   {
-    id: "comedy",
+    id: 6,
     title: "Comedy shows",
     imgSrc: ComedyShowsIcon,
   },
   {
-    id: "amusement-park",
+    id: 7,
     title: "Amusement park",
     imgSrc: AmusementParkIcon,
   },
   {
-    id: "all",
+    id: 8,
     title: "See all",
     imgSrc: SeeAllIcon,
   },
@@ -62,7 +61,7 @@ export const ActivitiesTypesList = () => {
   return (
     <FlatList
       horizontal
-      keyExtractor={({ id }) => id}
+      keyExtractor={(item, index) => `${item.id}`}
       data={activitiesTypesList}
       style={tw`h-20`}
       showsHorizontalScrollIndicator={false}
@@ -70,7 +69,6 @@ export const ActivitiesTypesList = () => {
         <Image
           style={tw`aspect-square flex-1 w-19 h-19`}
           source={item.imgSrc}
-          onPress={() => item.clickHandler?.(item.id)}
           PlaceholderContent={<ActivityIndicator />}
         />
       )}

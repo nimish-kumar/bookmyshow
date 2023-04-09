@@ -1,9 +1,8 @@
-import { tw } from "@lib";
 import { Icon } from "@rneui/themed";
+import { tw } from "@tailwind";
+import { ITitlebarProps } from "@types";
 import React from "react";
-import { View, Text } from "react-native";
-
-import { ITitlebarProps } from "./types";
+import { Text, View } from "react-native";
 
 export const Titlebar = ({
   currentCity,
