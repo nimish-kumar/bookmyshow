@@ -7,10 +7,11 @@
       "@assets": ["./assets"],
       "@components": ["./src/components"],
       "@screens": ["./src/screens"],
-      "@lib": ["./src/lib"],
+      "@tailwind": ["src/tailwind"],
       "@navigation": ["./src/navigation"],
       "@context": ["./src/context"],
       "@utils": ["./src/utils"]
-    }
+    },
+    "typeRoots": ["./src/types"]
   }
 }
