@@ -1,8 +1,6 @@
 import { tw } from "@lib";
 import {
   IRowDetails,
-  SeatStatus,
-  SeatStatusCode,
   getSeatDetails,
   getUpdatedRow,
   hasRowStarted,
@@ -21,13 +19,13 @@ interface ISeatRowProps {
   rowHead: string;
   seatsString: string;
   updateRowDetails: (rowDetails: IRowDetails) => void;
-  changeSelectedSeats?: (seat: string) => void;
+  updateSelectedSeats?: (seat: string) => void;
 }
-const Row = ({
+const NonMemoizedSeatRow = ({
   rowHead,
   seatsString,
   updateRowDetails,
-  changeSelectedSeats,
+  updateSelectedSeats,
   grpRowIndex,
   grpCode,
 }: ISeatRowProps) => {
@@ -43,14 +41,6 @@ const Row = ({
     return updatedRowDetails;
   };
 
-  // const rowHead = "A";
-  // const seatsString =
-  //   "A0+0:A0+0:1A&H1+30:1A&H2+29:1A&H3+28:1A&H4+27:1A&H5+26:1A&H6+25:1A&H7+24:1A&H8+23:1A&H9+22:1A&H10+21:1A&H11+20:1A&H12+19:1A&H13+18:1A&H14+17:1A&H15+16:1A&H16+15:1A&H17+14:1A&H18+13:1A&H19+12:1A&H20+11:1A&H21+10:1A&H22+9:1A&H23+8:1A&H24+7:1A&H25+6:1A&H26+5:1A&H27+4:1A&H28+3:1A&H29+2:1A&H30+1";
-  const statuses = Object.keys(SeatStatusCode) as SeatStatus[];
-  // Converts status code to status
-  const getStatusFromStatusCode = (index: string) =>
-    statuses[parseInt(index, 10)];
-
   return (
     <View style={tw`flex-row mt-1 items-center`}>
       <Text style={tw`text-sm text-gray-500 w-4`}>{rowHead}</Text>
@@ -58,32 +48,32 @@ const Row = ({
         if (isAisle(seat)) {
           return <Gap key={`gap-${idx}`} />;
         } else {
-          const seatDetails = getSeatDetails(seat);
-          if (seatDetails) {
-            return (
-              <Seat
-                key={`seat-${idx}`}
-                seatNumber={seatDetails.seatNumber}
-                status={getStatusFromStatusCode(
-                  seatDetails?.seatStatusCode ??
-                    `${statuses.indexOf("available")}`
-                )}
-                seatSelectHandler={() => {
-                  updateRowDetails(updatedRow(idx));
-                  if (changeSelectedSeats) {
-                    changeSelectedSeats(
-                      seatGenerator(
-                        seatDetails.seatGrpCode,
-                        seatDetails.seatRow,
-                        seatDetails.seatCol,
-                        seatDetails.seatNumber
-                      )
-                    );
-                  }
-                }}
-              />
-            );
-          }
+          return (
+            <Seat
+              key={`seat-${idx}`}
+              seat={seat}
+              seatSelectHandler={() => {
+                // Updates seats in the row when tapped
+                updateRowDetails(updatedRow(idx));
+
+                const seatDetails = getSeatDetails(seat);
+                if (!seatDetails)
+                  throw Error(`ParseError: Could not render seat ${seat}`);
+
+                // Keeps track of selected seats
+                if (updateSelectedSeats) {
+                  updateSelectedSeats(
+                    seatGenerator(
+                      seatDetails.seatGrpCode,
+                      seatDetails.seatRow,
+                      seatDetails.seatCol,
+                      seatDetails.seatNumber
+                    )
+                  );
+                }
+              }}
+            />
+          );
         }
       })}
     </View>
@@ -93,5 +83,7 @@ const Row = ({
 const shouldNotRender = (
   prevProps: ISeatRowProps,
   currentProps: ISeatRowProps
-) => prevProps.seatsString === currentProps.seatsString;
-export const SeatRow = React.memo(Row, shouldNotRender);
+) => {
+  return prevProps.seatsString === currentProps.seatsString;
+};
+export const SeatRow = React.memo(NonMemoizedSeatRow, shouldNotRender);

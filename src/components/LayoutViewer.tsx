@@ -67,7 +67,7 @@ export const LayoutViewer = ({
                 key={grpIndex}
               >
                 {rows.map((row, rowIndex) => {
-                  function updateTheatreGrps(
+                  function updateLayout(
                     updatedRowDetails: IRowDetails,
                     grpIndex: number
                   ) {
@@ -89,9 +89,9 @@ export const LayoutViewer = ({
                       grpCode={row.seatGrpCode}
                       grpRowIndex={row.grpRowIndex}
                       updateRowDetails={(rowDetails) =>
-                        updateTheatreGrps(rowDetails, grpIndex)
+                        updateLayout(rowDetails, grpIndex)
                       }
-                      changeSelectedSeats={(seat) =>
+                      updateSelectedSeats={(seat) =>
                         selectedSeatChangeHandler &&
                         selectedSeatChangeHandler(seat)
                       }

@@ -123,10 +123,6 @@ export const isAisle = (boxString: string): boolean => {
 
 export const getUpdatedRow = (row: string[], index: number, reverse = true) => {
   let updatedRow: string[] = [...row];
-  if (reverse) {
-    updatedRow = updatedRow.reverse();
-    index = updatedRow.length - (index + 1);
-  }
   const selectedSeat = getSeatDetails(updatedRow[index]);
   if (selectedSeat) {
     let updatedSeat = "";
@@ -150,9 +146,6 @@ export const getUpdatedRow = (row: string[], index: number, reverse = true) => {
       );
     }
     updatedRow = immutableInsertArray(updatedRow, index, updatedSeat);
-  }
-  if (reverse) {
-    updatedRow = [...updatedRow].reverse();
   }
   return updatedRow;
 };

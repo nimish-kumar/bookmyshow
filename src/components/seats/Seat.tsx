@@ -1,16 +1,29 @@
 import { tw } from "@lib";
-import { SeatStatus } from "@utils";
+import { SeatStatus, SeatStatusCode, getSeatDetails } from "@utils";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface ISeatProps {
-  seatNumber: number;
-  status: SeatStatus;
+  seat: string;
   seatSelectHandler?: () => void;
 }
+export const Seat = ({ seat, seatSelectHandler }: ISeatProps) => {
+  const seatDetails = getSeatDetails(seat);
+  if (!seatDetails) throw Error(`ParseError: Could not render seat ${seat}`);
+  const { seatNumber, seatStatusCode } = seatDetails;
 
-export const Seat = ({ seatNumber, status, seatSelectHandler }: ISeatProps) => {
-  const seat = (
+  const getStatusFromStatusCode = () => {
+    const statuses = Object.keys(SeatStatusCode) as SeatStatus[];
+    const status = statuses[parseInt(seatStatusCode, 10)];
+    if (!status)
+      throw Error(
+        `ParseError: COuld not find status with value ${seatStatusCode}`
+      );
+    return status;
+  };
+  const status = getStatusFromStatusCode();
+
+  const seatJsx = (
     <View
       style={[
         tw`bg-white mr-1 h-6 w-6 border border-seagreen justify-center items-center rounded-sm`,
@@ -31,8 +44,8 @@ export const Seat = ({ seatNumber, status, seatSelectHandler }: ISeatProps) => {
   );
   if (status !== "sold") {
     return (
-      <TouchableOpacity onPress={seatSelectHandler}>{seat}</TouchableOpacity>
+      <TouchableOpacity onPress={seatSelectHandler}>{seatJsx}</TouchableOpacity>
     );
   }
-  return seat;
+  return seatJsx;
 };
