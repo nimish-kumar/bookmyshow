@@ -1,5 +1,5 @@
-import { tw } from "@lib";
 import { Icon } from "@rneui/themed";
+import { tw } from "@tailwind";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 

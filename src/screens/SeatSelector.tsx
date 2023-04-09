@@ -1,9 +1,9 @@
 import { AppBar, LayoutViewer } from "@components";
-import { tw } from "@lib";
 import { RootStackParamList } from "@navigation";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "@rneui/themed";
+import { tw } from "@tailwind";
 import { IGrpDetails, calculateTotalCost, extractGroupsDetails } from "@utils";
 import React, { useEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";

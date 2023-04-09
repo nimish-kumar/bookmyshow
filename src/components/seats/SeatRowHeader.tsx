@@ -1,4 +1,4 @@
-import { tw } from "@lib";
+import { tw } from "@tailwind";
 import React, { PropsWithChildren } from "react";
 import { Text, View } from "react-native";
 

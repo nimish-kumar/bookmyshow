@@ -1,4 +1,4 @@
-import { tw } from "@lib";
+import { tw } from "@tailwind";
 import { SeatStatus, SeatStatusCode, getSeatDetails } from "@utils";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";

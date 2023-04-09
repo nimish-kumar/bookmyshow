@@ -1,7 +1,7 @@
-import { tw } from "@lib";
 import { RootStackParamList } from "@navigation";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { tw } from "@tailwind";
 import { notify } from "@utils";
 import React, { useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";

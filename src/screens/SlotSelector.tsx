@@ -6,7 +6,6 @@ import {
   ISlotTile,
   SlotTile,
 } from "@components";
-import { tw } from "@lib";
 import { RootStackParamList } from "@navigation";
 import {
   RouteProp,
@@ -15,6 +14,7 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { tw } from "@tailwind";
 import { addListener, removeListener } from "@utils";
 import React, { useCallback, useEffect, useState } from "react";
 import {

@@ -1,6 +1,6 @@
 import { BalliBanner, GpayBanner, MartinBanner, PrimaryBanner } from "@assets";
-import { tw } from "@lib";
 import { Image } from "@rneui/themed";
+import { tw } from "@tailwind";
 import React from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 
