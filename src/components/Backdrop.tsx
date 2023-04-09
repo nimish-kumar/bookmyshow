@@ -1,4 +1,5 @@
-import React, { PropsWithChildren } from "react";
+import { IBackdropProps } from "@types";
+import React from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 

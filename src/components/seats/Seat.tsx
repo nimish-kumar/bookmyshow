@@ -1,8 +1,8 @@
 import { tw } from "@tailwind";
-import { SeatStatus, SeatStatusCode, getSeatDetails } from "@utils";
+import { ISeatProps, SeatStatus } from "@types";
+import { SeatStatusCode, getSeatDetails } from "@utils";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
 
 export const Seat = ({ seat, seatSelectHandler }: ISeatProps) => {
   const seatDetails = getSeatDetails(seat);

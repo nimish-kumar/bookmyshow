@@ -1,12 +1,4 @@
-import {
-  AppBar,
-  Badge,
-  CalendarDateTile,
-  ICalendarTile,
-  ISlotTile,
-  SlotTile,
-} from "@components";
-import { RootStackParamList } from "@navigation";
+import { AppBar, Badge, CalendarDateTile, SlotTile } from "@components";
 import {
   RouteProp,
   useFocusEffect,
@@ -15,6 +7,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
+import { ICalendarTile, ISlotTile, RootStackParamList } from "@types";
 import { addListener, removeListener } from "@utils";
 import React, { useCallback, useEffect, useState } from "react";
 import {

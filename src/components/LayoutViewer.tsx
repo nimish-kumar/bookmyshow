@@ -1,7 +1,6 @@
 import { tw } from "@tailwind";
+import { IGrpDetails, ILayoutViewerProps, IRowDetails } from "@types";
 import {
-  IGrpDetails,
-  IRowDetails,
   extractGroupsDetails,
   hasRowStarted,
   immutableInsertArray,

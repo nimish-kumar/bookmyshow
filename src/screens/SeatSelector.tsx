@@ -1,10 +1,15 @@
 import { AppBar, LayoutViewer } from "@components";
-import { RootStackParamList } from "@navigation";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "@rneui/themed";
 import { tw } from "@tailwind";
-import { IGrpDetails, calculateTotalCost, extractGroupsDetails } from "@utils";
+import {
+  IGrpDetails,
+  ITimingBtnProp,
+  ITimingLayout,
+  RootStackParamList,
+} from "@types";
+import { calculateTotalCost, extractGroupsDetails } from "@utils";
 import React, { useEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";

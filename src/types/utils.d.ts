@@ -1,3 +1,5 @@
+import { SeatStatusCode } from "@utils";
+
 export interface IRowDetails {
   inputString: string;
   grpRowIndex: number;
@@ -14,3 +16,4 @@ export interface IGrpDetails {
   currency: string;
   rows: IRowDetails[];
 }
+export type SeatStatus = keyof typeof SeatStatusCode;

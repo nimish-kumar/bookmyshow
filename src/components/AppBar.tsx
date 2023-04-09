@@ -1,5 +1,6 @@
 import { Icon } from "@rneui/themed";
 import { tw } from "@tailwind";
+import { IAppBarProps } from "@types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 

@@ -1,5 +1,5 @@
-import React, { createContext, PropsWithChildren, useState } from "react";
-
+import { IGate, IPortal, IPortalFrom, IPortalTo } from "@types";
+import React, { PropsWithChildren, createContext, useState } from "react";
 
 export const PortalContext = createContext<IPortal>({
   gates: {},

@@ -1,6 +1,6 @@
 import { tw } from "@tailwind";
+import { ISeatRowProps } from "@types";
 import {
-  IRowDetails,
   getSeatDetails,
   getUpdatedRow,
   hasRowStarted,

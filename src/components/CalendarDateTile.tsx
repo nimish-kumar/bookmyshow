@@ -1,9 +1,7 @@
 import { tw } from "@tailwind";
+import { ICalendarTile } from "@types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
-type CalendarTileModeType = "default" | "selected" | "disabled";
-
 
 const NonTouchableCalendarTile = ({
   day,

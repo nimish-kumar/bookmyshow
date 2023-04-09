@@ -1,7 +1,7 @@
 import { tw } from "@tailwind";
+import { ISeatRowHeaderProps } from "@types";
 import React, { PropsWithChildren } from "react";
 import { Text, View } from "react-native";
-
 
 export const SeatRowHeader: React.FC<
   PropsWithChildren<ISeatRowHeaderProps>

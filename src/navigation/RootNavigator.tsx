@@ -1,24 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FormatSelector, Home, SeatSelector, SlotSelector } from "@screens";
+import { RootStackParamList } from "@types";
 import React from "react";
-
-export type RootStackParamList = {
-  Home: undefined;
-  SeatSelector: {
-    movieId: number;
-    lang: string;
-    format: string;
-    slotId: number;
-  };
-  SlotSelector: {
-    movieId: number;
-    lang: string;
-    format: string;
-  };
-  FormatSelector: {
-    movieId: number;
-  };
-};
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

@@ -1,6 +1,6 @@
 import { Image } from "@rneui/themed";
 import { tw } from "@tailwind";
-import { IActivity } from "@types";
+import { IActivityListProps, IActivityProps } from "@types";
 import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
@@ -64,7 +64,7 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
 export const ActivityList = ({
   activities,
   activityHandler,
-}: IActivityList) => {
+}: IActivityListProps) => {
   return (
     <FlatList
       horizontal

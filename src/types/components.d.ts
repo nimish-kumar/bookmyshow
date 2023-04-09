@@ -1,5 +1,35 @@
 import { PropsWithChildren } from "react";
 import { GestureResponderEvent } from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+export type BadgeModeType = "default" | "selected";
+export type CalendarTileModeType = "default" | "selected" | "disabled";
+
+export type PanGestureContextType = {
+  translateY: number;
+};
+
+export type RootStackParamList = {
+  Home: undefined;
+  SeatSelector: {
+    movieId: number;
+    lang: string;
+    format: string;
+    slotId: number;
+  };
+  SlotSelector: {
+    movieId: number;
+    lang: string;
+    format: string;
+  };
+  FormatSelector: {
+    movieId: number;
+  };
+};
+export type HomeNavigationProps = NativeStackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
 
 export interface ITitlebarProps {
   currentCity: string;
@@ -21,7 +51,7 @@ export interface IActivityProps {
   clickHandler?: (id: number) => void;
 }
 
-export interface IActivityList {
+export interface IActivityListProps {
   activities: IActivity[];
   activityHandler: (id: number) => void;
 }

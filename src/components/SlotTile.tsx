@@ -1,7 +1,7 @@
 import { tw } from "@tailwind";
+import { ISlotTile } from "@types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
 
 export const SlotTile = ({
   theatreName,

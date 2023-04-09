@@ -5,15 +5,12 @@ import {
   Titlebar,
 } from "@components";
 import { PortalTo } from "@context";
-import { RootStackParamList } from "@navigation";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
+import { HomeNavigationProps } from "@types";
 import React, { useLayoutEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export const Home = () => {
   const navigation = useNavigation<HomeNavigationProps>();

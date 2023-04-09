@@ -1,8 +1,7 @@
 import { tw } from "@tailwind";
+import { IBadgeProps } from "@types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
-type BadgeModeType = "default" | "selected";
 
 export const Badge = ({
   badgeText,

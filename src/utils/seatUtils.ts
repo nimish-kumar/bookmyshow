@@ -1,9 +1,6 @@
-export const SeatStatusCode = {
-  sold: 0,
-  available: 1,
-  selected: 2,
-} as const;
-export type SeatStatus = keyof typeof SeatStatusCode;
+import { IGrpDetails, IRowDetails, SeatStatus } from "@types";
+
+import { SeatStatusCode } from "./constants";
 
 export const seatGenerator = (
   groupCode: string,
@@ -57,7 +54,6 @@ export const immutableInsertArray = <T>(row: T[], index: number, obj: T) => [
   ...row.slice(index + 1),
 ];
 
-
 // 1:F:D000:D0+0:D0+0:4D&F16+16:4D&F15+15:D0+0:D0+0:4D&F12+15|
 export const hasRowStarted = (rowString: string): IRowDetails | null => {
   const regex = /^([0-9]+:[A-Z]+:[A-Z]+000:)(.*)/gm;
@@ -77,7 +73,6 @@ export const hasRowStarted = (rowString: string): IRowDetails | null => {
   }
   return null;
 };
-
 
 export const extractGroupsDetails = (
   grpDeatilsString: string

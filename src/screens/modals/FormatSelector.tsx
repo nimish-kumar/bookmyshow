@@ -1,7 +1,7 @@
-import { RootStackParamList } from "@navigation";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
+import { PanGestureContextType, RootStackParamList } from "@types";
 import { notify } from "@utils";
 import React, { useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -31,9 +31,6 @@ const langAndFormat = [
     format: ["2D", "3D", "4DX"],
   },
 ];
-type ContextType = {
-  translateY: number;
-};
 
 export const FormatSelector = () => {
   const navigation =
@@ -51,7 +48,7 @@ export const FormatSelector = () => {
   const closeBackdrop = () => navigation.goBack();
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
-    ContextType
+    PanGestureContextType
   >({
     onStart: (event, ctx) => {
       ctx.translateY = event.translationY;
