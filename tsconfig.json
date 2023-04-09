@@ -10,7 +10,8 @@
       "@tailwind": ["src/tailwind"],
       "@navigation": ["./src/navigation"],
       "@context": ["./src/context"],
-      "@utils": ["./src/utils"]
+      "@utils": ["./src/utils"],
+      "@types": ["./src/types"]
     },
     "typeRoots": ["./src/types"]
   }
