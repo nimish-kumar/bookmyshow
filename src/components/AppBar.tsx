@@ -37,7 +37,7 @@ export const AppBar = ({
           />
         </TouchableOpacity>
       ) : null}
-      <View style={tw`justify-center ml-6 w-2/3`}>
+      <View style={tw`justify-center w-2/3`}>
         <Text
           style={tw`text-base text-white `}
           numberOfLines={1}
