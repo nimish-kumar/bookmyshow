@@ -2,17 +2,6 @@ import { tw } from "@tailwind";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-interface ITimeSlot {
-  time: string;
-  available?: boolean;
-}
-export interface ISlotTile {
-  theatreName: string;
-  areaName?: string;
-  cancellationAvailable?: boolean;
-  slots: ITimeSlot[];
-  slotSelectHandler?: () => void;
-}
 
 export const SlotTile = ({
   theatreName,

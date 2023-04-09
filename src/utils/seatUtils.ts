@@ -57,13 +57,7 @@ export const immutableInsertArray = <T>(row: T[], index: number, obj: T) => [
   ...row.slice(index + 1),
 ];
 
-export interface IRowDetails {
-  inputString: string;
-  grpRowIndex: number;
-  rowHead: string;
-  seatGrpCode: string;
-  seatsString: string;
-}
+
 // 1:F:D000:D0+0:D0+0:4D&F16+16:4D&F15+15:D0+0:D0+0:4D&F12+15|
 export const hasRowStarted = (rowString: string): IRowDetails | null => {
   const regex = /^([0-9]+:[A-Z]+:[A-Z]+000:)(.*)/gm;
@@ -84,15 +78,6 @@ export const hasRowStarted = (rowString: string): IRowDetails | null => {
   return null;
 };
 
-export interface IGrpDetails {
-  inputGroupString: string;
-  grpName: string;
-  grpCode: string;
-  cost: number;
-  grpOrder: number;
-  currency: string;
-  rows: IRowDetails[];
-}
 
 export const extractGroupsDetails = (
   grpDeatilsString: string

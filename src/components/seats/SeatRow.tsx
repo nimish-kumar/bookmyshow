@@ -13,14 +13,6 @@ import { Text, View } from "react-native";
 
 import { Gap } from "./Gap";
 import { Seat } from "./Seat";
-interface ISeatRowProps {
-  grpCode: string;
-  grpRowIndex: number;
-  rowHead: string;
-  seatsString: string;
-  updateRowDetails: (rowDetails: IRowDetails) => void;
-  updateSelectedSeats?: (seat: string) => void;
-}
 const NonMemoizedSeatRow = ({
   rowHead,
   seatsString,

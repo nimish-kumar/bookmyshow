@@ -4,12 +4,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 type CalendarTileModeType = "default" | "selected" | "disabled";
 
-export interface ICalendarTile {
-  day: string;
-  date: number;
-  month: string;
-  mode?: CalendarTileModeType;
-}
+
 const NonTouchableCalendarTile = ({
   day,
   date,

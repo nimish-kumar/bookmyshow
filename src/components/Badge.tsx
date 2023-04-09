@@ -4,11 +4,6 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 type BadgeModeType = "default" | "selected";
 
-interface IBadgeProps {
-  badgeText: string;
-  onPress?: () => void;
-  mode?: BadgeModeType;
-}
 export const Badge = ({
   badgeText,
   onPress,

@@ -40,9 +40,6 @@ const movies: IActivity[] = [
   },
 ];
 
-interface IMoviesListProps {
-  navigation: HomeNavigationProps;
-}
 
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
   const clickHandler = (id: number) =>

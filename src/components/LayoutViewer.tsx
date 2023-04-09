@@ -11,11 +11,6 @@ import { ScrollView, Text, View } from "react-native";
 
 import { SeatRow, SeatRowHeader } from "./seats";
 
-interface ILayoutViewerProps {
-  layout: string;
-  selectedSeatChangeHandler?: (seat: string) => void;
-}
-
 export const LayoutViewer = ({
   layout,
   selectedSeatChangeHandler,

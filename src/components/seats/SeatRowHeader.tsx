@@ -2,10 +2,7 @@ import { tw } from "@tailwind";
 import React, { PropsWithChildren } from "react";
 import { Text, View } from "react-native";
 
-interface ISeatRowHeaderProps {
-  grpName: string;
-  cost: number;
-}
+
 export const SeatRowHeader: React.FC<
   PropsWithChildren<ISeatRowHeaderProps>
 > = ({ grpName, cost, children }) => {

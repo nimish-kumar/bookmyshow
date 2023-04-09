@@ -2,10 +2,6 @@ import React, { PropsWithChildren } from "react";
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-interface IBackdropProps extends PropsWithChildren {
-  isVisible: boolean;
-  closeBackdrop: () => void;
-}
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 export const Backdrop = ({
   closeBackdrop,

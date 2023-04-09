@@ -4,16 +4,6 @@ import { IActivity } from "@types";
 import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
-interface IActivityProps {
-  activityDetail: IActivity;
-  clickHandler?: (id: number) => void;
-}
-
-interface IActivityList {
-  activities: IActivity[];
-  activityHandler: (id: number) => void;
-}
-
 const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
   // const [popupVisibility] = useState(true);
   return (

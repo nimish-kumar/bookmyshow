@@ -1,12 +1,6 @@
 import React, { createContext, PropsWithChildren, useState } from "react";
 
-interface IGate {
-  [gateName: string]: JSX.Element;
-}
-interface IPortal {
-  gates: IGate;
-  gateSetter: (gateName: string, element: JSX.Element) => void;
-}
+
 export const PortalContext = createContext<IPortal>({
   gates: {},
   gateSetter: () => null,
@@ -24,11 +18,7 @@ export const PortalProvider = ({ children }: PropsWithChildren<object>) => {
     </PortalContext.Provider>
   );
 };
-interface IPortalFrom {
-  children?: (
-    gateSetter: (gateName: string, element: JSX.Element) => void
-  ) => JSX.Element;
-}
+
 const PortalFrom = ({ children }: IPortalFrom) => {
   return (
     <PortalContext.Consumer>
@@ -38,9 +28,7 @@ const PortalFrom = ({ children }: IPortalFrom) => {
     </PortalContext.Consumer>
   );
 };
-interface IPortalTo {
-  activeGateName: string;
-}
+
 const PortalTo = ({ activeGateName }: IPortalTo) => {
   return (
     <PortalContext.Consumer>

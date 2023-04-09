@@ -3,14 +3,6 @@ import { tw } from "@tailwind";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-interface IAppBarProps {
-  title: string;
-  subtitle?: string;
-  backButton?: boolean;
-  backFunction?: () => void;
-  extras?: JSX.Element;
-}
-
 export const AppBar = ({
   title,
   subtitle,

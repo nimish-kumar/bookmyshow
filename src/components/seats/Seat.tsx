@@ -3,10 +3,7 @@ import { SeatStatus, SeatStatusCode, getSeatDetails } from "@utils";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-interface ISeatProps {
-  seat: string;
-  seatSelectHandler?: () => void;
-}
+
 export const Seat = ({ seat, seatSelectHandler }: ISeatProps) => {
   const seatDetails = getSeatDetails(seat);
   if (!seatDetails) throw Error(`ParseError: Could not render seat ${seat}`);
