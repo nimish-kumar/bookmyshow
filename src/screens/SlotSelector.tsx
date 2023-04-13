@@ -7,9 +7,10 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
-import { ICalendarTile, ISlotTile, RootStackParamList } from "@types";
+import { IPriceRange, ISlotTile, RootStackParamList } from "@types";
 import { addListener, removeListener } from "@utils";
-import React, { useCallback, useEffect, useState } from "react";
+import dayjs from "dayjs";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BackHandler,
   ScrollView,
@@ -232,34 +233,7 @@ const data: ISlotTile[] = [
   },
 ];
 
-const dateData: ICalendarTile[] = [
-  {
-    day: "SUN",
-    date: 28,
-    month: "DEC",
-    mode: "selected",
-  },
-  ...Array(4).fill({
-    day: "SUN",
-    date: 28,
-    month: "DEC",
-    mode: "default",
-  }),
-  {
-    day: "SUN",
-    date: 28,
-    month: "DEC",
-    mode: "disabled",
-  },
-  {
-    day: "SUN",
-    date: 28,
-    month: "DEC",
-    mode: "disabled",
-  },
-];
-
-const priceRange = [
+const priceRanges: IPriceRange[] = [
   {
     low: 0,
     high: 100,
@@ -288,6 +262,8 @@ export const SlotSelector = () => {
       NativeStackNavigationProp<RootStackParamList, "SlotSelector">
     >();
 
+  const goBack = useCallback(() => navigation.navigate("Home"), []);
+
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -306,7 +282,8 @@ export const SlotSelector = () => {
   const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
   const { format, lang, movieId } = route.params;
   const [langFormat, setLangFormat] = useState({ code: lang, format });
-
+  const [movieDateIdx, setMovieDateIdx] = useState(0);
+  const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
   useEffect(() => {
     const changeLangFormat = (lang: string, movieFormat: string) =>
       setLangFormat({ code: lang, format: movieFormat });
@@ -315,24 +292,41 @@ export const SlotSelector = () => {
       removeListener("OnLangFormatChange", changeLangFormat);
     };
   }, []);
+  const priceRangeHandler = (idx: number) => {
+    if (priceRangeIdx === idx) setPriceRangeIdx(null);
+    else setPriceRangeIdx(idx);
+  };
+  const datetimeArray = useMemo(
+    () =>
+      Array(7)
+        .fill(dayjs())
+        .map((v: dayjs.Dayjs, idx) => {
+          let datetime = v.add(idx, "day");
+          if (idx !== 0) {
+            datetime = datetime.startOf("day");
+          }
+          return datetime;
+        }),
+    []
+  );
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
-        <AppBar
-          title="Movie name"
-          backButton
-          backFunction={() => navigation.navigate("Home")}
-        />
+        <AppBar title="Movie name" backButton backFunction={goBack} />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
-          {dateData.map((e, idx) => (
-            <CalendarDateTile
-              key={idx}
-              date={e.date}
-              day={e.day}
-              month={e.month}
-              mode={e.mode}
-            />
-          ))}
+          {datetimeArray.map((dayjs_dt, idx) => {
+            return (
+              <CalendarDateTile
+                key={idx}
+                datetime={dayjs_dt}
+                selectDateHandler={() => {
+                  setMovieDateIdx(idx);
+                }}
+                // TODO: Add condition for disabled state on CalenderDateTile
+                mode={idx === movieDateIdx ? "selected" : "default"}
+              />
+            );
+          })}
         </ScrollView>
         <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
           <View style={tw`flex-row w-4/5 items-center`}>
@@ -357,10 +351,14 @@ export const SlotSelector = () => {
         <FlatList
           horizontal
           style={tw`bg-white pl-2 border-b border-gray-200`}
-          data={priceRange}
-          renderItem={({ item: e }) => (
+          data={priceRanges}
+          renderItem={({ item: { low, high }, index }) => (
             <View style={tw`mr-2 mt-2 mb-5`}>
-              <Badge badgeText={`${`₹${e.low} - ₹${e.high}`}`} />
+              <Badge
+                badgeText={`${`₹${low} - ₹${high}`}`}
+                onPress={() => priceRangeHandler(index)}
+                mode={priceRangeIdx === index ? "selected" : "default"}
+              />
             </View>
           )}
         />
