@@ -1,8 +1,10 @@
+import { ApolloProvider } from "@apollo/client";
 import { darkNavy } from "@assets";
 import { PortalProvider } from "@context";
 import { RootNavigator } from "@navigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "@rneui/themed";
+import { client } from "@utils";
 import { useFonts } from "expo-font";
 import { StatusBar } from "react-native";
 
@@ -17,13 +19,15 @@ export default function App() {
     return null;
   }
   return (
-    <PortalProvider>
-      <ThemeProvider>
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
-        <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
-      </ThemeProvider>
-    </PortalProvider>
+    <ApolloProvider client={client}>
+      <PortalProvider>
+        <ThemeProvider>
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+          <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
+        </ThemeProvider>
+      </PortalProvider>
+    </ApolloProvider>
   );
 }
