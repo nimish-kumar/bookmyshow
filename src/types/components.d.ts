@@ -1,10 +1,10 @@
 import { PropsWithChildren } from "react";
 import { GestureResponderEvent } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import dayjs from "dayjs";
 
 export type BadgeModeType = "default" | "selected";
 export type CalendarTileModeType = "default" | "selected" | "disabled";
-
 export type PanGestureContextType = {
   translateY: number;
 };
@@ -30,6 +30,10 @@ export type HomeNavigationProps = NativeStackNavigationProp<
   RootStackParamList,
   "Home"
 >;
+export interface IPriceRange {
+  high: number;
+  low: number;
+}
 
 export interface ITitlebarProps {
   currentCity: string;
@@ -134,10 +138,9 @@ export interface ILayoutViewerProps {
   selectedSeatChangeHandler?: (seat: string) => void;
 }
 export interface ICalendarTile {
-  day: string;
-  date: number;
-  month: string;
+  datetime: dayjs.Dayjs;
   mode?: CalendarTileModeType;
+  selectDateHandler?: () => void;
 }
 export interface IBadgeProps {
   badgeText: string;
