@@ -4,7 +4,7 @@ import { IAppBarProps } from "@types";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-export const AppBar = ({
+const NonMemoizedAppBar = ({
   title,
   subtitle,
   backButton,
@@ -44,3 +44,4 @@ export const AppBar = ({
     </View>
   );
 };
+export const AppBar = React.memo(NonMemoizedAppBar);
