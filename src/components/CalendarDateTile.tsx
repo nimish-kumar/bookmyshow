@@ -4,11 +4,13 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const NonTouchableCalendarTile = ({
-  day,
-  date,
-  month,
+  datetime,
   mode = "default",
 }: ICalendarTile) => {
+  const dateArr = datetime.format("ddd DD MMM YYYY").toUpperCase().split(" ");
+  const day = dateArr[0];
+  const date = dateArr[1];
+  const month = dateArr[2];
   return (
     <View
       style={tw`px-4 pt-2 pb-8 items-center ${
@@ -44,25 +46,17 @@ const NonTouchableCalendarTile = ({
   );
 };
 
-export const CalendarDateTile = ({ day, date, month, mode }: ICalendarTile) => {
+export const CalendarDateTile = ({
+  datetime,
+  mode,
+  selectDateHandler,
+}: ICalendarTile) => {
   if (mode === "disabled") {
-    return (
-      <NonTouchableCalendarTile
-        day={day}
-        month={month}
-        date={date}
-        mode={mode}
-      />
-    );
+    return <NonTouchableCalendarTile datetime={datetime} />;
   }
   return (
-    <TouchableOpacity>
-      <NonTouchableCalendarTile
-        day={day}
-        month={month}
-        date={date}
-        mode={mode}
-      />
+    <TouchableOpacity onPress={selectDateHandler}>
+      <NonTouchableCalendarTile datetime={datetime} mode={mode} />
     </TouchableOpacity>
   );
 };
