@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { darkNavy } from "@assets";
-import { PortalProvider } from "@context";
+import { AuthContextProvider } from "@context";
 import { RootNavigator } from "@navigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "@rneui/themed";
@@ -19,15 +19,15 @@ export default function App() {
     return null;
   }
   return (
-    <ApolloProvider client={client}>
-      <PortalProvider>
+    <AuthContextProvider>
+      <ApolloProvider client={client}>
         <ThemeProvider>
           <NavigationContainer>
             <RootNavigator />
           </NavigationContainer>
           <StatusBar backgroundColor={darkNavy} barStyle="light-content" />
         </ThemeProvider>
-      </PortalProvider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </AuthContextProvider>
   );
 }
