@@ -4,7 +4,6 @@ import {
   MoviesList,
   Titlebar,
 } from "@components";
-import { PortalTo } from "@context";
 import { useNavigation } from "@react-navigation/native";
 import { tw } from "@tailwind";
 import { HomeNavigationProps } from "@types";
@@ -22,7 +21,6 @@ export const Home = () => {
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center`}>
-        <PortalTo activeGateName="format-selector" />
         <Titlebar currentCity="Pune" />
         <ActivitiesTypesList />
         <Carousel />

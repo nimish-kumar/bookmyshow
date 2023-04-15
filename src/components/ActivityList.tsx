@@ -5,24 +5,11 @@ import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
-  // const [popupVisibility] = useState(true);
   return (
-    // <PortalFrom>
-    //   {(portal) => (
     <TouchableOpacity
       style={tw`h-full w-32 mr-2 flex-col`}
       onPress={() => {
         clickHandler?.(activityDetail.id);
-        // portal(
-        //   "format-selector",
-        //   <FormatSelector
-        //     isVisible={popupVisibility}
-        //     closeBackdrop={() => {
-        //       // Reset portal for closing backdrop
-        //       portal("format-selector", <></>);
-        //     }}
-        //   />
-        // );
       }}
     >
       <Image
@@ -56,8 +43,6 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
         )}
       </View>
     </TouchableOpacity>
-    // )}
-    // </PortalFrom>
   );
 };
 
