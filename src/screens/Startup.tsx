@@ -83,6 +83,8 @@ export const Startup = () => {
         });
     }
     if (!fetchingAccessToken && accessTokenError) {
+      setLoggedIn(false);
+      setSplashVisibility(false);
       throw Error(
         "APIError: Could not fetch results for FETCH_ACCESS_TOKEN api"
       );
