@@ -112,6 +112,8 @@ export const Startup = () => {
         });
     }
     if (!fetchingRefreshToken && refreshTokenError) {
+      setLoggedIn(false);
+      setSplashVisibility(false);
       throw Error("APIError: Could not fetch results for REFRESH_TOKEN API");
     }
   }, [fetchingRefreshToken]);
