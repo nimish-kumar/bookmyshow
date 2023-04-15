@@ -1,13 +1,12 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
+import { IAccessTokenData, IRefreshTokenData } from "@types";
 import {
   MutationRefreshTokenArgs,
   MutationTokenAuthArgs,
-  ObtainJsonWebToken,
-  Refresh,
 } from "src/__generated__/graphql";
 
 export const FETCH_ACCESS_TOKEN: TypedDocumentNode<
-  ObtainJsonWebToken,
+  IAccessTokenData,
   MutationTokenAuthArgs
 > = gql`
   mutation tokenAuth($email: String!, $password: String!) {
@@ -15,19 +14,21 @@ export const FETCH_ACCESS_TOKEN: TypedDocumentNode<
       payload
       refreshExpiresIn
       token
+      refreshToken
     }
   }
 `;
 
 export const REFRESH_TOKEN: TypedDocumentNode<
-  Refresh,
+  IRefreshTokenData,
   MutationRefreshTokenArgs
 > = gql`
-  mutation refreshToken($token: String!) {
-    refreshToken(token: $token) {
+  mutation refreshToken($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
       payload
       refreshExpiresIn
       token
+      refreshToken
     }
   }
 `;
