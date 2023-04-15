@@ -1,12 +1,16 @@
+import { IPayload } from "@types";
 import dayjs from "dayjs";
 import * as SecureStore from "expo-secure-store";
-import jwtDecode, { JwtPayload } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 export const hasTokenExpired = (token: string) => {
-  const expTime = jwtDecode<JwtPayload>(token).exp;
+  const decodedJwt = jwtDecode<IPayload>(token);
+  const expTime = decodedJwt.exp;
+  const iat = decodedJwt.origIat;
+
   if (expTime === undefined)
     throw new Error("Expiry time not available on the token");
-  return dayjs(expTime) >= dayjs();
+  return dayjs(expTime) >= dayjs(iat);
 };
 export const setAccessToken = async (token: string) => {
   await SecureStore.setItemAsync("accessToken", token);
