@@ -147,3 +147,8 @@ export interface IBadgeProps {
   onPress?: () => void;
   mode?: BadgeModeType;
 }
+
+export interface IAuthContext {
+  isLoggedIn: boolean;
+  setLoggedIn: (loggedIn: boolean) => void;
+}
