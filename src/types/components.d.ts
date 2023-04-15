@@ -10,6 +10,7 @@ export type PanGestureContextType = {
 };
 
 export type RootStackParamList = {
+  Startup: undefined;
   Home: undefined;
   SeatSelector: {
     movieId: number;
