@@ -249,7 +249,6 @@ export type Mutation = {
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
-  verifyToken?: Maybe<Verify>;
 };
 
 
@@ -268,7 +267,7 @@ export type MutationProcessBookingArgs = {
 
 
 export type MutationRefreshTokenArgs = {
-  token?: InputMaybe<Scalars['String']>;
+  refreshToken?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -277,16 +276,12 @@ export type MutationTokenAuthArgs = {
   password: Scalars['String'];
 };
 
-
-export type MutationVerifyTokenArgs = {
-  token?: InputMaybe<Scalars['String']>;
-};
-
 /** Obtain JSON Web Token mutation */
 export type ObtainJsonWebToken = {
   __typename?: 'ObtainJSONWebToken';
   payload: Scalars['GenericScalar'];
   refreshExpiresIn: Scalars['Int'];
+  refreshToken: Scalars['String'];
   token: Scalars['String'];
 };
 
@@ -313,6 +308,7 @@ export type Refresh = {
   __typename?: 'Refresh';
   payload: Scalars['GenericScalar'];
   refreshExpiresIn: Scalars['Int'];
+  refreshToken: Scalars['String'];
   token: Scalars['String'];
 };
 
@@ -356,9 +352,4 @@ export type TrailerUrlType = {
   id: Scalars['ID'];
   movie: MovieType;
   trailerUrl: Scalars['String'];
-};
-
-export type Verify = {
-  __typename?: 'Verify';
-  payload: Scalars['GenericScalar'];
 };
