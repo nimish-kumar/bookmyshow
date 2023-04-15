@@ -39,6 +39,5 @@ const AuthNavigator = () => {
 
 export const RootNavigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  // console.log("Is logged in? ---> ", isLoggedIn);
   return !isLoggedIn ? <AuthNavigator /> : <AppNavigator />;
 };
