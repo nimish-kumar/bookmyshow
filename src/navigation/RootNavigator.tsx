@@ -9,21 +9,9 @@ export const RootNavigator = () => {
   return (
     <RootStack.Navigator initialRouteName="Home">
       <RootStack.Group>
-        <RootStack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name="SeatSelector"
-          component={SeatSelector}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name="SlotSelector"
-          component={SlotSelector}
-          options={{ headerShown: false }}
-        />
+        <RootStack.Screen name="Home" component={Home} />
+        <RootStack.Screen name="SeatSelector" component={SeatSelector} />
+        <RootStack.Screen name="SlotSelector" component={SlotSelector} />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ presentation: "transparentModal" }}>
         <RootStack.Screen name="FormatSelector" component={FormatSelector} />

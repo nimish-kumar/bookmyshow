@@ -10,7 +10,13 @@ import { tw } from "@tailwind";
 import { IPriceRange, ISlotTile, RootStackParamList } from "@types";
 import { addListener, removeListener } from "@utils";
 import dayjs from "dayjs";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   BackHandler,
   ScrollView,
@@ -261,7 +267,11 @@ export const SlotSelector = () => {
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, "SlotSelector">
     >();
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
   const goBack = useCallback(() => navigation.navigate("Home"), []);
 
   useFocusEffect(

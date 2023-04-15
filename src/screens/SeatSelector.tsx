@@ -10,7 +10,7 @@ import {
   RootStackParamList,
 } from "@types";
 import { calculateTotalCost, extractGroupsDetails } from "@utils";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -49,6 +49,11 @@ export const SeatSelector = () => {
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, "SeatSelector">
     >();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
 
   const route = useRoute<RouteProp<RootStackParamList, "SeatSelector">>();
   const { format, lang, movieId, slotId } = route.params;
