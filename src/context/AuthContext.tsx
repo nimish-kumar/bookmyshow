@@ -9,7 +9,7 @@ export const AuthContext = createContext<IAuthContext>({
 export const AuthContextProvider = ({
   children,
 }: PropsWithChildren<object>) => {
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const setLoginValue = (loggedIn: boolean) => {
     setLoggedIn(loggedIn);
   };
