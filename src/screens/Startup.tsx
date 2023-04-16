@@ -53,14 +53,17 @@ export const Startup = () => {
         let accessToken: string | null = null;
         let refreshToken: string | null = null;
         accessToken = await getAccessToken();
-
-        if (accessToken && hasTokenExpired(accessToken)) {
-          refreshToken = await getRefreshToken();
-          fetchRefreshedToken({
-            variables: { refreshToken },
-          });
-        }
-        if (!accessToken) {
+        if (accessToken) {
+          if (hasTokenExpired(accessToken)) {
+            refreshToken = await getRefreshToken();
+            fetchRefreshedToken({
+              variables: { refreshToken },
+            });
+          } else {
+            // If access token has not expired, simply login
+            setLoggedIn(true);
+          }
+        } else {
           setSplashVisibility(false);
         }
       } catch (error) {
