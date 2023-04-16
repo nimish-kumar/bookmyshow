@@ -7,9 +7,12 @@ import { tw } from "@tailwind";
 import { StartupNavigationProp } from "@types";
 import {
   getAccessToken,
+  getRefreshExpiryTime,
   getRefreshToken,
   hasTokenExpired,
+  isPastOrEqual,
   setAccessToken,
+  setRefreshExpiryTime,
   setRefreshToken,
 } from "@utils";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
@@ -52,18 +55,31 @@ export const Startup = () => {
       try {
         let accessToken: string | null = null;
         let refreshToken: string | null = null;
+        let refreshExpiryTime: number | null = null;
         accessToken = await getAccessToken();
         if (accessToken) {
           if (hasTokenExpired(accessToken)) {
             refreshToken = await getRefreshToken();
-            fetchRefreshedToken({
-              variables: { refreshToken },
-            });
+            refreshExpiryTime = await getRefreshExpiryTime();
+
+            if (
+              (refreshExpiryTime && isPastOrEqual(refreshExpiryTime)) ||
+              refreshExpiryTime === null
+            ) {
+              setLoggedIn(false);
+              setSplashVisibility(false);
+            } else {
+              fetchRefreshedToken({
+                variables: { refreshToken },
+              });
+            }
           } else {
             // If access token has not expired, simply login
             setLoggedIn(true);
           }
         } else {
+          // If token was not found set splash visibility false.
+          // Because of which we will see SignIn page
           setSplashVisibility(false);
         }
       } catch (error) {
@@ -78,7 +94,10 @@ export const Startup = () => {
     if (!fetchingAccessToken && accessTokenData?.tokenAuth) {
       const atPromise = setAccessToken(accessTokenData.tokenAuth.token);
       const rtPromise = setRefreshToken(accessTokenData.tokenAuth.refreshToken);
-      Promise.all([atPromise, rtPromise])
+      const rtExpiryTimePromise = setRefreshExpiryTime(
+        accessTokenData.tokenAuth.refreshExpiresIn
+      );
+      Promise.all([atPromise, rtPromise, rtExpiryTimePromise])
         .then(() => {
           setSplashVisibility(true);
           setLoggedIn(true);
@@ -112,7 +131,10 @@ export const Startup = () => {
       const rtPromise = setRefreshToken(
         refreshTokenData.refreshToken.refreshToken
       );
-      Promise.all([atPromise, rtPromise])
+      const rtExpiryTimePromise = setRefreshExpiryTime(
+        refreshTokenData.refreshToken.refreshExpiresIn
+      );
+      Promise.all([atPromise, rtPromise, rtExpiryTimePromise])
         .then(() => {
           setSplashVisibility(true);
           setLoggedIn(true);
