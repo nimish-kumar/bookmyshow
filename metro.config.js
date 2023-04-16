@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require("expo/metro-config");
 
@@ -6,6 +7,7 @@ module.exports = (() => {
   const config = getDefaultConfig(__dirname);
 
   const { transformer, resolver } = config;
+  resolver.sourceExts.push("cjs");
 
   config.transformer = {
     ...transformer,

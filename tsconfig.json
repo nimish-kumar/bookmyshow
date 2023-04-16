@@ -7,9 +7,13 @@
       "@assets": ["./assets"],
       "@components": ["./src/components"],
       "@screens": ["./src/screens"],
-      "@lib": ["./src/lib"],
+      "@tailwind": ["src/tailwind"],
       "@navigation": ["./src/navigation"],
-      "@context": ["./src/context"]
-    }
+      "@context": ["./src/context"],
+      "@utils": ["./src/utils"],
+      "@types": ["./src/types"],
+      "@graphql": ["./src/graphql"]
+    },
+    "typeRoots": ["./src/types"]
   }
 }

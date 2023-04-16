@@ -4,17 +4,23 @@ import {
   MoviesList,
   Titlebar,
 } from "@components";
-import { PortalTo } from "@context";
-import { tw } from "@lib";
-import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { tw } from "@tailwind";
+import { HomeNavigationProps } from "@types";
+import React, { useLayoutEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Home = () => {
+  const navigation = useNavigation<HomeNavigationProps>();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center`}>
-        <PortalTo activeGateName="format-selector" />
         <Titlebar currentCity="Pune" />
         <ActivitiesTypesList />
         <Carousel />
@@ -27,7 +33,7 @@ export const Home = () => {
               {"See All >"}
             </Text>
           </View>
-          <MoviesList />
+          <MoviesList navigation={navigation} />
         </View>
       </View>
     </SafeAreaView>

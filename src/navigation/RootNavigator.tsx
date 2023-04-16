@@ -1,17 +1,43 @@
+import { AuthContext } from "@context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Home } from "@screens";
-import React from "react";
+import {
+  FormatSelector,
+  Home,
+  SeatSelector,
+  SlotSelector,
+  Startup,
+} from "@screens";
+import { RootStackParamList } from "@types";
+import React, { useContext } from "react";
 
-const AppStack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
+
+const AppNavigator = () => {
+  return (
+    <RootStack.Navigator initialRouteName="Home">
+      <RootStack.Group>
+        <RootStack.Screen name="Home" component={Home} />
+        <RootStack.Screen name="SeatSelector" component={SeatSelector} />
+        <RootStack.Screen name="SlotSelector" component={SlotSelector} />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ presentation: "transparentModal" }}>
+        <RootStack.Screen name="FormatSelector" component={FormatSelector} />
+      </RootStack.Group>
+    </RootStack.Navigator>
+  );
+};
+
+const AuthNavigator = () => {
+  return (
+    <RootStack.Navigator initialRouteName="Startup">
+      <RootStack.Group>
+        <RootStack.Screen name="Startup" component={Startup} />
+      </RootStack.Group>
+    </RootStack.Navigator>
+  );
+};
 
 export const RootNavigator = () => {
-  return (
-    <AppStack.Navigator initialRouteName="Home">
-      <AppStack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-    </AppStack.Navigator>
-  );
+  const { isLoggedIn } = useContext(AuthContext);
+  return !isLoggedIn ? <AuthNavigator /> : <AppNavigator />;
 };
