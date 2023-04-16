@@ -31,6 +31,12 @@ export type HomeNavigationProps = NativeStackNavigationProp<
   RootStackParamList,
   "Home"
 >;
+
+export type StartupNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Startup"
+>;
+
 export interface IPriceRange {
   high: number;
   low: number;

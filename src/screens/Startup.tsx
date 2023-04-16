@@ -2,7 +2,9 @@ import { useMutation } from "@apollo/client";
 import { AuthContext } from "@context";
 import { EMAIL_ID, PASSWORD } from "@env";
 import { FETCH_ACCESS_TOKEN, REFRESH_TOKEN } from "@graphql";
+import { useNavigation } from "@react-navigation/native";
 import { tw } from "@tailwind";
+import { StartupNavigationProp } from "@types";
 import {
   getAccessToken,
   getRefreshToken,
@@ -10,7 +12,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from "@utils";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { View } from "react-native";
 
 import { SignIn } from "./SignIn";
@@ -19,6 +21,12 @@ import { Splash } from "./Splash";
 export const Startup = () => {
   const { setLoggedIn } = useContext(AuthContext);
   const [splashVisible, setSplashVisibility] = useState(true);
+  const navigation = useNavigation<StartupNavigationProp>();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
   const [
     fetchLoginToken,
     {
