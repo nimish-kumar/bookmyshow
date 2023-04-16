@@ -6,11 +6,10 @@ import jwtDecode from "jwt-decode";
 export const hasTokenExpired = (token: string) => {
   const decodedJwt = jwtDecode<IPayload>(token);
   const expTime = decodedJwt.exp;
-  const iat = decodedJwt.origIat;
 
   if (expTime === undefined)
     throw new Error("Expiry time not available on the token");
-  return dayjs(expTime) >= dayjs(iat);
+  return dayjs(expTime * 1000) <= dayjs();
 };
 export const setAccessToken = async (token: string) => {
   await SecureStore.setItemAsync("accessToken", token);
