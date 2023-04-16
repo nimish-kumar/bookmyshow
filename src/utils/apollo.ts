@@ -25,7 +25,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
       },
     };
 
-    console.log("Headers", newHeaders);
+    console.log("Headers --->", newHeaders);
     return newHeaders;
   });
   return forward(operation);
