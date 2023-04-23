@@ -25,6 +25,7 @@ export type RootStackParamList = {
   };
   FormatSelector: {
     movieId: number;
+    movieName: string;
     formats: ILanguagesAndFormat[];
   };
 };
@@ -60,12 +61,12 @@ export interface IActivity {
 
 export interface IActivityProps {
   activityDetail: IActivity;
-  clickHandler?: (id: number) => void;
+  clickHandler?: (id: number, name: string) => void;
 }
 
 export interface IActivityListProps {
   activities: IActivity[];
-  activityHandler: (id: number) => void;
+  activityHandler: (id: number, name: string) => void;
 }
 export interface IAppBarProps {
   title: string;
