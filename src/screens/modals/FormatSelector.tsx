@@ -66,7 +66,7 @@ export const FormatSelector = () => {
               style={tw`self-center h-1 w-24 rounded-3xl bg-gray-400 mt-2 mb-6`}
             />
             <View style={tw`px-4 mb-2`}>
-              <Text style={tw`font-roboto-regular text-sm`}>{movieName}</Text>
+              <Text style={tw`font-roboto-regular text-base`}>{movieName}</Text>
               <Text style={tw`text-lg`}>Select language and format</Text>
             </View>
             <View style={tw`mb-2`}>
