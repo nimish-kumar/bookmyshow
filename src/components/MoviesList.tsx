@@ -1,48 +1,35 @@
-import {
-  AvatarTile,
-  KutteyTile,
-  LakadbaggaTile,
-  ValviTile,
-  VedTile,
-} from "@assets";
+import { useQuery } from "@apollo/client";
+import { LIST_MOVIES_AND_FORMATS } from "@graphql";
 import { IActivity, IMoviesListProps } from "@types";
 import React from "react";
+import { ActivityIndicator } from "react-native";
 
 import { ActivityList } from "./ActivityList";
-
-const movies: IActivity[] = [
-  {
-    id: 1,
-    imgSrc: AvatarTile,
-    title: "Avatar: The Way of Water",
-  },
-  {
-    id: 2,
-    imgSrc: KutteyTile,
-    title: "Kuttey",
-  },
-  {
-    id: 3,
-    imgSrc: LakadbaggaTile,
-    title: "Lakadbaggha",
-  },
-
-  {
-    id: 4,
-    imgSrc: ValviTile,
-    title: "Vaalvi",
-  },
-  {
-    id: 5,
-    imgSrc: VedTile,
-    title: "Ved",
-  },
-];
-
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
+  const {
+    data: moviesList,
+    error: moviesError,
+    loading: moviesLoading,
+  } = useQuery(LIST_MOVIES_AND_FORMATS, {
+    variables: { city: "1" },
+  });
+  if (moviesLoading) {
+    return <ActivityIndicator />;
+  }
+  if (moviesError) {
+    throw Error(moviesError.message);
+  }
+  const movies: IActivity[] =
+    moviesList?.listMovieLangByCity.map(({ movie }) => {
+      return {
+        id: parseInt(movie?.id || "-1", 10),
+        title: movie?.name || "Movie title here",
+      };
+    }) || [];
   const clickHandler = (id: number) =>
     navigation.navigate("FormatSelector", {
       movieId: id,
     });
+
   return <ActivityList activities={movies} activityHandler={clickHandler} />;
 };
