@@ -9,7 +9,7 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
     <TouchableOpacity
       style={tw`h-full w-32 mr-2 flex-col`}
       onPress={() => {
-        clickHandler?.(activityDetail.id);
+        clickHandler?.(activityDetail.id, activityDetail.title);
       }}
     >
       <Image

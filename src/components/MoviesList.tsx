@@ -36,10 +36,11 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
         title: movie?.name || "Movie title here",
       };
     }) || [];
-  const clickHandler = (id: number) => {
+  const clickHandler = (id: number, name: string) => {
     if (formats)
       navigation.navigate("FormatSelector", {
         movieId: id,
+        movieName: name,
         formats,
       });
   };
