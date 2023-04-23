@@ -321,8 +321,8 @@ export type QueryListMovieLangByCityArgs = {
 
 export type QueryListMovieSlotsByCityDateLangArgs = {
   city: Scalars['ID'];
-  format: Scalars['ID'];
-  language: Scalars['ID'];
+  format: Scalars['String'];
+  language: Scalars['String'];
   movie: Scalars['ID'];
 };
 
