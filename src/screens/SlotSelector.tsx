@@ -249,18 +249,6 @@ const priceRanges: IPriceRange[] = [
     high: 300,
   },
 ];
-const langAndFormatArray = [
-  {
-    code: "HI",
-    lang: "Hindi",
-    format: ["2D"],
-  },
-  {
-    code: "EN",
-    lang: "English",
-    format: ["2D", "3D", "4DX"],
-  },
-];
 
 export const SlotSelector = () => {
   const navigation =
@@ -290,7 +278,7 @@ export const SlotSelector = () => {
   );
 
   const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
-  const { format, lang, movieId } = route.params;
+  const { format, lang, movieId, movieName, formats } = route.params;
   const [langFormat, setLangFormat] = useState({ code: lang, format });
   const [movieDateIdx, setMovieDateIdx] = useState(0);
   const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
@@ -341,7 +329,7 @@ export const SlotSelector = () => {
         <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
           <View style={tw`flex-row w-4/5 items-center`}>
             <Text style={tw`font-roboto-medium mr-2 text-xs`}>
-              {langAndFormatArray.find((e) => e.code === langFormat.code)?.lang}
+              {formats.find((e) => e.code === langFormat.code)?.lang}
             </Text>
             <Text style={[tw`self-center`, { fontSize: 5 }]}>{"\u2B24"}</Text>
             <Text style={tw`font-roboto-medium ml-2 text-xs`}>
@@ -352,6 +340,8 @@ export const SlotSelector = () => {
             onPress={() => {
               navigation.push("FormatSelector", {
                 movieId,
+                movieName,
+                formats,
               });
             }}
           >

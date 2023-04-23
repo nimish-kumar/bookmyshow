@@ -88,6 +88,8 @@ export const FormatSelector = () => {
                               movieId,
                               format,
                               lang: e.code,
+                              formats: langAndFormat,
+                              movieName,
                             });
                           }}
                         />
