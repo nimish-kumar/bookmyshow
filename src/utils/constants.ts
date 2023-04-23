@@ -5,3 +5,8 @@ export const SeatStatusCode = {
 } as const;
 
 export const PUNE_CITY_ID = "1";
+
+export const DEFAULT_MOVIE_LANG = {
+  code: "HI",
+  lang: "Hindi",
+} as const;

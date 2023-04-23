@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { LIST_MOVIES_AND_FORMATS } from "@graphql";
 import { IActivity, ILanguagesAndFormat, IMoviesListProps } from "@types";
-import { PUNE_CITY_ID } from "@utils";
+import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
 import { ActivityIndicator } from "react-native";
 
@@ -26,8 +26,8 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       formats =
         langs?.map((d) => {
           return {
-            code: d?.lang?.langCode || "HI",
-            lang: d?.lang?.name || "Hindi",
+            code: d?.lang?.langCode || DEFAULT_MOVIE_LANG.code,
+            lang: d?.lang?.name || DEFAULT_MOVIE_LANG.lang,
             format: d?.formats?.map((format) => format?.format || "-1") || [],
           };
         }) || [];
