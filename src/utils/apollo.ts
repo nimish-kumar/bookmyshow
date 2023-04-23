@@ -24,7 +24,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
         Authorization: accessToken ? `JWT ${accessToken}` : null,
       },
     };
-
+    console.log("URI ---->", GRAPHQL_API_URL);
     console.log("Headers --->", newHeaders);
     return newHeaders;
   });
