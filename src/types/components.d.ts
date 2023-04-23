@@ -51,7 +51,7 @@ export interface ITitlebarProps {
 
 export interface IActivity {
   id: number;
-  imgSrc: any;
+  imgSrc?: any;
   title: string;
   description?: string;
   additionalInfo?: string;
