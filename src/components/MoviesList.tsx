@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { LIST_MOVIES_AND_FORMATS } from "@graphql";
-import { IActivity, IMoviesListProps } from "@types";
+import { IActivity, ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { PUNE_CITY_ID } from "@utils";
 import React from "react";
 import { ActivityIndicator } from "react-native";
@@ -20,17 +20,29 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
   if (moviesError) {
     throw Error(moviesError.message);
   }
+  let formats: ILanguagesAndFormat[] | null = null;
   const movies: IActivity[] =
-    moviesList?.listMovieLangByCity.map(({ movie }) => {
+    moviesList?.listMovieLangByCity.map(({ movie, langs }) => {
+      formats =
+        langs?.map((d) => {
+          return {
+            code: d?.lang?.langCode || "HI",
+            lang: d?.lang?.name || "Hindi",
+            format: d?.formats?.map((format) => format?.format || "-1") || [],
+          };
+        }) || [];
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
       };
     }) || [];
-  const clickHandler = (id: number) =>
-    navigation.navigate("FormatSelector", {
-      movieId: id,
-    });
+  const clickHandler = (id: number) => {
+    if (formats)
+      navigation.navigate("FormatSelector", {
+        movieId: id,
+        formats,
+      });
+  };
 
   return <ActivityList activities={movies} activityHandler={clickHandler} />;
 };

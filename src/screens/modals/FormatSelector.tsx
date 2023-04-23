@@ -19,18 +19,6 @@ import Animated, {
 
 import { Backdrop } from "../../components/Backdrop";
 import { Badge } from "../../components/Badge";
-const langAndFormat = [
-  {
-    code: "HI",
-    lang: "Hindi",
-    format: ["2D"],
-  },
-  {
-    code: "EN",
-    lang: "English",
-    format: ["2D", "3D", "4DX"],
-  },
-];
 
 export const FormatSelector = () => {
   const navigation =
@@ -43,7 +31,7 @@ export const FormatSelector = () => {
     });
   }, []);
   const route = useRoute<RouteProp<RootStackParamList, "FormatSelector">>();
-  const { movieId } = route.params;
+  const { movieId, formats: langAndFormat } = route.params;
   const translateY = useSharedValue(0);
   const closeBackdrop = () => navigation.goBack();
   const panGestureEvent = useAnimatedGestureHandler<
