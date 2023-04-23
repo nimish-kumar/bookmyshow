@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { LIST_MOVIES_AND_FORMATS } from "@graphql";
 import { IActivity, IMoviesListProps } from "@types";
+import { PUNE_CITY_ID } from "@utils";
 import React from "react";
 import { ActivityIndicator } from "react-native";
 
@@ -11,7 +12,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     error: moviesError,
     loading: moviesLoading,
   } = useQuery(LIST_MOVIES_AND_FORMATS, {
-    variables: { city: "1" },
+    variables: { city: PUNE_CITY_ID },
   });
   if (moviesLoading) {
     return <ActivityIndicator />;
