@@ -16,6 +16,7 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
         style={tw`h-54 w-auto rounded-lg`}
         resizeMode="contain"
         source={activityDetail.imgSrc}
+        loadingIndicatorSource={activityDetail.imgSrc}
       />
       <View style={tw`px-1`}>
         <Text
