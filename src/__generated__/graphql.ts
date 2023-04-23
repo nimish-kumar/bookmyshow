@@ -43,14 +43,16 @@ export type ArtistType = {
 
 export type BookingSlotType = {
   __typename?: 'BookingSlotType';
+  format?: Maybe<MovieFormatType>;
   id: Scalars['ID'];
   isFullyBooked: Scalars['Boolean'];
   lang: LanguageType;
-  layout: Scalars['String'];
+  maxCost?: Maybe<Scalars['Int']>;
+  minCost?: Maybe<Scalars['Int']>;
   movie: MovieType;
   screen: ScreenType;
   screeningDatetime: Scalars['DateTime'];
-  slotBooking: Array<SlotGroupType>;
+  slotgrpBooking: Array<SlotGroupType>;
   subtitlesLang?: Maybe<LanguageType>;
 };
 
@@ -95,6 +97,12 @@ export type GenreType = {
 export type InitiateBookingTicket = {
   __typename?: 'InitiateBookingTicket';
   ticketDetails?: Maybe<Array<Maybe<BookingType>>>;
+};
+
+export type LanguageFormatType = {
+  __typename?: 'LanguageFormatType';
+  formats?: Maybe<Array<Maybe<MovieFormatType>>>;
+  lang?: Maybe<LanguageType>;
 };
 
 export type LanguageType = {
@@ -201,10 +209,17 @@ export enum MetaFacilityPriorityChoices {
   A_3 = 'A_3'
 }
 
+export type MovieDetailsType = {
+  __typename?: 'MovieDetailsType';
+  langs?: Maybe<Array<Maybe<LanguageFormatType>>>;
+  movie?: Maybe<MovieType>;
+};
+
 export type MovieFormatType = {
   __typename?: 'MovieFormatType';
   format: Scalars['String'];
   formatMovies: Array<MovieType>;
+  formatSlot: Array<BookingSlotType>;
   id: Scalars['ID'];
 };
 
@@ -212,7 +227,7 @@ export type MovieType = {
   __typename?: 'MovieType';
   cast: Array<ArtistType>;
   crew: Array<ArtistType>;
-  descriptiom?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   format: Array<MovieFormatType>;
   genre: Array<GenreType>;
   id: Scalars['ID'];
@@ -294,14 +309,21 @@ export type ProcessBooking = {
 export type Query = {
   __typename?: 'Query';
   listCities?: Maybe<Array<Maybe<CityType>>>;
+  listMovieLangByCity?: Maybe<Array<Maybe<MovieDetailsType>>>;
   listMovieSlotsByCityDateLang?: Maybe<Array<Maybe<BookingSlotType>>>;
+};
+
+
+export type QueryListMovieLangByCityArgs = {
+  city: Scalars['ID'];
 };
 
 
 export type QueryListMovieSlotsByCityDateLangArgs = {
   city: Scalars['ID'];
-  datetime?: InputMaybe<Scalars['DateTime']>;
+  format: Scalars['ID'];
   language: Scalars['ID'];
+  movie: Scalars['ID'];
 };
 
 export type Refresh = {
@@ -315,6 +337,7 @@ export type Refresh = {
 export type ScreenType = {
   __typename?: 'ScreenType';
   id: Scalars['ID'];
+  layout: Scalars['String'];
   screenId: Scalars['String'];
   screenSlots: Array<BookingSlotType>;
   theatre: TheatreType;
@@ -324,7 +347,6 @@ export type SlotGroupType = {
   __typename?: 'SlotGroupType';
   cost: Scalars['Int'];
   createdAt: Scalars['DateTime'];
-  currency: Scalars['String'];
   grpCode: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -338,7 +360,6 @@ export type TheatreType = {
   areaName: Scalars['String'];
   city: CityType;
   coordinates?: Maybe<Scalars['String']>;
-  details: Scalars['String'];
   facilities: Array<FacilityType>;
   id: Scalars['ID'];
   locationLink?: Maybe<Scalars['String']>;
