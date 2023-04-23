@@ -25,6 +25,7 @@ export type RootStackParamList = {
   };
   FormatSelector: {
     movieId: number;
+    formats: ILanguagesAndFormat[];
   };
 };
 export type HomeNavigationProps = NativeStackNavigationProp<
@@ -158,4 +159,10 @@ export interface IBadgeProps {
 export interface IAuthContext {
   isLoggedIn: boolean;
   setLoggedIn: (loggedIn: boolean) => void;
+}
+
+export interface ILanguagesAndFormat {
+  code: string;
+  lang: string;
+  format: string[];
 }
