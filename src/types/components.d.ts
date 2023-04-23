@@ -22,6 +22,8 @@ export type RootStackParamList = {
     movieId: number;
     lang: string;
     format: string;
+    movieName: string;
+    formats: ILanguagesAndFormat[];
   };
   FormatSelector: {
     movieId: number;
