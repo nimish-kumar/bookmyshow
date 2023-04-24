@@ -31,6 +31,8 @@ export const LIST_SLOTS: TypedDocumentNode<
         id
         format
       }
+      minCost
+      maxCost
     }
   }
 `;
