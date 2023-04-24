@@ -1,5 +1,5 @@
 import {
-  BookingType,
+  BookingSlotType,
   MovieDetailsType,
   ObtainJsonWebToken,
   Refresh,
@@ -22,5 +22,5 @@ export interface MoviesListFormatsData {
 }
 
 export interface SlotListData {
-  listMovieSlotsByCityDateLang: BookingType[];
+  listMovieSlotsByCityDateLang: BookingSlotType[];
 }
