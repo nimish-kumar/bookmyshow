@@ -1,4 +1,5 @@
 import {
+  BookingType,
   MovieDetailsType,
   ObtainJsonWebToken,
   Refresh,
@@ -18,4 +19,8 @@ export interface IPayload {
 
 export interface MoviesListFormatsData {
   listMovieLangByCity: MovieDetailsType[];
+}
+
+export interface SlotListData {
+  listMovieSlotsByCityDateLang: BookingType[];
 }
