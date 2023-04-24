@@ -1,6 +1,39 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
-import { MoviesListFormatsData } from "@types";
-import { QueryListMovieLangByCityArgs } from "src/__generated__/graphql";
+import { MoviesListFormatsData, SlotListData } from "@types";
+import {
+  QueryListMovieLangByCityArgs,
+  QueryListMovieSlotsByCityDateLangArgs,
+} from "src/__generated__/graphql";
+
+export const LIST_SLOTS: TypedDocumentNode<
+  SlotListData,
+  QueryListMovieSlotsByCityDateLangArgs
+> = gql`
+  query ($city: ID!, $language: String!, $movie: ID!, $format: String!) {
+    listMovieSlotsByCityDateLang(
+      city: $city
+      language: $language
+      movie: $movie
+      format: $format
+    ) {
+      screen {
+        theatre {
+          id
+          name
+        }
+      }
+      screeningDatetime
+      lang {
+        langCode
+        name
+      }
+      format {
+        id
+        format
+      }
+    }
+  }
+`;
 
 export const LIST_MOVIES_AND_FORMATS: TypedDocumentNode<
   MoviesListFormatsData,
