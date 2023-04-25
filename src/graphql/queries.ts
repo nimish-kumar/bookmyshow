@@ -20,6 +20,7 @@ export const LIST_SLOTS: TypedDocumentNode<
         theatre {
           id
           name
+          areaName
         }
       }
       screeningDatetime
