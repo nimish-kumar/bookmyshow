@@ -15,15 +15,26 @@ export const SlotTile = ({
     <View style={tw`px-4 py-4 bg-white`}>
       <View style={tw`flex-col mb-2 justify-center`}>
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           ellipsizeMode="tail"
-          style={tw`w-4/5 font-roboto-medium text-sm text-slate-700`}
+          style={tw`font-roboto-medium text-base text-slate-700`}
         >
-          {areaName ? `${theatreName}, ${areaName}` : `${theatreName}`}
+          {theatreName}
         </Text>
-        <Text style={tw`text-xs text-slate-400`}>
-          {cancellationAvailable ? "Cancellation Available" : "Non-cancellable"}
-        </Text>
+        <View style={tw`flex-row items-center justify-between mb-1`}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={tw`font-roboto-regular text-sm text-slate-400`}
+          >
+            {areaName}
+          </Text>
+          <Text style={tw`text-xs text-slate-400`}>
+            {cancellationAvailable
+              ? "Cancellation Available"
+              : "Non-cancellable"}
+          </Text>
+        </View>
       </View>
       <View style={tw`flex flex-wrap flex-row`}>
         {slots.map((slot, idx) => {
