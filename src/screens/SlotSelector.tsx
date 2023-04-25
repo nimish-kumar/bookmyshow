@@ -213,7 +213,7 @@ export const SlotSelector = () => {
   }
   return (
     <SafeAreaView>
-      <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
+      <View style={tw`flex justify-center bg-neutral-200`}>
         <AppBar title={movieName} backButton backFunction={goBack} />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
           {datetimeArray.map((dayjs_dt, idx) => {
