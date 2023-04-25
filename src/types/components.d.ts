@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { GestureResponderEvent } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
+import { BookingSlotType } from "src/__generated__/graphql";
 
 export type BadgeModeType = "default" | "selected";
 export type CalendarTileModeType = "default" | "selected" | "disabled";
@@ -137,7 +138,7 @@ export interface ISlotTile {
   theatreName: string;
   areaName?: string;
   cancellationAvailable?: boolean;
-  slots: ITimeSlot[];
+  slots: BookingSlotType[];
   slotSelectHandler?: () => void;
 }
 
