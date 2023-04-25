@@ -134,7 +134,7 @@ export interface ITimeSlot {
   time: string;
   available?: boolean;
 }
-export interface ISlotTile {
+export interface ISlotTileProps {
   theatreName: string;
   areaName?: string;
   cancellationAvailable?: boolean;
