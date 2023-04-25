@@ -17,10 +17,25 @@ export interface IPayload {
   origIat: number;
 }
 
-export interface MoviesListFormatsData {
+export interface IMoviesListFormatsData {
   listMovieLangByCity: MovieDetailsType[];
 }
 
-export interface SlotListData {
+export interface ISlotListData {
   listMovieSlotsByCityDateLang: BookingSlotType[];
+}
+
+export interface ISlotListWithDates {
+  date: string;
+  theatreSlots: BookingSlotType[] | null;
+}
+export interface ITheatreGroupedSlot {
+  theatreId: string;
+  theatreName: string;
+  areaName: string;
+  timeSlots: BookingSlotType[];
+}
+export interface IGroupedSlot {
+  date: string;
+  theatreSlots: ITheatreGroupedSlot[] | null;
 }
