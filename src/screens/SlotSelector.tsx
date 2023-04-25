@@ -118,7 +118,7 @@ export const SlotSelector = () => {
 
   const [langFormat, setLangFormat] = useState({ code: lang, format });
   const [movieDate, setMovieDate] = useState<string>(
-    dayjs().format("DD-MM-YYYY")
+    groupedSlots.at(0)?.date || dayjs().format("DD-MM-YYYY")
   );
   const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
   const priceDifference = 100;
@@ -226,9 +226,13 @@ export const SlotSelector = () => {
                 }}
                 // TODO: Add condition for disabled state on CalenderDateTile
                 mode={
-                  dayjs_dt.format("DD-MM-YYYY") === movieDate
-                    ? "selected"
-                    : "default"
+                  groupedSlots.find(
+                    (s) => s.date === dayjs_dt.format("DD-MM-YYYY")
+                  )?.theatreSlots ?? null
+                    ? movieDate === dayjs_dt.format("DD-MM-YYYY")
+                      ? "selected"
+                      : "default"
+                    : "disabled"
                 }
               />
             );
@@ -261,7 +265,7 @@ export const SlotSelector = () => {
           style={tw`bg-white pl-2 border-b border-gray-200`}
           data={priceRanges}
           renderItem={({ item: { minCost, maxCost }, index }) => (
-            <View style={tw`mr-2 mt-2 mb-5`}>
+            <View style={tw`mr-2 my-3`}>
               <Badge
                 badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
                 onPress={() => priceRangeHandler(index)}
