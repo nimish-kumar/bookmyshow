@@ -104,9 +104,15 @@ export const SlotSelector = () => {
               theatreName: theatreObj.screen.theatre.name,
               areaName: theatreObj.screen.theatre.areaName,
               timeSlots:
-                theatreSlots.filter(
-                  (x) => x.screen.theatre.id === theatreObj.screen.theatre.id
-                ) ?? null,
+                theatreSlots
+                  .filter(
+                    (x) => x.screen.theatre.id === theatreObj.screen.theatre.id
+                  )
+                  .sort(
+                    (slotA, slotB) =>
+                      dayjs(slotA.screeningDatetime).unix() -
+                      dayjs(slotB.screeningDatetime).unix()
+                  ) ?? null,
             });
           }
         }
