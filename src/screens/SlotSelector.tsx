@@ -218,9 +218,13 @@ export const SlotSelector = () => {
   }
   return (
     <SafeAreaView>
-      <View style={tw`flex justify-center bg-neutral-500`}>
+      <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
         <AppBar title={movieName} backButton backFunction={goBack} />
-        <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={tw`border-b bg-white border-gray-300 max-h-20`}
+        >
           {datetimeArray.map((dayjs_dt, idx) => {
             return (
               <CalendarDateTile
@@ -267,8 +271,9 @@ export const SlotSelector = () => {
         </View>
         <FlatList
           horizontal
-          style={tw`bg-white pl-2 border-b border-gray-200`}
+          style={tw`bg-white pl-2 border-b border-gray-200 max-h-14`}
           data={priceRanges}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item: { minCost, maxCost }, index }) => (
             <View style={tw`mr-2 my-3`}>
               <Badge
