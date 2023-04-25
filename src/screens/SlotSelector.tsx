@@ -118,8 +118,13 @@ export const SlotSelector = () => {
 
   const [langFormat, setLangFormat] = useState({ code: lang, format });
   const [movieDate, setMovieDate] = useState<string>(
-    groupedSlots.at(0)?.date || dayjs().format("DD-MM-YYYY")
+    dayjs().format("DD-MM-YYYY")
   );
+  useEffect(() => {
+    if (!slotListLoading && !slotListError) {
+      setMovieDate(groupedSlots.at(0)?.date || dayjs().format("DD-MM-YYYY"));
+    }
+  }, [slotListLoading, slotListError]);
   const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
   const priceDifference = 100;
   const generatePriceRanges = useCallback(
@@ -213,7 +218,7 @@ export const SlotSelector = () => {
   }
   return (
     <SafeAreaView>
-      <View style={tw`flex justify-center bg-neutral-200`}>
+      <View style={tw`flex justify-center bg-neutral-500`}>
         <AppBar title={movieName} backButton backFunction={goBack} />
         <ScrollView horizontal style={tw`border-b bg-white border-gray-300`}>
           {datetimeArray.map((dayjs_dt, idx) => {
@@ -276,7 +281,7 @@ export const SlotSelector = () => {
         />
 
         <FlatList
-          contentContainerStyle={tw`pt-4 pb-65 px-4`}
+          contentContainerStyle={tw`py-4 px-4`}
           data={slots}
           renderItem={({ index, item }) => {
             return (
