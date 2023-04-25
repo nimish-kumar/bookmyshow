@@ -1,4 +1,6 @@
+import { useQuery } from "@apollo/client";
 import { AppBar, Badge, CalendarDateTile, SlotTile } from "@components";
+import { LIST_SLOTS } from "@graphql";
 import {
   RouteProp,
   useFocusEffect,
@@ -7,8 +9,8 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
-import { IPriceRange, ISlotTile, RootStackParamList } from "@types";
-import { addListener, removeListener } from "@utils";
+import { IGroupedSlot, ITheatreGroupedSlot, RootStackParamList } from "@types";
+import { PUNE_CITY_ID, addListener, removeListener } from "@utils";
 import dayjs from "dayjs";
 import React, {
   useCallback,
@@ -18,6 +20,7 @@ import React, {
   useState,
 } from "react";
 import {
+  ActivityIndicator,
   BackHandler,
   ScrollView,
   Text,
@@ -26,229 +29,6 @@ import {
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const data: ISlotTile[] = [
-  {
-    areaName: "Viman Nagar",
-    theatreName: "Pheonix Marktcity",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Talwandi",
-    theatreName: "PVR Talkies",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Pune",
-    theatreName: "INOX Bund Garden Road",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "NIBM Exit",
-    theatreName: "INOX Royal Heritage mall",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: false },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Viman Nagar",
-    theatreName: "Pheonix Marktcity",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Viman Nagar",
-    theatreName: "Pheonix Marktcity",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Talwandi",
-    theatreName: "PVR Talkies",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Pune",
-    theatreName: "INOX Bund Garden Road",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "NIBM Exit",
-    theatreName: "INOX Royal Heritage mall",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: false },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Viman Nagar",
-    theatreName: "Pheonix Marktcity",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Talwandi",
-    theatreName: "PVR Talkies",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Pune",
-    theatreName: "INOX Bund Garden Road",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "NIBM Exit",
-    theatreName: "INOX Royal Heritage mall",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: false },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Viman Nagar",
-    theatreName: "Pheonix Marktcity",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Talwandi",
-    theatreName: "PVR Talkies",
-    cancellationAvailable: true,
-    slots: [
-      { time: "08:30 AM", available: true },
-      { time: "10:40 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "Pune",
-    theatreName: "INOX Bund Garden Road",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: true },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-  {
-    areaName: "NIBM Exit",
-    theatreName: "INOX Royal Heritage mall",
-    cancellationAvailable: true,
-    slots: [
-      { time: "10:40 AM", available: false },
-      { time: "11:30 AM", available: true },
-      { time: "12:40 PM", available: true },
-      { time: "01:30 PM", available: true },
-      { time: "03:40 PM", available: true },
-    ],
-  },
-];
-
-const priceRanges: IPriceRange[] = [
-  {
-    low: 0,
-    high: 100,
-  },
-  {
-    low: 200,
-    high: 300,
-  },
-];
 
 export const SlotSelector = () => {
   const navigation =
@@ -279,9 +59,103 @@ export const SlotSelector = () => {
 
   const route = useRoute<RouteProp<RootStackParamList, "SlotSelector">>();
   const { format, lang, movieId, movieName, formats } = route.params;
+  const {
+    data: slotListData,
+    loading: slotListLoading,
+    error: slotListError,
+  } = useQuery(LIST_SLOTS, {
+    variables: {
+      city: PUNE_CITY_ID,
+      format,
+      language: lang,
+      movie: `${movieId}`,
+    },
+  });
+  const groupedSlots: IGroupedSlot[] = useMemo(() => {
+    const modMovieSlots = slotListData?.listMovieSlotsByCityDateLang.map(
+      (e) => {
+        return {
+          date: dayjs(e.screeningDatetime).format("DD-MM-YYYY"),
+          ...e,
+        };
+      }
+    );
+    const dateGroupedSlots = Array.from(
+      new Set(modMovieSlots?.map((e) => e.date))
+    ).map((date) => ({
+      date,
+      theatreSlots: modMovieSlots?.filter((slot) => slot.date === date) ?? null,
+    }));
+    return dateGroupedSlots.map((slot) => {
+      const theatreSlots = slot.theatreSlots;
+      if (theatreSlots) {
+        const uniqueTheatreIds = Array.from(
+          new Set(theatreSlots.map((e) => e.screen.theatre.id))
+        );
+        const theatresArray = [];
+        for (let i = 0; i < uniqueTheatreIds.length; i++) {
+          const theatreId = uniqueTheatreIds[i];
+          const theatreObj = theatreSlots.find(
+            (x) => x.screen.theatre.id === theatreId
+          );
+          if (theatreObj) {
+            theatresArray.push({
+              theatreId: theatreObj.screen.theatre.id,
+              theatreName: theatreObj.screen.theatre.name,
+              areaName: theatreObj.screen.theatre.areaName,
+              timeSlots:
+                theatreSlots.filter(
+                  (x) => x.screen.theatre.id === theatreObj.screen.theatre.id
+                ) ?? null,
+            });
+          }
+        }
+        return { date: slot.date, theatreSlots: theatresArray };
+      }
+      return { date: slot.date, theatreSlots };
+    });
+  }, [slotListData]);
+
   const [langFormat, setLangFormat] = useState({ code: lang, format });
-  const [movieDateIdx, setMovieDateIdx] = useState(0);
+  const [movieDate, setMovieDate] = useState<string>(
+    dayjs().format("DD-MM-YYYY")
+  );
   const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
+  const priceDifference = 100;
+  const generatePriceRanges = useCallback(
+    (difference: number) => {
+      const activeDateSlot =
+        groupedSlots.find((e) => e.date === movieDate) ?? null;
+      if (activeDateSlot) {
+        const costs = (
+          activeDateSlot?.theatreSlots?.map((e) =>
+            e.timeSlots.map((x) => ({ maxCost: x.maxCost, minCost: x.minCost }))
+          ) || []
+        ).flat(2);
+        const maxCost =
+          costs
+            .map((e) => e.maxCost || Number.MIN_SAFE_INTEGER)
+            .sort((a, b) => a - b)
+            .at(-1) || Number.MIN_SAFE_INTEGER;
+        const priceRangeCount = Math.floor(maxCost / difference) + 1;
+        return Array(priceRangeCount)
+          .fill({ maxCost: 0, minCost: 0 })
+          .map((d, idx) => {
+            return {
+              maxCost: (idx + 1) * difference,
+              minCost: idx === 0 ? idx * difference : idx * difference + 1,
+            };
+          });
+      }
+      return [];
+    },
+    [priceRangeIdx, movieDate]
+  );
+  const priceRanges = useMemo(
+    () => generatePriceRanges(priceDifference),
+    [movieDate]
+  );
+
   useEffect(() => {
     const changeLangFormat = (lang: string, movieFormat: string) =>
       setLangFormat({ code: lang, format: movieFormat });
@@ -290,23 +164,53 @@ export const SlotSelector = () => {
       removeListener("OnLangFormatChange", changeLangFormat);
     };
   }, []);
-  const priceRangeHandler = (idx: number) => {
-    if (priceRangeIdx === idx) setPriceRangeIdx(null);
-    else setPriceRangeIdx(idx);
+
+  const priceRangeHandler = (index: number) => {
+    if (index === priceRangeIdx) setPriceRangeIdx(null);
+    else {
+      setPriceRangeIdx(index);
+    }
   };
   const datetimeArray = useMemo(
     () =>
       Array(7)
         .fill(dayjs())
-        .map((v: dayjs.Dayjs, idx) => {
-          let datetime = v.add(idx, "day");
-          if (idx !== 0) {
-            datetime = datetime.startOf("day");
-          }
-          return datetime;
-        }),
+        .map((v: dayjs.Dayjs, idx) => v.add(idx, "day")),
     []
   );
+
+  const [slots, setSlots] = useState<ITheatreGroupedSlot[] | null>(null);
+  useEffect(() => {
+    setSlots(
+      groupedSlots.find((e) => e.date === movieDate)?.theatreSlots ?? null
+    );
+    //clear price range filter if date changes
+    setPriceRangeIdx(null);
+  }, [movieDate]);
+  useEffect(() => {
+    // Filter based on price range and movie date
+    if (priceRangeIdx && slots) {
+      const maxPrice = priceRanges[priceRangeIdx].maxCost;
+      const minPrice = priceRanges[priceRangeIdx].minCost;
+      const costFilteredSlots = slots.filter((e) =>
+        e.timeSlots.filter(
+          (x) => x.maxCost === maxPrice && x.minCost === minPrice
+        )
+      );
+      setSlots(costFilteredSlots);
+    }
+  }, [priceRangeIdx]);
+
+  if (slotListLoading) {
+    return (
+      <SafeAreaView>
+        <ActivityIndicator />
+      </SafeAreaView>
+    );
+  }
+  if (slotListError) {
+    throw Error("APIError: Could not load LIST_SLOTS Query API");
+  }
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
@@ -318,10 +222,14 @@ export const SlotSelector = () => {
                 key={idx}
                 datetime={dayjs_dt}
                 selectDateHandler={() => {
-                  setMovieDateIdx(idx);
+                  setMovieDate(dayjs_dt.format("DD-MM-YYYY"));
                 }}
                 // TODO: Add condition for disabled state on CalenderDateTile
-                mode={idx === movieDateIdx ? "selected" : "default"}
+                mode={
+                  dayjs_dt.format("DD-MM-YYYY") === movieDate
+                    ? "selected"
+                    : "default"
+                }
               />
             );
           })}
@@ -352,12 +260,12 @@ export const SlotSelector = () => {
           horizontal
           style={tw`bg-white pl-2 border-b border-gray-200`}
           data={priceRanges}
-          renderItem={({ item: { low, high }, index }) => (
+          renderItem={({ item: { minCost, maxCost }, index }) => (
             <View style={tw`mr-2 mt-2 mb-5`}>
               <Badge
-                badgeText={`${`₹${low} - ₹${high}`}`}
+                badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
                 onPress={() => priceRangeHandler(index)}
-                mode={priceRangeIdx === index ? "selected" : "default"}
+                mode={index === priceRangeIdx ? "selected" : "default"}
               />
             </View>
           )}
@@ -365,13 +273,13 @@ export const SlotSelector = () => {
 
         <FlatList
           contentContainerStyle={tw`pt-4 pb-65 px-4`}
-          data={data}
+          data={slots}
           renderItem={({ index, item }) => {
             return (
               <View key={index}>
                 <SlotTile
                   areaName={item.areaName}
-                  slots={item.slots}
+                  slots={item.timeSlots}
                   theatreName={item.theatreName}
                   slotSelectHandler={() => {
                     navigation.navigate("SeatSelector", {
