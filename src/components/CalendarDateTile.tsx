@@ -13,7 +13,7 @@ const NonTouchableCalendarTile = ({
   const month = dateArr[2];
   return (
     <View
-      style={tw`px-4 pt-2 pb-8 items-center ${
+      style={tw`px-4 pt-2 pb-4 items-center ${
         mode === "selected" ? "bg-pink" : ""
       }`}
     >
