@@ -55,7 +55,6 @@ export const CalendarDateTile = ({
     <TouchableOpacity
       onPress={selectDateHandler}
       disabled={mode === "disabled"}
-      style={tw`self-start`}
     >
       <NonTouchableCalendarTile datetime={datetime} mode={mode} />
     </TouchableOpacity>
