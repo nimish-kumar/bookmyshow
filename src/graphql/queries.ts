@@ -1,12 +1,12 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
-import { MoviesListFormatsData, SlotListData } from "@types";
+import { IMoviesListFormatsData, ISlotListData } from "@types";
 import {
   QueryListMovieLangByCityArgs,
   QueryListMovieSlotsByCityDateLangArgs,
 } from "src/__generated__/graphql";
 
 export const LIST_SLOTS: TypedDocumentNode<
-  SlotListData,
+  ISlotListData,
   QueryListMovieSlotsByCityDateLangArgs
 > = gql`
   query ($city: ID!, $language: String!, $movie: ID!, $format: String!) {
@@ -38,7 +38,7 @@ export const LIST_SLOTS: TypedDocumentNode<
 `;
 
 export const LIST_MOVIES_AND_FORMATS: TypedDocumentNode<
-  MoviesListFormatsData,
+  IMoviesListFormatsData,
   QueryListMovieLangByCityArgs
 > = gql`
   query ($city: ID!) {
