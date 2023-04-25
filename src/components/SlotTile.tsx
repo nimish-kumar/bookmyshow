@@ -1,5 +1,6 @@
 import { tw } from "@tailwind";
 import { ISlotTile } from "@types";
+import dayjs from "dayjs";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -36,7 +37,7 @@ export const SlotTile = ({
                 style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-24.66`}
               >
                 <Text style={tw`font-roboto-bold text-green-500`}>
-                  {slot.time}
+                  {dayjs(slot.screeningDatetime).format("hh:mm a")}
                 </Text>
               </View>
             </TouchableOpacity>
