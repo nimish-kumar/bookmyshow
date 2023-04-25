@@ -1,16 +1,16 @@
 import { tw } from "@tailwind";
-import { ISlotTile } from "@types";
+import { ISlotTileProps } from "@types";
 import dayjs from "dayjs";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-export const SlotTile = ({
+const NonMemoizedSlotTile = ({
   theatreName,
   areaName,
   slots,
   cancellationAvailable = false,
   slotSelectHandler,
-}: ISlotTile) => {
+}: ISlotTileProps) => {
   return (
     <View style={tw`px-4 py-4 bg-white`}>
       <View style={tw`flex-col mb-2 justify-center`}>
@@ -58,3 +58,13 @@ export const SlotTile = ({
     </View>
   );
 };
+
+const shouldNotRender = (
+  prevProps: ISlotTileProps,
+  nextProps: ISlotTileProps
+) =>
+  prevProps.areaName === nextProps.areaName &&
+  prevProps.cancellationAvailable === nextProps.cancellationAvailable &&
+  prevProps.theatreName === nextProps.theatreName;
+
+export const SlotTile = React.memo(NonMemoizedSlotTile, shouldNotRender);
