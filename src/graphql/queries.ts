@@ -1,6 +1,11 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
-import { IMoviesListFormatsData, ISlotListData } from "@types";
 import {
+  IMoviesListFormatsData,
+  ISlotDetailsData,
+  ISlotListData,
+} from "@types";
+import {
+  QueryGetSlotDetailsArgs,
   QueryListMovieLangByCityArgs,
   QueryListMovieSlotsByCityDateLangArgs,
 } from "src/__generated__/graphql";
@@ -16,6 +21,7 @@ export const LIST_SLOTS: TypedDocumentNode<
       movie: $movie
       format: $format
     ) {
+      id
       screen {
         theatre {
           id
@@ -56,6 +62,19 @@ export const LIST_MOVIES_AND_FORMATS: TypedDocumentNode<
         formats {
           format
         }
+      }
+    }
+  }
+`;
+
+export const GET_SLOT_DETAILS: TypedDocumentNode<
+  ISlotDetailsData,
+  QueryGetSlotDetailsArgs
+> = gql`
+  query ($id: ID!) {
+    getSlotDetails(id: $id) {
+      screen {
+        layout
       }
     }
   }
