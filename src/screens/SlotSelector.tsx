@@ -247,7 +247,6 @@ export const SlotSelector = () => {
                     ) ?? null
                   );
                 }}
-                // TODO: Add condition for disabled state on CalenderDateTile
                 mode={
                   groupedSlots.find(
                     (s) => s.date === dayjs_dt.format("DD-MM-YYYY")
