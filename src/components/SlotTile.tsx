@@ -42,7 +42,7 @@ const NonMemoizedSlotTile = ({
             <TouchableOpacity
               style={tw`mr-2`}
               key={idx}
-              onPress={slotSelectHandler}
+              onPress={() => slotSelectHandler?.(idx)}
             >
               <View
                 style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-24.66`}
