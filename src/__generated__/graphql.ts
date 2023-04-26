@@ -43,6 +43,7 @@ export type ArtistType = {
 
 export type BookingSlotType = {
   __typename?: 'BookingSlotType';
+  currentLayout?: Maybe<Scalars['String']>;
   format?: Maybe<MovieFormatType>;
   id: Scalars['ID'];
   isFullyBooked: Scalars['Boolean'];
