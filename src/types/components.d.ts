@@ -21,6 +21,8 @@ export type RootStackParamList = {
     movieName: string;
     datetimeList: string[];
     selectedDatetimeIdx: number;
+    theatreName: string;
+    areaName: string;
   };
   SlotSelector: {
     movieId: number;
