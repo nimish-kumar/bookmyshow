@@ -97,6 +97,7 @@ export const SeatSelector = () => {
   }, [selectedTimeSlotIdx]);
   const { loading, error, data } = useQuery(GET_SLOT_DETAILS, {
     variables: { id: `${slotId}` },
+    fetchPolicy: "no-cache",
   });
   const sleep = () => {
     setTimeout(() => {}, 5000);

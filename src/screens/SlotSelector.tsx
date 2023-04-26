@@ -70,7 +70,7 @@ export const SlotSelector = () => {
       language: lang,
       movie: `${movieId}`,
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   const groupedSlots: IGroupedSlot[] = useMemo(() => {
     const modMovieSlots = slotListData?.listMovieSlotsByCityDateLang
