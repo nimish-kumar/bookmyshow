@@ -17,7 +17,6 @@ import React, {
   useEffect,
   useLayoutEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import {
@@ -71,6 +70,7 @@ export const SlotSelector = () => {
       language: lang,
       movie: `${movieId}`,
     },
+    fetchPolicy: "network-only",
   });
   const groupedSlots: IGroupedSlot[] = useMemo(() => {
     const modMovieSlots = slotListData?.listMovieSlotsByCityDateLang
