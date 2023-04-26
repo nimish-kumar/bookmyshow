@@ -39,3 +39,7 @@ export interface IGroupedSlot {
 export interface ISlotDetailsData {
   getSlotDetails: BookingSlotType;
 }
+
+export interface IBookingTicketData {
+  bookTickets: BookingSlotType[];
+}

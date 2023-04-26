@@ -1,6 +1,11 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
-import { IAccessTokenData, IRefreshTokenData } from "@types";
 import {
+  IAccessTokenData,
+  IBookingTicketData,
+  IRefreshTokenData,
+} from "@types";
+import {
+  MutationBookTicketsArgs,
   MutationRefreshTokenArgs,
   MutationTokenAuthArgs,
 } from "src/__generated__/graphql";
@@ -29,6 +34,26 @@ export const REFRESH_TOKEN: TypedDocumentNode<
       refreshExpiresIn
       token
       refreshToken
+    }
+  }
+`;
+
+export const BOOK_TICKETS: TypedDocumentNode<
+  IBookingTicketData,
+  MutationBookTicketsArgs
+> = gql`
+  mutation ($seats: [String], $slotId: ID!) {
+    bookTickets(seats: $seats, slotId: $slotId) {
+      ticketDetails {
+        slotGrp {
+          name
+          grpCode
+        }
+        paidAmt
+        createdAt
+        seatNumber
+        status
+      }
     }
   }
 `;
