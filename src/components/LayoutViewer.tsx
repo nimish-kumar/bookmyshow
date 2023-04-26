@@ -51,7 +51,7 @@ export const LayoutViewer = ({
   return (
     <View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={[{ display: "flex", flex: 1, alignItems: "center" }]}>
+        <View style={[{ display: "flex", flex: 1 }]}>
           {theatreGrps.map((grp, grpIndex) => {
             const rows = grp.rows;
             return (
@@ -96,12 +96,16 @@ export const LayoutViewer = ({
               </SeatRowHeader>
             );
           })}
-          <View
-            style={tw`w-1/3 h-5 shadow-lg shadow-red-600 my-4 border-red-600`}
-          />
-          <Text style={tw`text-xs font-roboto-regular text-gray-500`}>
-            All eyes this way please!
-          </Text>
+          <View style={tw`self-center w-120`}>
+            <View
+              style={tw`w-full h-5 shadow-lg shadow-red-600 my-4 border-red-600`}
+            />
+            <Text
+              style={tw`text-xs font-roboto-regular text-gray-500 text-center`}
+            >
+              All eyes this way please!
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </View>
