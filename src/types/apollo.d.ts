@@ -35,3 +35,7 @@ export interface IGroupedSlot {
   date: string;
   theatreSlots: ITheatreGroupedSlot[] | null;
 }
+
+export interface ISlotDetailsData {
+  getSlotDetails: BookingSlotType;
+}
