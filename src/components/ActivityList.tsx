@@ -9,13 +9,14 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
     <TouchableOpacity
       style={tw`h-full w-32 mr-2 flex-col`}
       onPress={() => {
-        clickHandler?.(activityDetail.id);
+        clickHandler?.(activityDetail.id, activityDetail.title);
       }}
     >
       <Image
         style={tw`h-54 w-auto rounded-lg`}
         resizeMode="contain"
         source={activityDetail.imgSrc}
+        loadingIndicatorSource={activityDetail.imgSrc}
       />
       <View style={tw`px-1`}>
         <Text

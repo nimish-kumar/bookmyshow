@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { GestureResponderEvent } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
+import { BookingSlotType } from "src/__generated__/graphql";
 
 export type BadgeModeType = "default" | "selected";
 export type CalendarTileModeType = "default" | "selected" | "disabled";
@@ -16,15 +17,24 @@ export type RootStackParamList = {
     movieId: number;
     lang: string;
     format: string;
-    slotId: number;
+    slotId: string;
+    movieName: string;
+    datetimeList: string[];
+    selectedDatetimeIdx: number;
+    theatreName: string;
+    areaName: string;
   };
   SlotSelector: {
     movieId: number;
     lang: string;
     format: string;
+    movieName: string;
+    formats: ILanguagesAndFormat[];
   };
   FormatSelector: {
     movieId: number;
+    movieName: string;
+    formats: ILanguagesAndFormat[];
   };
 };
 export type HomeNavigationProps = NativeStackNavigationProp<
@@ -51,7 +61,7 @@ export interface ITitlebarProps {
 
 export interface IActivity {
   id: number;
-  imgSrc: any;
+  imgSrc?: any;
   title: string;
   description?: string;
   additionalInfo?: string;
@@ -59,12 +69,12 @@ export interface IActivity {
 
 export interface IActivityProps {
   activityDetail: IActivity;
-  clickHandler?: (id: number) => void;
+  clickHandler?: (id: number, name: string) => void;
 }
 
 export interface IActivityListProps {
   activities: IActivity[];
-  activityHandler: (id: number) => void;
+  activityHandler: (id: number, name: string) => void;
 }
 export interface IAppBarProps {
   title: string;
@@ -129,12 +139,12 @@ export interface ITimeSlot {
   time: string;
   available?: boolean;
 }
-export interface ISlotTile {
+export interface ISlotTileProps {
   theatreName: string;
   areaName?: string;
   cancellationAvailable?: boolean;
-  slots: ITimeSlot[];
-  slotSelectHandler?: () => void;
+  slots: BookingSlotType[];
+  slotSelectHandler?: (idx: number, slotId: string) => void;
 }
 
 export interface IMoviesListProps {
@@ -158,4 +168,16 @@ export interface IBadgeProps {
 export interface IAuthContext {
   isLoggedIn: boolean;
   setLoggedIn: (loggedIn: boolean) => void;
+}
+
+export interface ILanguagesAndFormat {
+  code: string;
+  lang: string;
+  format: string[];
+}
+export interface ISubmitBtnProps {
+  totalCost: number;
+  bookingTickets: boolean;
+  bookingTicketsData: IBookingTicketData | null | undefined;
+  bookingTicketsError: ApolloError | undefined;
 }
