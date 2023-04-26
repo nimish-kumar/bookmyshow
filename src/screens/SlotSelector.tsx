@@ -17,6 +17,7 @@ import React, {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -72,14 +73,14 @@ export const SlotSelector = () => {
     },
   });
   const groupedSlots: IGroupedSlot[] = useMemo(() => {
-    const modMovieSlots = slotListData?.listMovieSlotsByCityDateLang.map(
-      (e) => {
+    const modMovieSlots = slotListData?.listMovieSlotsByCityDateLang
+      .map((e) => {
         return {
           date: dayjs(e.screeningDatetime).format("DD-MM-YYYY"),
           ...e,
         };
-      }
-    );
+      })
+      .sort((x, y) => dayjs(x.date).unix() - dayjs(y.date).unix());
     const dateGroupedSlots = Array.from(
       new Set(modMovieSlots?.map((e) => e.date))
     ).map((date) => ({
@@ -180,10 +181,6 @@ export const SlotSelector = () => {
   );
 
   useEffect(() => {
-    //clear price range filter if date changes
-    // if (slots?.date) setPriceRangeIdx(null);
-  }, [slots]);
-  useEffect(() => {
     // Filter based on price range and movie da
     if (priceRangeIdx !== null && slots !== null) {
       const maxPrice = priceRanges[priceRangeIdx].maxCost;
@@ -208,7 +205,8 @@ export const SlotSelector = () => {
         }
         return null;
       });
-    } else {
+    }
+    if (slots !== null && priceRangeIdx === null) {
       const selectedDate = slots?.date;
       setSlots(groupedSlots.find((e) => e.date === selectedDate) || null);
     }
@@ -242,6 +240,7 @@ export const SlotSelector = () => {
                 key={idx}
                 datetime={dayjs_dt}
                 selectDateHandler={() => {
+                  setPriceRangeIdx(null);
                   setSlots(
                     groupedSlots.find(
                       (e) => e.date === dayjs_dt.format("DD-MM-YYYY")
