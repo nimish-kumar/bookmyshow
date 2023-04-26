@@ -135,47 +135,53 @@ export const SeatSelector = () => {
   return (
     <SafeAreaView>
       <View style={tw`min-h-full`}>
-        <AppBar
-          title={`${movieName}, ${format}`}
-          subtitle={areaName ? `${theatreName} | ${areaName}` : theatreName}
-          backButton
-          backFunction={navigation.goBack}
-        />
-        <View style={tw`bg-gray-200 h-25 pl-4`}>
-          <Text style={tw`text-sm my-3`}>
-            {dayjs(datetimeList[selectedDatetimeIdx]).format("ddd, DD MMM")}
-          </Text>
-          <ScrollView horizontal>
-            {datetimeList.map((timing, timingIdx) => {
-              return (
-                <TimingBtn
-                  time={dayjs(timing).format("hh:mm A")}
-                  key={timingIdx}
-                  type={
-                    selectedTimeSlotIdx === timingIdx ? "selected" : "default"
-                  }
-                  setTimeSlot={() => setTimeSlotIdx(timingIdx)}
-                />
-              );
-            })}
-          </ScrollView>
+        <View style={tw`z-2 absolute top-0 left-0 right-0`}>
+          <AppBar
+            title={`${movieName}, ${format}`}
+            subtitle={areaName ? `${theatreName} | ${areaName}` : theatreName}
+            backButton
+            backFunction={navigation.goBack}
+          />
+          <View style={tw`bg-gray-200 h-25 pl-4`}>
+            <Text style={tw`text-sm my-3`}>
+              {dayjs(datetimeList[selectedDatetimeIdx]).format("ddd, DD MMM")}
+            </Text>
+            <ScrollView horizontal>
+              {datetimeList.map((timing, timingIdx) => {
+                return (
+                  <TimingBtn
+                    time={dayjs(timing).format("hh:mm A")}
+                    key={timingIdx}
+                    type={
+                      selectedTimeSlotIdx === timingIdx ? "selected" : "default"
+                    }
+                    setTimeSlot={() => setTimeSlotIdx(timingIdx)}
+                  />
+                );
+              })}
+            </ScrollView>
+          </View>
         </View>
-        <LayoutViewer
-          layout={layout}
-          selectedSeatChangeHandler={(seat) => {
-            setSelectedSeats((prevSelectedSeats) => {
-              if (prevSelectedSeats.includes(seat)) {
-                const seatIndex = prevSelectedSeats.indexOf(seat);
-                return [
-                  ...prevSelectedSeats.slice(0, seatIndex),
-                  ...prevSelectedSeats.slice(seatIndex + 1),
-                ];
-              }
-              return [...prevSelectedSeats, seat];
-            });
-          }}
-        />
-        <View style={tw`z-1 absolute bottom-0 bg-white items-center flex-col`}>
+        <ScrollView style={tw`mb-23 mt-40`}>
+          <LayoutViewer
+            layout={layout}
+            selectedSeatChangeHandler={(seat) => {
+              setSelectedSeats((prevSelectedSeats) => {
+                if (prevSelectedSeats.includes(seat)) {
+                  const seatIndex = prevSelectedSeats.indexOf(seat);
+                  return [
+                    ...prevSelectedSeats.slice(0, seatIndex),
+                    ...prevSelectedSeats.slice(seatIndex + 1),
+                  ];
+                }
+                return [...prevSelectedSeats, seat];
+              });
+            }}
+          />
+        </ScrollView>
+        <View
+          style={tw`z-2 absolute bottom-0 left-0 right-0 bg-white items-center flex-col`}
+        >
           <View
             style={tw`py-2 flex-row min-w-full justify-around items-center px-8`}
           >
