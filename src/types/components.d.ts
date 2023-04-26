@@ -175,3 +175,9 @@ export interface ILanguagesAndFormat {
   lang: string;
   format: string[];
 }
+export interface ISubmitBtnProps {
+  totalCost: number;
+  bookingTickets: boolean;
+  bookingTicketsData: IBookingTicketData | null | undefined;
+  bookingTicketsError: ApolloError | undefined;
+}

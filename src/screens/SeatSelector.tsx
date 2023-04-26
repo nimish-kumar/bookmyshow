@@ -1,11 +1,16 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { AppBar, LayoutViewer } from "@components";
-import { GET_SLOT_DETAILS } from "@graphql";
+import { BOOK_TICKETS, GET_SLOT_DETAILS } from "@graphql";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button } from "@rneui/themed";
+import { Button, Icon } from "@rneui/themed";
 import { tw } from "@tailwind";
-import { IGrpDetails, ITimingBtnProp, RootStackParamList } from "@types";
+import {
+  IGrpDetails,
+  ISubmitBtnProps,
+  ITimingBtnProp,
+  RootStackParamList,
+} from "@types";
 import { calculateTotalCost, extractGroupsDetails } from "@utils";
 import dayjs from "dayjs";
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
@@ -32,7 +37,27 @@ const TimingBtn = ({ time, setTimeSlot, type = "default" }: ITimingBtnProp) => {
     </Button>
   );
 };
-
+const SubmitBtnNode = ({
+  totalCost,
+  bookingTickets,
+  bookingTicketsError,
+  bookingTicketsData,
+}: ISubmitBtnProps) => {
+  const BtnPayText = () => (
+    <Text
+      style={tw`text-base ${totalCost === 0 ? "text-slate-400" : "text-white"}`}
+    >
+      Pay ₹ {totalCost}
+    </Text>
+  );
+  const BtnLoader = () => <ActivityIndicator color="white" />;
+  if (bookingTickets) return <BtnLoader />;
+  if (bookingTicketsError) throw Error(bookingTicketsError.message);
+  if (bookingTicketsData) {
+    return <Icon name="check-circle-outline" type="material" color="white" />;
+  }
+  return <BtnPayText />;
+};
 export const SeatSelector = () => {
   const navigation =
     useNavigation<
@@ -57,6 +82,14 @@ export const SeatSelector = () => {
   const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(selectedDatetimeIdx);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
+  const [
+    bookTickets,
+    {
+      loading: bookingTickets,
+      data: bookingTicketsData,
+      error: bookingTicketsError,
+    },
+  ] = useMutation(BOOK_TICKETS);
   // Reset selected seats if time slot is changed
   useEffect(() => {
     setSelectedSeats([]);
@@ -65,6 +98,12 @@ export const SeatSelector = () => {
   const { loading, error, data } = useQuery(GET_SLOT_DETAILS, {
     variables: { id: `${slotId}` },
   });
+  const sleep = () => {
+    setTimeout(() => {}, 5000);
+  };
+  const payTicketsHandler = () => {
+    bookTickets({ variables: { slotId, seats: selectedSeats } });
+  };
   const layout = data?.getSlotDetails.screen.layout || "";
   // Memoize group details as it will not change
   // unless the layout is changed
@@ -93,7 +132,6 @@ export const SeatSelector = () => {
   if (error) {
     throw Error(error.message);
   }
-  console.log("Pay button disabled", totalCost > 0);
   return (
     <SafeAreaView>
       <View style={tw`min-h-full`}>
@@ -160,14 +198,20 @@ export const SeatSelector = () => {
             <Button
               buttonStyle={tw`bg-pink rounded-md h-12 items-center justify-center`}
               disabled={totalCost === 0}
+              onPress={() => {
+                payTicketsHandler();
+                if (!bookingTickets && bookingTicketsData) {
+                  sleep();
+                  // Navigate to booked tickets screen
+                }
+              }}
             >
-              <Text
-                style={tw`text-base ${
-                  totalCost === 0 ? "text-slate-400" : "text-white"
-                }`}
-              >
-                Pay ₹ {totalCost}
-              </Text>
+              <SubmitBtnNode
+                bookingTickets={bookingTickets}
+                bookingTicketsData={bookingTicketsData}
+                bookingTicketsError={bookingTicketsError}
+                totalCost={totalCost}
+              />
             </Button>
           </View>
         </View>
