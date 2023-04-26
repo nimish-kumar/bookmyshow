@@ -7,7 +7,7 @@ export const seatGenerator = (
   row: string,
   col: number,
   seatNumber: number,
-  statusCode?: SeatStatus
+  statusCode: SeatStatus
 ) => {
   if (statusCode) {
     const status = SeatStatusCode[statusCode];
