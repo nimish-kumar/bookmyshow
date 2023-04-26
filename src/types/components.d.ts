@@ -17,7 +17,7 @@ export type RootStackParamList = {
     movieId: number;
     lang: string;
     format: string;
-    slotId: number;
+    slotId: string;
     movieName: string;
     datetimeList: string[];
     selectedDatetimeIdx: number;
@@ -144,7 +144,7 @@ export interface ISlotTileProps {
   areaName?: string;
   cancellationAvailable?: boolean;
   slots: BookingSlotType[];
-  slotSelectHandler?: (idx: number) => void;
+  slotSelectHandler?: (idx: number, slotId: string) => void;
 }
 
 export interface IMoviesListProps {

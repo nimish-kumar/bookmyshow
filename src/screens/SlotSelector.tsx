@@ -308,12 +308,12 @@ export const SlotSelector = () => {
                   areaName={item.areaName}
                   slots={item.timeSlots}
                   theatreName={item.theatreName}
-                  slotSelectHandler={(timeSlotIdx) => {
+                  slotSelectHandler={(timeSlotIdx, slotId) => {
                     navigation.navigate("SeatSelector", {
                       movieId,
                       format: langFormat.format,
                       lang: langFormat.code,
-                      slotId: 0,
+                      slotId,
                       movieName,
                       datetimeList: item.timeSlots.map(
                         (e) => e.screeningDatetime
