@@ -79,6 +79,11 @@ export type CityType = {
   state: MetaCityStateChoices;
 };
 
+export type DirectBookingTicket = {
+  __typename?: 'DirectBookingTicket';
+  ticketDetails?: Maybe<Array<Maybe<BookingType>>>;
+};
+
 export type FacilityType = {
   __typename?: 'FacilityType';
   facilityTheatres: Array<TheatreType>;
@@ -92,11 +97,6 @@ export type GenreType = {
   genreMovies: Array<MovieType>;
   id: Scalars['ID'];
   name: Scalars['String'];
-};
-
-export type InitiateBookingTicket = {
-  __typename?: 'InitiateBookingTicket';
-  ticketDetails?: Maybe<Array<Maybe<BookingType>>>;
 };
 
 export type LanguageFormatType = {
@@ -259,25 +259,16 @@ export enum MoviesBookingStatusChoices {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  initiateBookingTicket?: Maybe<InitiateBookingTicket>;
-  processBooking?: Maybe<ProcessBooking>;
+  bookTickets?: Maybe<DirectBookingTicket>;
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
 };
 
 
-export type MutationInitiateBookingTicketArgs = {
-  movieId: Scalars['ID'];
-  screen: Scalars['String'];
-  screeningDatetime: Scalars['DateTime'];
+export type MutationBookTicketsArgs = {
   seats?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  theatreId: Scalars['ID'];
-};
-
-
-export type MutationProcessBookingArgs = {
-  bookings?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  slotId: Scalars['ID'];
 };
 
 
@@ -300,17 +291,17 @@ export type ObtainJsonWebToken = {
   token: Scalars['String'];
 };
 
-export type ProcessBooking = {
-  __typename?: 'ProcessBooking';
-  ok?: Maybe<Scalars['Boolean']>;
-  ticketDetails?: Maybe<Array<Maybe<BookingType>>>;
-};
-
 export type Query = {
   __typename?: 'Query';
+  getSlotDetails?: Maybe<BookingSlotType>;
   listCities?: Maybe<Array<Maybe<CityType>>>;
   listMovieLangByCity?: Maybe<Array<Maybe<MovieDetailsType>>>;
   listMovieSlotsByCityDateLang?: Maybe<Array<Maybe<BookingSlotType>>>;
+};
+
+
+export type QueryGetSlotDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 
