@@ -181,13 +181,36 @@ export const SlotSelector = () => {
 
   useEffect(() => {
     //clear price range filter if date changes
-    setPriceRangeIdx(null);
+    // if (slots?.date) setPriceRangeIdx(null);
   }, [slots]);
   useEffect(() => {
-    // Filter based on price range and movie date
-    if (priceRangeIdx && slots) {
+    // Filter based on price range and movie da
+    if (priceRangeIdx !== null && slots !== null) {
       const maxPrice = priceRanges[priceRangeIdx].maxCost;
       const minPrice = priceRanges[priceRangeIdx].minCost;
+      setSlots((slot) => {
+        if (slot) {
+          const theatreSlots = [...(slot?.theatreSlots || [])];
+          const costFilteredSlots = theatreSlots
+            .map((e) => {
+              const newSlots = e.timeSlots.filter(
+                (t) =>
+                  (t.maxCost || Number.MIN_SAFE_INTEGER) <= maxPrice &&
+                  minPrice <= (t.minCost || Number.MAX_SAFE_INTEGER)
+              );
+              return {
+                ...e,
+                timeSlots: newSlots,
+              };
+            })
+            .filter((e) => e.timeSlots.length !== 0);
+          return { ...slot, theatreSlots: costFilteredSlots };
+        }
+        return null;
+      });
+    } else {
+      const selectedDate = slots?.date;
+      setSlots(groupedSlots.find((e) => e.date === selectedDate) || null);
     }
   }, [priceRangeIdx]);
 
@@ -279,7 +302,7 @@ export const SlotSelector = () => {
 
         <FlatList
           contentContainerStyle={tw`py-4 px-4`}
-          data={groupedSlots[0]?.theatreSlots}
+          data={slots.theatreSlots}
           renderItem={({ index, item }) => {
             return (
               <View key={index}>
