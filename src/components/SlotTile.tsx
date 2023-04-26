@@ -66,5 +66,6 @@ const shouldNotRender = (
   prevProps.areaName === nextProps.areaName &&
   prevProps.cancellationAvailable === nextProps.cancellationAvailable &&
   prevProps.theatreName === nextProps.theatreName &&
-  prevProps.slots.length === nextProps.slots.length;
+  prevProps.slots.map((e) => e.id).join(" ") ===
+    nextProps.slots.map((e) => e.id).join(" ");
 export const SlotTile = React.memo(NonMemoizedSlotTile, shouldNotRender);
