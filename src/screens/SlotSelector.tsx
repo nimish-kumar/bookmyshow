@@ -319,6 +319,8 @@ export const SlotSelector = () => {
                         (e) => e.screeningDatetime
                       ),
                       selectedDatetimeIdx: timeSlotIdx,
+                      theatreName: item.theatreName,
+                      areaName: item.areaName,
                     });
                   }}
                 />
