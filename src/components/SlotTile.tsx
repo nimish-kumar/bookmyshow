@@ -48,7 +48,7 @@ const NonMemoizedSlotTile = ({
                 style={tw`py-2 mt-2 border border-black border-opacity-60 justify-center items-center rounded-sm w-24.66`}
               >
                 <Text style={tw`font-roboto-bold text-green-500`}>
-                  {dayjs(slot.screeningDatetime).format("hh:mm a")}
+                  {dayjs(slot.screeningDatetime).format("hh:mm A")}
                 </Text>
               </View>
             </TouchableOpacity>
