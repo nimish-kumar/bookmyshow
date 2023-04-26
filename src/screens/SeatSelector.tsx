@@ -10,6 +10,7 @@ import {
   RootStackParamList,
 } from "@types";
 import { calculateTotalCost, extractGroupsDetails } from "@utils";
+import dayjs from "dayjs";
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -56,8 +57,18 @@ export const SeatSelector = () => {
   });
 
   const route = useRoute<RouteProp<RootStackParamList, "SeatSelector">>();
-  const { format, lang, movieId, slotId } = route.params;
-  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(0);
+  const {
+    format,
+    lang,
+    movieId,
+    slotId,
+    datetimeList,
+    movieName,
+    selectedDatetimeIdx,
+    areaName,
+    theatreName,
+  } = route.params;
+  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(selectedDatetimeIdx);
   const layout = timings[selectedTimeSlotIdx].layout;
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
@@ -87,18 +98,20 @@ export const SeatSelector = () => {
   return (
     <View style={tw`min-h-full`}>
       <AppBar
-        title="Movie name"
-        subtitle="Viman Nagar"
+        title={movieName}
+        subtitle={areaName ? `${theatreName} | ${areaName}` : theatreName}
         backButton
         backFunction={navigation.goBack}
       />
       <View style={tw`bg-gray-200 h-25 pl-4`}>
-        <Text style={tw`text-sm my-3`}>Tue, 04 Apr</Text>
+        <Text style={tw`text-sm my-3`}>
+          {dayjs(datetimeList[selectedDatetimeIdx]).format("ddd, DD MMM")}
+        </Text>
         <ScrollView horizontal>
-          {timings.map((timing, timingIdx) => {
+          {datetimeList.map((timing, timingIdx) => {
             return (
               <TimingBtn
-                time={timing.time}
+                time={dayjs(timing).format("hh:mm A")}
                 key={timingIdx}
                 type={
                   selectedTimeSlotIdx === timingIdx ? "selected" : "default"
