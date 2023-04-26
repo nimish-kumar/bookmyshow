@@ -9,7 +9,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
-import { IGroupedSlot, ITheatreGroupedSlot, RootStackParamList } from "@types";
+import { IGroupedSlot, RootStackParamList } from "@types";
 import { PUNE_CITY_ID, addListener, removeListener } from "@utils";
 import dayjs from "dayjs";
 import React, {
@@ -122,20 +122,13 @@ export const SlotSelector = () => {
   }, [slotListData]);
 
   const [langFormat, setLangFormat] = useState({ code: lang, format });
-  const [movieDate, setMovieDate] = useState<string>(
-    dayjs().format("DD-MM-YYYY")
-  );
-  useEffect(() => {
-    if (!slotListLoading && !slotListError) {
-      setMovieDate(groupedSlots.at(0)?.date || dayjs().format("DD-MM-YYYY"));
-    }
-  }, [slotListLoading, slotListError]);
+  const [slots, setSlots] = useState<IGroupedSlot | null>(null);
   const [priceRangeIdx, setPriceRangeIdx] = useState<number | null>(null);
-  const priceDifference = 100;
+
   const generatePriceRanges = useCallback(
     (difference: number) => {
       const activeDateSlot =
-        groupedSlots.find((e) => e.date === movieDate) ?? null;
+        groupedSlots.find((e) => e.date === slots?.date) ?? null;
       if (activeDateSlot) {
         const costs = (
           activeDateSlot?.theatreSlots?.map((e) =>
@@ -159,12 +152,9 @@ export const SlotSelector = () => {
       }
       return [];
     },
-    [priceRangeIdx, movieDate]
+    [priceRangeIdx, slots]
   );
-  const priceRanges = useMemo(
-    () => generatePriceRanges(priceDifference),
-    [movieDate]
-  );
+  const priceRanges = useMemo(() => generatePriceRanges(100), [slots]);
 
   useEffect(() => {
     const changeLangFormat = (lang: string, movieFormat: string) =>
@@ -189,29 +179,22 @@ export const SlotSelector = () => {
     []
   );
 
-  const [slots, setSlots] = useState<ITheatreGroupedSlot[] | null>(null);
   useEffect(() => {
-    setSlots(
-      groupedSlots.find((e) => e.date === movieDate)?.theatreSlots ?? null
-    );
     //clear price range filter if date changes
     setPriceRangeIdx(null);
-  }, [movieDate]);
+  }, [slots]);
   useEffect(() => {
     // Filter based on price range and movie date
     if (priceRangeIdx && slots) {
       const maxPrice = priceRanges[priceRangeIdx].maxCost;
       const minPrice = priceRanges[priceRangeIdx].minCost;
-      const costFilteredSlots = slots.filter((e) =>
-        e.timeSlots.filter(
-          (x) => x.maxCost === maxPrice && x.minCost === minPrice
-        )
-      );
-      setSlots(costFilteredSlots);
     }
   }, [priceRangeIdx]);
 
-  if (slotListLoading) {
+  useEffect(() => {
+    setSlots(groupedSlots[0]);
+  }, [slotListLoading]);
+  if (slotListLoading || !slots) {
     return (
       <SafeAreaView>
         <ActivityIndicator />
@@ -236,14 +219,18 @@ export const SlotSelector = () => {
                 key={idx}
                 datetime={dayjs_dt}
                 selectDateHandler={() => {
-                  setMovieDate(dayjs_dt.format("DD-MM-YYYY"));
+                  setSlots(
+                    groupedSlots.find(
+                      (e) => e.date === dayjs_dt.format("DD-MM-YYYY")
+                    ) ?? null
+                  );
                 }}
                 // TODO: Add condition for disabled state on CalenderDateTile
                 mode={
                   groupedSlots.find(
                     (s) => s.date === dayjs_dt.format("DD-MM-YYYY")
                   )?.theatreSlots ?? null
-                    ? movieDate === dayjs_dt.format("DD-MM-YYYY")
+                    ? slots?.date === dayjs_dt.format("DD-MM-YYYY")
                       ? "selected"
                       : "default"
                     : "disabled"
@@ -292,7 +279,7 @@ export const SlotSelector = () => {
 
         <FlatList
           contentContainerStyle={tw`py-4 px-4`}
-          data={slots}
+          data={groupedSlots[0]?.theatreSlots}
           renderItem={({ index, item }) => {
             return (
               <View key={index}>
