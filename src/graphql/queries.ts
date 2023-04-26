@@ -73,9 +73,7 @@ export const GET_SLOT_DETAILS: TypedDocumentNode<
 > = gql`
   query ($id: ID!) {
     getSlotDetails(id: $id) {
-      screen {
-        layout
-      }
+      currentLayout
     }
   }
 `;

@@ -104,7 +104,7 @@ export const SeatSelector = () => {
   const payTicketsHandler = () => {
     bookTickets({ variables: { slotId, seats: selectedSeats } });
   };
-  const layout = data?.getSlotDetails.screen.layout || "";
+  const layout = data?.getSlotDetails.currentLayout || "|||";
   // Memoize group details as it will not change
   // unless the layout is changed
   const groupDetailsArray = useMemo(() => {
