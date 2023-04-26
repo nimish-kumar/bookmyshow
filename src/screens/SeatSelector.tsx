@@ -13,7 +13,6 @@ import { ActivityIndicator, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 const TimingBtn = ({ time, setTimeSlot, type = "default" }: ITimingBtnProp) => {
   if (type === "selected")
     return (
@@ -94,6 +93,7 @@ export const SeatSelector = () => {
   if (error) {
     throw Error(error.message);
   }
+  console.log("Pay button disabled", totalCost > 0);
   return (
     <SafeAreaView>
       <View style={tw`min-h-full`}>
@@ -159,8 +159,15 @@ export const SeatSelector = () => {
           <View style={tw`min-w-full`}>
             <Button
               buttonStyle={tw`bg-pink rounded-md h-12 items-center justify-center`}
+              disabled={totalCost === 0}
             >
-              <Text style={tw`text-white text-base`}>Pay ₹ {totalCost}</Text>
+              <Text
+                style={tw`text-base ${
+                  totalCost === 0 ? "text-slate-400" : "text-white"
+                }`}
+              >
+                Pay ₹ {totalCost}
+              </Text>
             </Button>
           </View>
         </View>
