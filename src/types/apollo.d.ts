@@ -25,10 +25,6 @@ export interface ISlotListData {
   listMovieSlotsByCityDateLang: BookingSlotType[];
 }
 
-export interface ISlotListWithDates {
-  date: string;
-  theatreSlots: BookingSlotType[] | null;
-}
 export interface ITheatreGroupedSlot {
   theatreId: string;
   theatreName: string;
