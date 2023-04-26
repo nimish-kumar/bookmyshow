@@ -193,7 +193,7 @@ export const SlotSelector = () => {
 
   useEffect(() => {
     setSlots(groupedSlots[0]);
-  }, [slotListLoading]);
+  }, [slotListLoading, langFormat]);
   if (slotListLoading || !slots) {
     return (
       <SafeAreaView>
