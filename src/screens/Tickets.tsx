@@ -1,7 +1,8 @@
-import { AppBar } from "@components";
+import { AppBar, Ticket } from "@components";
 import { useNavigation } from "@react-navigation/native";
+import { tw } from "@tailwind";
 import React, { useLayoutEffect } from "react";
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Tickets = () => {
@@ -15,9 +16,9 @@ export const Tickets = () => {
   return (
     <SafeAreaView>
       <AppBar title="Tickets" />
-      <View>
-        <Text>Tickets</Text>
-      </View>
+      <ScrollView style={tw`px-3`}>
+        <Ticket />
+      </ScrollView>
     </SafeAreaView>
   );
 };
