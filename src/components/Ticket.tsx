@@ -6,9 +6,9 @@ import { Image, View } from "react-native";
 
 export const Ticket = () => {
   return (
-    <View style={tw`py-2 flex-row justify-between border`}>
+    <View style={tw`py-2 flex-row justify-between`}>
       <View style={tw`items-center w-1/3`}>
-        <Image source={AvatarTile} style={tw`h-54 w-32 rounded-lg`} />
+        <Image source={AvatarTile} style={tw`h-50 w-30 rounded-lg`} />
       </View>
       <View style={tw`w-2/3 justify-center ml-6`}>
         <Text style={tw`font-roboto-bold text-xl text-green-600`}>Booked</Text>
