@@ -7,7 +7,6 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
 import { IGroupedSlot, RootStackParamList } from "@types";
 import { PUNE_CITY_ID, addListener, removeListener } from "@utils";
@@ -30,11 +29,10 @@ import {
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { HomeNavigationProps } from "./Home";
+
 export const SlotSelector = () => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, "SlotSelector">
-    >();
+  const navigation = useNavigation<HomeNavigationProps>();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,

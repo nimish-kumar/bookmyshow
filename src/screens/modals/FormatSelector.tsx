@@ -1,4 +1,10 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
 import { PanGestureContextType, RootStackParamList } from "@types";
@@ -16,15 +22,18 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { TabNavigatorParamsList } from "src/navigation/TabNavigator";
 
 import { Backdrop } from "../../components/Backdrop";
 import { Badge } from "../../components/Badge";
 
+export type SlotSelectorNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<RootStackParamList, "SlotSelector">,
+  BottomTabNavigationProp<TabNavigatorParamsList, "Home">
+>;
+
 export const FormatSelector = () => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, "Home" | "FormatSelector">
-    >();
+  const navigation = useNavigation<SlotSelectorNavigationProp>();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,

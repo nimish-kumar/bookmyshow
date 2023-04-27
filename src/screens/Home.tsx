@@ -4,12 +4,23 @@ import {
   MoviesList,
   Titlebar,
 } from "@components";
-import { useNavigation } from "@react-navigation/native";
+import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
-import { HomeNavigationProps } from "@types";
+import { RootStackParamList } from "@types";
 import React, { useLayoutEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { TabNavigatorParamsList } from "src/navigation/TabNavigator";
+
+export type HomeNavigationProps = CompositeNavigationProp<
+  BottomTabNavigationProp<TabNavigatorParamsList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 export const Home = () => {
   const navigation = useNavigation<HomeNavigationProps>();
