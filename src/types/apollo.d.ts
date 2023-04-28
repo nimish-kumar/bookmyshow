@@ -43,3 +43,7 @@ export interface ISlotDetailsData {
 export interface IBookingTicketData {
   bookTickets: BookingSlotType[];
 }
+
+export interface IListBookingDetailsData {
+  listBookingDetails: PaginatedBookingType;
+}

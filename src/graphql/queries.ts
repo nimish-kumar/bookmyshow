@@ -1,11 +1,13 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
 import {
+  IListBookingDetailsData,
   IMoviesListFormatsData,
   ISlotDetailsData,
   ISlotListData,
 } from "@types";
 import {
   QueryGetSlotDetailsArgs,
+  QueryListBookingDetailsArgs,
   QueryListMovieLangByCityArgs,
   QueryListMovieSlotsByCityDateLangArgs,
 } from "src/__generated__/graphql";
@@ -74,6 +76,44 @@ export const GET_SLOT_DETAILS: TypedDocumentNode<
   query ($id: ID!) {
     getSlotDetails(id: $id) {
       currentLayout
+    }
+  }
+`;
+
+export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
+  IListBookingDetailsData,
+  QueryListBookingDetailsArgs
+> = gql`
+  query ($page: Int!, $limit: Int!) {
+    listBookingDetails(page: $page, limit: $limit) {
+      prevPage
+      nextPage
+      count
+      results {
+        id
+        slotGrp {
+          name
+          grpCode
+          slot {
+            movie {
+              name
+            }
+            format {
+              format
+            }
+            screen {
+              theatre {
+                name
+                areaName
+              }
+              screenId
+            }
+          }
+        }
+        seatNumber
+        status
+        row
+      }
     }
   }
 `;
