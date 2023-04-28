@@ -6,7 +6,7 @@ import { Divider } from "@rneui/themed";
 import { tw } from "@tailwind";
 import dayjs from "dayjs";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, ImageSourcePropType } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BookingType } from "src/__generated__/graphql";
 
@@ -46,6 +46,10 @@ export const Tickets = () => {
         renderItem={({ item: booking, index }) => (
           <Ticket
             bookingId={booking?.id || "-1"}
+            posterUrl={
+              (booking?.slotGrp.slot.movie.posterUrl ||
+                null) as ImageSourcePropType
+            }
             movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
             movieLang={booking?.slotGrp.slot.lang.name || "Hindi"}
             movieName={booking?.slotGrp.slot.movie.name || "Movie name"}

@@ -1,13 +1,13 @@
-import { AvatarTile } from "@assets";
 import { Divider, Text } from "@rneui/themed";
 import { tw } from "@tailwind";
 import dayjs from "dayjs";
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, ImageSourcePropType, View } from "react-native";
 interface ITicketProps {
   bookingId: string;
   movieName: string;
   movieLang: string;
+  posterUrl: ImageSourcePropType;
   movieFormat: string;
   screeningDatetime: string;
   theatreArea: string;
@@ -20,6 +20,7 @@ export const Ticket = ({
   bookingId,
   movieName,
   movieLang,
+  posterUrl,
   movieFormat,
   screeningDatetime,
   theatreArea,
@@ -33,7 +34,7 @@ export const Ticket = ({
       style={tw`py-2 flex-row justify-between px-4 rounded-xl bg-green-100`}
     >
       <View style={tw`items-center w-1/3`}>
-        <Image source={AvatarTile} style={tw`h-50 w-30 rounded-lg`} />
+        <Image source={posterUrl} style={tw`h-50 w-30 rounded-lg`} />
       </View>
       <View style={tw`w-2/3 justify-center ml-6`}>
         <Text
