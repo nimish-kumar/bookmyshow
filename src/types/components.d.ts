@@ -10,7 +10,10 @@ export type CalendarTileModeType = "default" | "selected" | "disabled";
 export type PanGestureContextType = {
   translateY: number;
 };
-
+export type SlotType = {
+  slotId: string;
+  datetime: string;
+};
 export type RootStackParamList = {
   Startup: undefined;
   Main: undefined;
@@ -20,7 +23,7 @@ export type RootStackParamList = {
     format: string;
     slotId: string;
     movieName: string;
-    datetimeList: string[];
+    slotList: SlotType[];
     selectedDatetimeIdx: number;
     theatreName: string;
     areaName: string;
