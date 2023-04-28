@@ -1,50 +1,9 @@
-import { Image } from "@rneui/themed";
 import { tw } from "@tailwind";
-import { IActivityListProps, IActivityProps } from "@types";
+import { IActivityListProps } from "@types";
 import React from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native";
 
-const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
-  return (
-    <TouchableOpacity
-      style={tw`h-full w-32 mr-2 flex-col`}
-      onPress={() => {
-        clickHandler?.(activityDetail.id, activityDetail.title);
-      }}
-    >
-      <Image
-        style={tw`h-54 w-auto rounded-lg`}
-        resizeMode="contain"
-        source={activityDetail.imgSrc}
-      />
-      <View style={tw`px-1`}>
-        <Text
-          style={tw`flex-wrap font-roboto-regular text-sm max-h-12 h-auto`}
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
-          {activityDetail.title}
-        </Text>
-        {activityDetail?.description && (
-          <Text
-            style={tw`font-roboto-regular text-slate-500 text-sm`}
-            numberOfLines={1}
-          >
-            {activityDetail.description}
-          </Text>
-        )}
-        {activityDetail?.additionalInfo && (
-          <Text
-            style={tw`font-roboto-regular text-slate-500 text-xs`}
-            numberOfLines={1}
-          >
-            {activityDetail.additionalInfo}
-          </Text>
-        )}
-      </View>
-    </TouchableOpacity>
-  );
-};
+import { ActivityTile } from "./ActivityTile";
 
 export const ActivityList = ({
   activities,
@@ -57,7 +16,7 @@ export const ActivityList = ({
       showsHorizontalScrollIndicator={false}
       style={tw`h-auto mt-4`}
       renderItem={({ item: activity }) => (
-        <Activity
+        <ActivityTile
           key={activity.id}
           activityDetail={activity}
           clickHandler={activityHandler}
