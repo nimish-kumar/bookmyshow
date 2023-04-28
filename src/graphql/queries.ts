@@ -96,6 +96,7 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
           name
           grpCode
           slot {
+            screeningDatetime
             movie {
               name
               posterUrl
