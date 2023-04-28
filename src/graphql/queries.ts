@@ -98,6 +98,9 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
             movie {
               name
             }
+            lang {
+              name
+            }
             format {
               format
             }
