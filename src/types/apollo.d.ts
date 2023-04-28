@@ -2,6 +2,7 @@ import {
   BookingSlotType,
   MovieDetailsType,
   ObtainJsonWebToken,
+  PaginatedBookingType,
   Refresh,
 } from "src/__generated__/graphql";
 
