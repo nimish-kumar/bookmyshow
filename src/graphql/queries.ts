@@ -55,6 +55,7 @@ export const LIST_MOVIES_AND_FORMATS: TypedDocumentNode<
       movie {
         id
         name
+        posterUrl
       }
       langs {
         lang {
@@ -97,6 +98,7 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
           slot {
             movie {
               name
+              posterUrl
             }
             lang {
               name

@@ -237,6 +237,7 @@ export type MovieType = {
   movieSlots: Array<BookingSlotType>;
   movieTrailers: Array<TrailerUrlType>;
   name: Scalars['String'];
+  posterUrl?: Maybe<Scalars['String']>;
   releaseDate: Scalars['Date'];
   subtitlesLang: Array<LanguageType>;
 };
