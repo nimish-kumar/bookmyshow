@@ -15,11 +15,15 @@ export const ActivityTile = ({
         clickHandler?.(activityDetail.id, activityDetail.title);
       }}
     >
-      <Image
-        style={tw`h-54 w-auto rounded-lg`}
-        resizeMode="contain"
-        source={activityDetail.imgSrc}
-      />
+      {activityDetail.imgSrc ? (
+        <Image
+          style={tw`h-54 w-auto rounded-lg`}
+          resizeMode="contain"
+          source={activityDetail.imgSrc}
+        />
+      ) : (
+        <View style={tw`h-54 w-auto rounded-lg bg-gray-300`} />
+      )}
       <View style={tw`px-1`}>
         <Text
           style={tw`flex-wrap font-roboto-regular text-sm max-h-12 h-auto`}
