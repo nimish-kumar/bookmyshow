@@ -75,11 +75,13 @@ export const SeatSelector = () => {
     slotId,
     slotList,
     movieName,
-    selectedDatetimeIdx,
+    selectedSlotId,
     areaName,
     theatreName,
   } = route.params;
-  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(selectedDatetimeIdx);
+  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(
+    slotList.findIndex((e) => e.slotId === selectedSlotId)
+  );
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const [
@@ -144,7 +146,7 @@ export const SeatSelector = () => {
           />
           <View style={tw`bg-gray-200 h-25 pl-4`}>
             <Text style={tw`text-sm my-3`}>
-              {dayjs(slotList[selectedDatetimeIdx].datetime).format(
+              {dayjs(slotList[selectedTimeSlotIdx].datetime).format(
                 "ddd, DD MMM"
               )}
             </Text>

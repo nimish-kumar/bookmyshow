@@ -317,7 +317,7 @@ export const SlotSelector = () => {
                         slotId: e.id,
                         datetime: e.screeningDatetime,
                       })),
-                      selectedDatetimeIdx: timeSlotIdx,
+                      selectedSlotId: slotId,
                       theatreName: item.theatreName,
                       areaName: item.areaName,
                     });
