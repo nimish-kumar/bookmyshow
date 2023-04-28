@@ -11,7 +11,11 @@ import {
   ITimingBtnProp,
   RootStackParamList,
 } from "@types";
-import { calculateTotalCost, extractGroupsDetails } from "@utils";
+import {
+  SeatStatusCode,
+  calculateTotalCost,
+  extractGroupsDetails,
+} from "@utils";
 import dayjs from "dayjs";
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
@@ -111,7 +115,10 @@ export const SeatSelector = () => {
     setTimeout(() => {}, 5000);
   };
   const payTicketsHandler = () => {
-    bookTickets({ variables: { slotId, seats: selectedSeats } });
+    // Prepending seat code with seats since selected seats doesn't have
+    // status code with the seat
+    const seats = selectedSeats.map((e) => `${SeatStatusCode.available}${e}`);
+    bookTickets({ variables: { slotId, seats } });
   };
   const layout = data?.getSlotDetails.currentLayout || "|||";
   // Memoize group details as it will not change
