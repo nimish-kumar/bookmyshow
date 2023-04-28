@@ -3,6 +3,7 @@ import { GestureResponderEvent } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import { BookingSlotType } from "src/__generated__/graphql";
+import { HomeNavigationProps } from "@screens";
 
 export type BadgeModeType = "default" | "selected";
 export type CalendarTileModeType = "default" | "selected" | "disabled";
@@ -12,7 +13,7 @@ export type PanGestureContextType = {
 
 export type RootStackParamList = {
   Startup: undefined;
-  Home: undefined;
+  Main: undefined;
   SeatSelector: {
     movieId: number;
     lang: string;
@@ -37,10 +38,6 @@ export type RootStackParamList = {
     formats: ILanguagesAndFormat[];
   };
 };
-export type HomeNavigationProps = NativeStackNavigationProp<
-  RootStackParamList,
-  "Home"
->;
 
 export type StartupNavigationProp = NativeStackNavigationProp<
   RootStackParamList,

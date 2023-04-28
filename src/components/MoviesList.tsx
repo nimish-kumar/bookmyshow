@@ -34,6 +34,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
+        imgSrc: movie?.posterUrl || null,
       };
     }) || [];
   const clickHandler = (id: number, name: string) => {

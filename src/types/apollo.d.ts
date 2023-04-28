@@ -2,6 +2,7 @@ import {
   BookingSlotType,
   MovieDetailsType,
   ObtainJsonWebToken,
+  PaginatedBookingType,
   Refresh,
 } from "src/__generated__/graphql";
 
@@ -42,4 +43,8 @@ export interface ISlotDetailsData {
 
 export interface IBookingTicketData {
   bookTickets: BookingSlotType[];
+}
+
+export interface IListBookingDetailsData {
+  listBookingDetails: PaginatedBookingType;
 }
