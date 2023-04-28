@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, ImageSourcePropType } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import { BookingSlotType } from "src/__generated__/graphql";
@@ -61,7 +61,7 @@ export interface ITitlebarProps {
 
 export interface IActivity {
   id: number;
-  imgSrc?: any;
+  imgSrc: ImageSourcePropType;
   title: string;
   description?: string;
   additionalInfo?: string;

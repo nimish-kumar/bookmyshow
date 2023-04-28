@@ -3,7 +3,7 @@ import { LIST_MOVIES_AND_FORMATS } from "@graphql";
 import { IActivity, ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, ImageSourcePropType } from "react-native";
 
 import { ActivityList } from "./ActivityList";
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
@@ -34,7 +34,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
-        imgSrc: movie?.posterUrl || null,
+        imgSrc: movie?.posterUrl as ImageSourcePropType,
       };
     }) || [];
   const clickHandler = (id: number, name: string) => {
