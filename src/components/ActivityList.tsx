@@ -2,7 +2,13 @@ import { Image } from "@rneui/themed";
 import { tw } from "@tailwind";
 import { IActivityListProps, IActivityProps } from "@types";
 import React from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
   return (
@@ -15,7 +21,7 @@ const Activity = ({ activityDetail, clickHandler }: IActivityProps) => {
       <Image
         style={tw`h-54 w-auto rounded-lg`}
         resizeMode="contain"
-        source={activityDetail.imgSrc}
+        source={activityDetail.imgSrc as ImageSourcePropType}
         loadingIndicatorSource={activityDetail.imgSrc}
       />
       <View style={tw`px-1`}>
