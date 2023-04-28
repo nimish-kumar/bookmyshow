@@ -34,7 +34,11 @@ export const Ticket = ({
       style={tw`py-2 flex-row justify-between px-4 rounded-xl bg-green-100`}
     >
       <View style={tw`items-center w-1/3`}>
-        <Image source={posterUrl} style={tw`h-50 w-30 rounded-lg`} />
+        <Image
+          source={posterUrl}
+          style={tw`h-50 w-30 rounded-lg`}
+          resizeMode="contain"
+        />
       </View>
       <View style={tw`w-2/3 justify-center ml-6`}>
         <Text
