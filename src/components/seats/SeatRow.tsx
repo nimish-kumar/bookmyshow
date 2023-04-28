@@ -6,6 +6,7 @@ import {
   hasRowStarted,
   isAisle,
   prependSeatRow,
+  seatGenerator,
 } from "@utils";
 import React from "react";
 import { Text, View } from "react-native";
@@ -53,7 +54,14 @@ const NonMemoizedSeatRow = ({
 
                 // Keeps track of selected seats
                 if (updateSelectedSeats) {
-                  updateSelectedSeats(seat);
+                  updateSelectedSeats(
+                    seatGenerator(
+                      seatDetails.seatGrpCode,
+                      seatDetails.seatRow,
+                      seatDetails.seatCol,
+                      seatDetails.seatNumber
+                    )
+                  );
                 }
               }}
             />
