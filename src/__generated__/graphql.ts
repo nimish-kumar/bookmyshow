@@ -67,8 +67,6 @@ export type BookingType = {
   seatNumber: Scalars['Int'];
   slotGrp: SlotGroupType;
   status: MoviesBookingStatusChoices;
-  transactionId?: Maybe<Scalars['String']>;
-  updatedAt: Scalars['DateTime'];
 };
 
 export type CityType = {
@@ -292,9 +290,18 @@ export type ObtainJsonWebToken = {
   token: Scalars['String'];
 };
 
+export type PaginatedBookingType = {
+  __typename?: 'PaginatedBookingType';
+  count?: Maybe<Scalars['Int']>;
+  nextPage?: Maybe<Scalars['Int']>;
+  prevPage?: Maybe<Scalars['Int']>;
+  results?: Maybe<Array<Maybe<BookingType>>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getSlotDetails?: Maybe<BookingSlotType>;
+  listBookingDetails?: Maybe<PaginatedBookingType>;
   listCities?: Maybe<Array<Maybe<CityType>>>;
   listMovieLangByCity?: Maybe<Array<Maybe<MovieDetailsType>>>;
   listMovieSlotsByCityDateLang?: Maybe<Array<Maybe<BookingSlotType>>>;
@@ -303,6 +310,12 @@ export type Query = {
 
 export type QueryGetSlotDetailsArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryListBookingDetailsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  page: Scalars['Int'];
 };
 
 
