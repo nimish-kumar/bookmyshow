@@ -14,6 +14,7 @@ import {
   setAccessToken,
   setRefreshExpiryTime,
   setRefreshToken,
+  setUserDetails,
 } from "@utils";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { View } from "react-native";
@@ -94,10 +95,19 @@ export const Startup = () => {
     if (!fetchingAccessToken && accessTokenData?.tokenAuth) {
       const atPromise = setAccessToken(accessTokenData.tokenAuth.token);
       const rtPromise = setRefreshToken(accessTokenData.tokenAuth.refreshToken);
+      const userDetailsPromise = setUserDetails(
+        null,
+        accessTokenData.tokenAuth.payload["email"]
+      );
       const rtExpiryTimePromise = setRefreshExpiryTime(
         accessTokenData.tokenAuth.refreshExpiresIn
       );
-      Promise.all([atPromise, rtPromise, rtExpiryTimePromise])
+      Promise.all([
+        atPromise,
+        rtPromise,
+        rtExpiryTimePromise,
+        userDetailsPromise,
+      ])
         .then(() => {
           setSplashVisibility(true);
           setLoggedIn(true);
@@ -131,10 +141,19 @@ export const Startup = () => {
       const rtPromise = setRefreshToken(
         refreshTokenData.refreshToken.refreshToken
       );
+      const userDetailsPromise = setUserDetails(
+        null,
+        refreshTokenData.refreshToken.payload["email"]
+      );
       const rtExpiryTimePromise = setRefreshExpiryTime(
         refreshTokenData.refreshToken.refreshExpiresIn
       );
-      Promise.all([atPromise, rtPromise, rtExpiryTimePromise])
+      Promise.all([
+        atPromise,
+        rtPromise,
+        rtExpiryTimePromise,
+        userDetailsPromise,
+      ])
         .then(() => {
           setSplashVisibility(true);
           setLoggedIn(true);

@@ -17,3 +17,8 @@ export interface IGrpDetails {
   rows: IRowDetails[];
 }
 export type SeatStatus = keyof typeof SeatStatusCode;
+
+export interface IUserDetails {
+  userEmail: string | null;
+  userName: string | null;
+}

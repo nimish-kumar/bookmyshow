@@ -1,4 +1,5 @@
-import { IPayload } from "@types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IPayload, IUserDetails } from "@types";
 import dayjs from "dayjs";
 import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
@@ -35,4 +36,32 @@ export const getRefreshExpiryTime = async () => {
 };
 export const setRefreshExpiryTime = async (expTimestamp: number) => {
   await SecureStore.setItemAsync("refreshExpiresIn", `${expTimestamp}`);
+};
+
+export const setUserDetails = async (name: string | null, email: string) => {
+  await AsyncStorage.multiSet([
+    ["user_email", email],
+    ["user_name", name ?? ""],
+  ]);
+};
+
+export const getUserDetails = async (): Promise<IUserDetails> => {
+  const values = await AsyncStorage.multiGet(["user_email", "user_name"]);
+  return {
+    userEmail: values[0][1],
+    userName: values[1][1],
+  };
+};
+
+export const removeSecureStoreKeys = async () => {
+  const deleteAt = SecureStore.deleteItemAsync("accessToken");
+  const deleteRt = SecureStore.deleteItemAsync("refreshToken");
+  const deleteRte = SecureStore.deleteItemAsync("refreshExpiresIn");
+  return Promise.all([deleteAt, deleteRt, deleteRte])
+    .then(() => true)
+    .catch(() => false);
+};
+
+export const emptyAsyncStorage = async () => {
+  await AsyncStorage.clear();
 };
