@@ -26,7 +26,7 @@ export const Tickets = () => {
     }
   }, [loading]);
   useEffect(() => {
-    fetchBookings({ variables: { page, limit: 10 } });
+    fetchBookings({ variables: { page, limit: 10 }, fetchPolicy: "no-cache" });
   }, [page]);
   useLayoutEffect(() => {
     navigation.setOptions({
