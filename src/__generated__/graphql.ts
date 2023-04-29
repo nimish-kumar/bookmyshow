@@ -299,12 +299,20 @@ export type PaginatedBookingType = {
   results?: Maybe<Array<Maybe<BookingType>>>;
 };
 
+export type PaginatedMoviesListFormats = {
+  __typename?: 'PaginatedMoviesListFormats';
+  count?: Maybe<Scalars['Int']>;
+  nextPage?: Maybe<Scalars['Int']>;
+  prevPage?: Maybe<Scalars['Int']>;
+  results?: Maybe<Array<Maybe<MovieDetailsType>>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getSlotDetails?: Maybe<BookingSlotType>;
   listBookingDetails?: Maybe<PaginatedBookingType>;
   listCities?: Maybe<Array<Maybe<CityType>>>;
-  listMovieLangByCity?: Maybe<Array<Maybe<MovieDetailsType>>>;
+  listMovieLangByCity?: Maybe<PaginatedMoviesListFormats>;
   listMovieSlotsByCityDateLang?: Maybe<Array<Maybe<BookingSlotType>>>;
 };
 
@@ -322,6 +330,8 @@ export type QueryListBookingDetailsArgs = {
 
 export type QueryListMovieLangByCityArgs = {
   city: Scalars['ID'];
+  limit?: InputMaybe<Scalars['Int']>;
+  page: Scalars['Int'];
 };
 
 

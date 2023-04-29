@@ -50,20 +50,25 @@ export const LIST_MOVIES_AND_FORMATS: TypedDocumentNode<
   IMoviesListFormatsData,
   QueryListMovieLangByCityArgs
 > = gql`
-  query ($city: ID!) {
-    listMovieLangByCity(city: $city) {
-      movie {
-        id
-        name
-        posterUrl
-      }
-      langs {
-        lang {
+  query ($city: ID!, $page: Int!, $limit: Int!) {
+    listMovieLangByCity(city: $city, page: $page, limit: $limit) {
+      prevPage
+      nextPage
+      count
+      results {
+        movie {
+          id
           name
-          langCode
+          posterUrl
         }
-        formats {
-          format
+        langs {
+          lang {
+            name
+            langCode
+          }
+          formats {
+            format
+          }
         }
       }
     }
@@ -96,6 +101,7 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
           name
           grpCode
           slot {
+            screeningDatetime
             movie {
               name
               posterUrl

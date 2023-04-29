@@ -26,7 +26,7 @@ export const Tickets = () => {
     }
   }, [loading]);
   useEffect(() => {
-    fetchBookings({ variables: { page, limit: 10 } });
+    fetchBookings({ variables: { page, limit: 10 }, fetchPolicy: "no-cache" });
   }, [page]);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -69,7 +69,9 @@ export const Tickets = () => {
         )}
         keyExtractor={(item) => item?.id || "key"}
         refreshing={loading}
-        onEndReached={() => setPage((p) => p + 1)}
+        onEndReached={() => {
+          if (data?.listBookingDetails.count !== 0) setPage((p) => p + 1);
+        }}
         onEndReachedThreshold={1}
         scrollsToTop={false}
       />

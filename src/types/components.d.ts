@@ -1,5 +1,9 @@
 import { PropsWithChildren } from "react";
-import { GestureResponderEvent } from "react-native";
+import {
+  GestureResponderEvent,
+  ImageSourcePropType,
+  StyleProp,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import { BookingSlotType } from "src/__generated__/graphql";
@@ -10,7 +14,10 @@ export type CalendarTileModeType = "default" | "selected" | "disabled";
 export type PanGestureContextType = {
   translateY: number;
 };
-
+export type SlotType = {
+  slotId: string;
+  datetime: string;
+};
 export type RootStackParamList = {
   Startup: undefined;
   Main: undefined;
@@ -20,11 +27,12 @@ export type RootStackParamList = {
     format: string;
     slotId: string;
     movieName: string;
-    datetimeList: string[];
-    selectedDatetimeIdx: number;
+    slotList: SlotType[];
+    selectedSlotId: string;
     theatreName: string;
     areaName: string;
   };
+  AllMovies: undefined;
   SlotSelector: {
     movieId: number;
     lang: string;
@@ -58,7 +66,7 @@ export interface ITitlebarProps {
 
 export interface IActivity {
   id: number;
-  imgSrc?: any;
+  imgSrc: ImageSourcePropType;
   title: string;
   description?: string;
   additionalInfo?: string;
@@ -66,12 +74,14 @@ export interface IActivity {
 
 export interface IActivityProps {
   activityDetail: IActivity;
-  clickHandler?: (id: number, name: string) => void;
+  clickHandler: () => void;
+  imageStyle?: StyleProp;
+  style?: StyleProp;
 }
 
 export interface IActivityListProps {
   activities: IActivity[];
-  activityHandler: (id: number, name: string) => void;
+  activityHandler: () => void;
 }
 export interface IAppBarProps {
   title: string;

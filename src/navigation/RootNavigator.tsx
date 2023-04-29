@@ -1,6 +1,12 @@
 import { AuthContext } from "@context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FormatSelector, SeatSelector, SlotSelector, Startup } from "@screens";
+import {
+  AllMovies,
+  FormatSelector,
+  SeatSelector,
+  SlotSelector,
+  Startup,
+} from "@screens";
 import { RootStackParamList } from "@types";
 import React, { useContext } from "react";
 
@@ -13,6 +19,7 @@ const AppNavigator = () => {
     <RootStack.Navigator initialRouteName="Main">
       <RootStack.Group>
         <RootStack.Screen name="Main" component={TabNavigator} />
+        <RootStack.Screen name="AllMovies" component={AllMovies} />
         <RootStack.Screen name="SeatSelector" component={SeatSelector} />
         <RootStack.Screen name="SlotSelector" component={SlotSelector} />
       </RootStack.Group>

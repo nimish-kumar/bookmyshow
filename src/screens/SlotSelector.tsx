@@ -313,10 +313,11 @@ export const SlotSelector = () => {
                       lang: langFormat.code,
                       slotId,
                       movieName,
-                      datetimeList: item.timeSlots.map(
-                        (e) => e.screeningDatetime
-                      ),
-                      selectedDatetimeIdx: timeSlotIdx,
+                      slotList: item.timeSlots.map((e) => ({
+                        slotId: e.id,
+                        datetime: e.screeningDatetime,
+                      })),
+                      selectedSlotId: slotId,
                       theatreName: item.theatreName,
                       areaName: item.areaName,
                     });

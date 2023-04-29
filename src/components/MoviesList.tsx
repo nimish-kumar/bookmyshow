@@ -1,18 +1,20 @@
 import { useQuery } from "@apollo/client";
 import { LIST_MOVIES_AND_FORMATS } from "@graphql";
-import { IActivity, ILanguagesAndFormat, IMoviesListProps } from "@types";
+import { tw } from "@tailwind";
+import { ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, FlatList, ImageSourcePropType } from "react-native";
 
-import { ActivityList } from "./ActivityList";
+import { ActivityTile } from "./ActivityTile";
+
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
   const {
     data: moviesList,
     error: moviesError,
     loading: moviesLoading,
   } = useQuery(LIST_MOVIES_AND_FORMATS, {
-    variables: { city: PUNE_CITY_ID },
+    variables: { city: PUNE_CITY_ID, page: 1, limit: 5 },
   });
   if (moviesLoading) {
     return <ActivityIndicator />;
@@ -20,10 +22,12 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
   if (moviesError) {
     throw Error(moviesError.message);
   }
-  let formats: ILanguagesAndFormat[] | null = null;
-  const movies: IActivity[] =
-    moviesList?.listMovieLangByCity.map(({ movie, langs }) => {
-      formats =
+
+  const movies =
+    moviesList?.listMovieLangByCity.results?.map((e) => {
+      const movie = e?.movie;
+      const langs = e?.langs;
+      const formats: ILanguagesAndFormat[] =
         langs?.map((d) => {
           return {
             code: d?.lang?.langCode || DEFAULT_MOVIE_LANG.code,
@@ -34,17 +38,34 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
-        imgSrc: movie?.posterUrl || null,
+        imgSrc: movie?.posterUrl as ImageSourcePropType,
+        formats,
       };
     }) || [];
-  const clickHandler = (id: number, name: string) => {
-    if (formats)
-      navigation.navigate("FormatSelector", {
-        movieId: id,
-        movieName: name,
-        formats,
-      });
+  const clickHandler = (
+    id: number,
+    name: string,
+    formats: ILanguagesAndFormat[]
+  ) => {
+    navigation.navigate("FormatSelector", {
+      movieId: id,
+      movieName: name,
+      formats,
+    });
   };
-
-  return <ActivityList activities={movies} activityHandler={clickHandler} />;
+  return (
+    <FlatList
+      horizontal
+      data={movies}
+      showsHorizontalScrollIndicator={false}
+      style={tw`h-auto mt-4`}
+      renderItem={({ item }) => (
+        <ActivityTile
+          key={item.id}
+          activityDetail={item}
+          clickHandler={() => clickHandler(item.id, item.title, item.formats)}
+        />
+      )}
+    />
+  );
 };

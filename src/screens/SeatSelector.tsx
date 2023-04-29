@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { AppBar, LayoutViewer } from "@components";
 import { BOOK_TICKETS, GET_SLOT_DETAILS } from "@graphql";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -11,7 +11,11 @@ import {
   ITimingBtnProp,
   RootStackParamList,
 } from "@types";
-import { calculateTotalCost, extractGroupsDetails } from "@utils";
+import {
+  SeatStatusCode,
+  calculateTotalCost,
+  extractGroupsDetails,
+} from "@utils";
 import dayjs from "dayjs";
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
@@ -73,13 +77,15 @@ export const SeatSelector = () => {
   const {
     format,
     slotId,
-    datetimeList,
+    slotList,
     movieName,
-    selectedDatetimeIdx,
+    selectedSlotId,
     areaName,
     theatreName,
   } = route.params;
-  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(selectedDatetimeIdx);
+  const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(
+    slotList.findIndex((e) => e.slotId === selectedSlotId)
+  );
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const [
@@ -90,20 +96,29 @@ export const SeatSelector = () => {
       error: bookingTicketsError,
     },
   ] = useMutation(BOOK_TICKETS);
-  // Reset selected seats if time slot is changed
+
+  const [fetchSlotDetails, { loading, error, data }] = useLazyQuery(
+    GET_SLOT_DETAILS,
+    {
+      fetchPolicy: "no-cache",
+    }
+  );
+  // Reset selected seats and total cost if time slot is changed
   useEffect(() => {
+    fetchSlotDetails({
+      variables: { id: `${slotList[selectedTimeSlotIdx].slotId}` },
+    });
     setSelectedSeats([]);
     setTotalCost(0);
   }, [selectedTimeSlotIdx]);
-  const { loading, error, data } = useQuery(GET_SLOT_DETAILS, {
-    variables: { id: `${slotId}` },
-    fetchPolicy: "no-cache",
-  });
   const sleep = () => {
     setTimeout(() => {}, 5000);
   };
   const payTicketsHandler = () => {
-    bookTickets({ variables: { slotId, seats: selectedSeats } });
+    // Prepending seat code with seats since selected seats doesn't have
+    // status code with the seat
+    const seats = selectedSeats.map((e) => `${SeatStatusCode.available}${e}`);
+    bookTickets({ variables: { slotId, seats } });
   };
   const layout = data?.getSlotDetails.currentLayout || "|||";
   // Memoize group details as it will not change
@@ -123,13 +138,6 @@ export const SeatSelector = () => {
     setTotalCost(calculateTotalCost(groupDetailsArray, selectedSeats));
   }, [selectedSeats]);
 
-  if (loading) {
-    return (
-      <SafeAreaView>
-        <ActivityIndicator />
-      </SafeAreaView>
-    );
-  }
   if (error) {
     throw Error(error.message);
   }
@@ -145,41 +153,47 @@ export const SeatSelector = () => {
           />
           <View style={tw`bg-gray-200 h-25 pl-4`}>
             <Text style={tw`text-sm my-3`}>
-              {dayjs(datetimeList[selectedDatetimeIdx]).format("ddd, DD MMM")}
+              {dayjs(slotList[selectedTimeSlotIdx].datetime).format(
+                "ddd, DD MMM"
+              )}
             </Text>
             <ScrollView horizontal>
-              {datetimeList.map((timing, timingIdx) => {
+              {slotList.map(({ datetime: timing }, slotIdx) => {
                 return (
                   <TimingBtn
                     time={dayjs(timing).format("hh:mm A")}
-                    key={timingIdx}
+                    key={slotIdx}
                     type={
-                      selectedTimeSlotIdx === timingIdx ? "selected" : "default"
+                      selectedTimeSlotIdx === slotIdx ? "selected" : "default"
                     }
-                    setTimeSlot={() => setTimeSlotIdx(timingIdx)}
+                    setTimeSlot={() => setTimeSlotIdx(slotIdx)}
                   />
                 );
               })}
             </ScrollView>
           </View>
         </View>
-        <ScrollView style={tw`mb-23 mt-40`}>
-          <LayoutViewer
-            layout={layout}
-            selectedSeatChangeHandler={(seat) => {
-              setSelectedSeats((prevSelectedSeats) => {
-                if (prevSelectedSeats.includes(seat)) {
-                  const seatIndex = prevSelectedSeats.indexOf(seat);
-                  return [
-                    ...prevSelectedSeats.slice(0, seatIndex),
-                    ...prevSelectedSeats.slice(seatIndex + 1),
-                  ];
-                }
-                return [...prevSelectedSeats, seat];
-              });
-            }}
-          />
-        </ScrollView>
+        {!loading ? (
+          <ScrollView style={tw`mb-23 mt-40`}>
+            <LayoutViewer
+              layout={layout}
+              selectedSeatChangeHandler={(seat) => {
+                setSelectedSeats((prevSelectedSeats) => {
+                  if (prevSelectedSeats.includes(seat)) {
+                    const seatIndex = prevSelectedSeats.indexOf(seat);
+                    return [
+                      ...prevSelectedSeats.slice(0, seatIndex),
+                      ...prevSelectedSeats.slice(seatIndex + 1),
+                    ];
+                  }
+                  return [...prevSelectedSeats, seat];
+                });
+              }}
+            />
+          </ScrollView>
+        ) : (
+          <ActivityIndicator style={tw`mt-44`} color="red" size="large" />
+        )}
         <View
           style={tw`z-2 absolute bottom-0 left-0 right-0 bg-white items-center flex-col`}
         >

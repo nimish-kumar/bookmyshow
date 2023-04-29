@@ -13,7 +13,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { tw } from "@tailwind";
 import { RootStackParamList } from "@types";
 import React, { useLayoutEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabNavigatorParamsList } from "src/navigation/TabNavigator";
 
@@ -21,14 +21,14 @@ export type HomeNavigationProps = CompositeNavigationProp<
   BottomTabNavigationProp<TabNavigatorParamsList, "Home">,
   NativeStackNavigationProp<RootStackParamList>
 >;
-
 export const Home = () => {
-  const navigation = useNavigation<HomeNavigationProps>();
+  const homeNavigation = useNavigation<HomeNavigationProps>();
   useLayoutEffect(() => {
-    navigation.setOptions({
+    homeNavigation.setOptions({
       headerShown: false,
     });
   });
+
   return (
     <SafeAreaView>
       <View style={tw`flex justify-center`}>
@@ -40,11 +40,15 @@ export const Home = () => {
             <Text style={tw`font-roboto-medium font-normal text-lg`}>
               Recommended Movies
             </Text>
-            <Text style={tw`font-roboto-regular text-pink text-sm`}>
-              {"See All >"}
-            </Text>
+            <TouchableOpacity
+              onPress={() => homeNavigation.navigate("AllMovies")}
+            >
+              <Text style={tw`font-roboto-regular text-pink text-sm`}>
+                {"See All >"}
+              </Text>
+            </TouchableOpacity>
           </View>
-          <MoviesList navigation={navigation} />
+          <MoviesList navigation={homeNavigation} />
         </View>
       </View>
     </SafeAreaView>

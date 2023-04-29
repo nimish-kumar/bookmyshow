@@ -10,3 +10,4 @@ export * from "./CalendarDateTile";
 export * from "./seats";
 export * from "./LayoutViewer";
 export * from "./Ticket";
+export * from "./ActivityTile";
