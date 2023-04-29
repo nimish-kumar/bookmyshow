@@ -12,7 +12,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     error: moviesError,
     loading: moviesLoading,
   } = useQuery(LIST_MOVIES_AND_FORMATS, {
-    variables: { city: PUNE_CITY_ID },
+    variables: { city: PUNE_CITY_ID, page: 1, limit: 5 },
   });
   if (moviesLoading) {
     return <ActivityIndicator />;
@@ -20,9 +20,12 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
   if (moviesError) {
     throw Error(moviesError.message);
   }
+
   let formats: ILanguagesAndFormat[] | null = null;
   const movies: IActivity[] =
-    moviesList?.listMovieLangByCity.map(({ movie, langs }) => {
+    moviesList?.listMovieLangByCity.results?.map((e) => {
+      const movie = e?.movie;
+      const langs = e?.langs;
       formats =
         langs?.map((d) => {
           return {
