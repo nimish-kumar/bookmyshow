@@ -6,3 +6,4 @@ export * from "./SignIn";
 export * from "./Startup";
 export * from "./modals";
 export * from "./Tickets";
+export * from "./AllMovies";
