@@ -14,13 +14,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "package": "com.fasttech.bms",
-      "googleServicesFile": "./google-services.json",
+      "googleServicesFile": "",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -29,6 +31,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["@react-native-firebase/app"]
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "94e4c144-d938-41a1-b1be-8b442252a8af"
+      }
+    }
   }
 }
