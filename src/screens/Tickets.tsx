@@ -1,16 +1,33 @@
 import { useLazyQuery } from "@apollo/client";
 import { AppBar, Ticket } from "@components";
 import { LIST_MOVIE_BOOKINGS } from "@graphql";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import { tw } from "@tailwind";
 import dayjs from "dayjs";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, ImageSourcePropType } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+import { BackHandler, FlatList, ImageSourcePropType } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BookingType } from "src/__generated__/graphql";
 
 export const Tickets = () => {
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => true;
+
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+      return () => subscription.remove();
+    }, [])
+  );
+
   const navigation = useNavigation();
   const [fetchBookings, { loading, data, error }] =
     useLazyQuery(LIST_MOVIE_BOOKINGS);
