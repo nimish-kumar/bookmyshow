@@ -7,3 +7,4 @@ export * from "./Startup";
 export * from "./modals";
 export * from "./Tickets";
 export * from "./AllMovies";
+export * from "./Profile";
