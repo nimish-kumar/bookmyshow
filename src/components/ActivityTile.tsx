@@ -7,22 +7,22 @@ import { Text, TouchableOpacity, View } from "react-native";
 export const ActivityTile = ({
   activityDetail,
   clickHandler,
+  imageStyle,
+  style,
 }: IActivityProps) => {
   return (
     <TouchableOpacity
-      style={tw`h-full w-32 mr-2 flex-col`}
-      onPress={() => {
-        clickHandler?.(activityDetail.id, activityDetail.title);
-      }}
+      style={[tw`h-full w-32 mr-2 flex-col`, style]}
+      onPress={clickHandler}
     >
       {activityDetail.imgSrc ? (
         <Image
-          style={tw`h-54 w-auto rounded-lg`}
+          style={[tw`h-54 w-32 rounded-lg`, imageStyle]}
           resizeMode="contain"
           source={activityDetail.imgSrc}
         />
       ) : (
-        <View style={tw`h-54 w-auto rounded-lg bg-gray-300`} />
+        <View style={[tw`h-54 w-32 rounded-lg bg-gray-300`, imageStyle]} />
       )}
       <View style={tw`px-1`}>
         <Text

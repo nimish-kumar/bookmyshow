@@ -1,5 +1,9 @@
 import { PropsWithChildren } from "react";
-import { GestureResponderEvent, ImageSourcePropType } from "react-native";
+import {
+  GestureResponderEvent,
+  ImageSourcePropType,
+  StyleProp,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import { BookingSlotType } from "src/__generated__/graphql";
@@ -28,6 +32,7 @@ export type RootStackParamList = {
     theatreName: string;
     areaName: string;
   };
+  AllMovies: undefined;
   SlotSelector: {
     movieId: number;
     lang: string;
@@ -69,12 +74,14 @@ export interface IActivity {
 
 export interface IActivityProps {
   activityDetail: IActivity;
-  clickHandler?: (id: number, name: string) => void;
+  clickHandler: () => void;
+  imageStyle?: StyleProp;
+  style?: StyleProp;
 }
 
 export interface IActivityListProps {
   activities: IActivity[];
-  activityHandler: (id: number, name: string) => void;
+  activityHandler: () => void;
 }
 export interface IAppBarProps {
   title: string;
