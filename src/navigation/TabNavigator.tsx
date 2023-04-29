@@ -44,7 +44,7 @@ export const TabNavigator = () => {
         tabBarActiveBackgroundColor: "#DC3558",
         tabBarStyle: tw`h-10`,
       })}
-      initialRouteName="Profile"
+      initialRouteName="Home"
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Tickets" component={Tickets} />
