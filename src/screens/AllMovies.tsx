@@ -31,7 +31,7 @@ export const AllMovies = () => {
   const [
     fetchMovies,
     { data: moviesData, error: moviesError, loading: moviesLoading },
-  ] = useLazyQuery(LIST_MOVIES_AND_FORMATS, {});
+  ] = useLazyQuery(LIST_MOVIES_AND_FORMATS);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -49,7 +49,10 @@ export const AllMovies = () => {
     }
   }, [moviesLoading]);
   useEffect(() => {
-    fetchMovies({ variables: { city: PUNE_CITY_ID, page, limit: 10 } });
+    fetchMovies({
+      variables: { city: PUNE_CITY_ID, page, limit: 10 },
+      fetchPolicy: "no-cache",
+    });
   }, [page]);
 
   const goBack = useCallback(() => navigation.navigate("Home"), []);
