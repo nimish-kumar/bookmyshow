@@ -29,7 +29,10 @@ export default ({ config }) => ({
   web: {
     favicon: "./assets/favicon.png",
   },
-  plugins: ["@react-native-firebase/app"],
+  plugins: [
+    "@react-native-firebase/app",
+    "@react-native-google-signin/google-signin",
+  ],
   extra: {
     eas: {
       projectId: "94e4c144-d938-41a1-b1be-8b442252a8af",
