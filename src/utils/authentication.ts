@@ -38,18 +38,28 @@ export const setRefreshExpiryTime = async (expTimestamp: number) => {
   await SecureStore.setItemAsync("refreshExpiresIn", `${expTimestamp}`);
 };
 
-export const setUserDetails = async (name: string | null, email: string) => {
+export const setUserDetails = async (
+  name: string | null,
+  email: string | null,
+  profileImageUrl: string | null
+) => {
   await AsyncStorage.multiSet([
-    ["user_email", email],
-    ["user_name", name ?? ""],
+    ["userEmail", email ?? ""],
+    ["userName", name ?? ""],
+    ["profileImageUrl", profileImageUrl ?? ""],
   ]);
 };
 
 export const getUserDetails = async (): Promise<IUserDetails> => {
-  const values = await AsyncStorage.multiGet(["user_email", "user_name"]);
+  const values = await AsyncStorage.multiGet([
+    "userEmail",
+    "userName",
+    "profileImageUrl",
+  ]);
   return {
     userEmail: values[0][1],
     userName: values[1][1],
+    profileImageUrl: values[2][1],
   };
 };
 
