@@ -21,4 +21,5 @@ export type SeatStatus = keyof typeof SeatStatusCode;
 export interface IUserDetails {
   userEmail: string | null;
   userName: string | null;
+  profileImageUrl: string | null;
 }
