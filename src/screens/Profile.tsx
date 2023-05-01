@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { AuthContext } from "@context";
 import { GET_USER_DETAILS } from "@graphql";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Button, Icon } from "@rneui/themed";
+import { Button, Icon, Image } from "@rneui/themed";
 import { tw } from "@tailwind";
 import {
   emptyAsyncStorage,
@@ -11,13 +11,7 @@ import {
   removeSecureStoreKeys,
 } from "@utils";
 import React, { useCallback, useContext, useLayoutEffect } from "react";
-import {
-  ActivityIndicator,
-  BackHandler,
-  Image,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, BackHandler, Text, View } from "react-native";
 
 export const Profile = () => {
   const { setLoggedIn } = useContext(AuthContext);
@@ -27,7 +21,7 @@ export const Profile = () => {
     loading: loadingUserDetails,
     data: userDetailsData,
     error: userDetailsError,
-  } = useQuery(GET_USER_DETAILS);
+  } = useQuery(GET_USER_DETAILS, { fetchPolicy: "no-cache" });
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -62,31 +56,39 @@ export const Profile = () => {
   return (
     <View style={tw`h-full flex`}>
       <View style={tw`pt-40 absolute z-10 self-center`}>
-        {!userDetailsData?.getUserDetails?.profileImageUrl ||
-        userDetailsData?.getUserDetails?.profileImageUrl !== "" ? (
-          <View
-            style={tw`w-40 h-40 rounded-full bg-pink justify-center items-center`}
-          >
+        <View
+          style={tw`justify-center items-center rounded-full overflow-hidden`}
+        >
+          {userDetailsData?.getUserDetails.profileImageUrl !== "" &&
+            userDetailsData?.getUserDetails.profileImageUrl && (
+              <Image
+                source={{
+                  uri: userDetailsData?.getUserDetails.profileImageUrl,
+                }}
+                PlaceholderContent={
+                  <Icon
+                    type="ionicon"
+                    name="person-sharp"
+                    color="white"
+                    size={100}
+                    style={tw`self-center`}
+                  />
+                }
+                progressiveRenderingEnabled
+                resizeMode="contain"
+                style={tw`w-40 h-40`}
+              />
+            )}
+          {!userDetailsData?.getUserDetails.profileImageUrl && (
             <Icon
               type="ionicon"
-              name="person-sharp"
-              color="white"
-              size={100}
-              style={tw`self-center`}
+              name="person-circle-outline"
+              color="black"
+              size={120}
+              style={tw`h-30 w-30 rounded-full bg-white`}
             />
-          </View>
-        ) : (
-          <View style={tw`justify-center items-center`}>
-            <Image
-              source={{
-                uri: userDetailsData.getUserDetails.profileImageUrl,
-              }}
-              progressiveRenderingEnabled
-              resizeMode="contain"
-              style={tw`w-30 h-30`}
-            />
-          </View>
-        )}
+          )}
+        </View>
         <View style={tw`items-center mt-1`}>
           <Text style={tw`text-base font-roboto-medium`}>
             {`${userDetailsData?.getUserDetails?.firstName} ${userDetailsData?.getUserDetails.lastName}`}
