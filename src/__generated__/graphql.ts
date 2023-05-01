@@ -319,6 +319,7 @@ export type PaginatedMoviesListFormats = {
 export type Query = {
   __typename?: 'Query';
   getSlotDetails?: Maybe<BookingSlotType>;
+  getUserDetails?: Maybe<UserType>;
   listBookingDetails?: Maybe<PaginatedBookingType>;
   listCities?: Maybe<Array<Maybe<CityType>>>;
   listMovieLangByCity?: Maybe<PaginatedMoviesListFormats>;
