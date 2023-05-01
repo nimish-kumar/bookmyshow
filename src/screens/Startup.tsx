@@ -1,5 +1,6 @@
 import { AuthContext } from "@context";
 import { FIREBASE_WEB_CLIENT_ID } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useNavigation } from "@react-navigation/native";
@@ -21,7 +22,6 @@ import { Splash } from "./Splash";
 export const Startup = () => {
   const { setLoggedIn } = useContext(AuthContext);
   useEffect(() => {
-    console.log("FIREBASE_WEB_CLIENT_ID", FIREBASE_WEB_CLIENT_ID);
     GoogleSignin.configure({
       scopes: [
         "email",
@@ -41,17 +41,19 @@ export const Startup = () => {
 
   useEffect(() => {
     let token: string | null = null;
-    getAccessToken().then((t) => {
-      if (!t) {
-        setSplashVisibility(false);
-      }
-      token = t;
+    AsyncStorage.getItem("alreadyVisited").then((value) => {
+      getAccessToken().then((t) => {
+        if (!t) {
+          setTimeout(() => setSplashVisibility(false), 3000);
+        }
+        token = t;
+        AsyncStorage.setItem("alreadyVisited", "true");
+      });
     });
 
     const subscriber = auth().onAuthStateChanged(
       async (user: FirebaseAuthTypes.User | null) => {
         if (user) {
-          console.log("User");
           const promiseSetUser = await setUserDetails(
             user.displayName,
             user.email || "",
@@ -73,7 +75,6 @@ export const Startup = () => {
     );
     return subscriber; // unsubscribe on unmount
   }, []);
-
   if (splashVisible) {
     return <Splash />;
   }

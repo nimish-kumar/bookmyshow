@@ -111,9 +111,7 @@ export const SeatSelector = () => {
     setSelectedSeats([]);
     setTotalCost(0);
   }, [selectedTimeSlotIdx]);
-  const sleep = () => {
-    setTimeout(() => {}, 5000);
-  };
+
   const payTicketsHandler = () => {
     // Prepending seat code with seats since selected seats doesn't have
     // status code with the seat
@@ -222,7 +220,6 @@ export const SeatSelector = () => {
               onPress={() => {
                 payTicketsHandler();
                 if (!bookingTickets && bookingTicketsData) {
-                  sleep();
                   // Navigate to booked tickets screen
                 }
               }}
