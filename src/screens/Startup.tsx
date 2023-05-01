@@ -22,7 +22,6 @@ import { Splash } from "./Splash";
 export const Startup = () => {
   const { setLoggedIn } = useContext(AuthContext);
   useEffect(() => {
-    console.log("FIREBASE_WEB_CLIENT_ID", FIREBASE_WEB_CLIENT_ID);
     GoogleSignin.configure({
       scopes: [
         "email",
