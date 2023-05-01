@@ -4,6 +4,7 @@ import {
   PaginatedBookingType,
   PaginatedMoviesListFormats,
   Refresh,
+  UpdateUserDetails,
 } from "src/__generated__/graphql";
 
 export interface IAccessTokenData {
@@ -47,4 +48,8 @@ export interface IBookingTicketData {
 
 export interface IListBookingDetailsData {
   listBookingDetails: PaginatedBookingType;
+}
+
+export interface IUpdateUserDetails {
+  updateUser: UpdateUserDetails;
 }
