@@ -1,5 +1,6 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
 import {
+  IGetUserDetailsData,
   IListBookingDetailsData,
   IMoviesListFormatsData,
   ISlotDetailsData,
@@ -125,6 +126,17 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
         status
         row
       }
+    }
+  }
+`;
+
+export const GET_USER_DETAILS: TypedDocumentNode<IGetUserDetailsData> = gql`
+  query {
+    getUserDetails {
+      firstName
+      lastName
+      email
+      profileImageUrl
     }
   }
 `;
