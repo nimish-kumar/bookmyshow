@@ -3,11 +3,13 @@ import {
   IAccessTokenData,
   IBookingTicketData,
   IRefreshTokenData,
+  IUpdateUserDetailsData,
 } from "@types";
 import {
   MutationBookTicketsArgs,
   MutationRefreshTokenArgs,
   MutationTokenAuthArgs,
+  MutationUpdateUserArgs,
 } from "src/__generated__/graphql";
 
 export const FETCH_ACCESS_TOKEN: TypedDocumentNode<
@@ -53,6 +55,25 @@ export const BOOK_TICKETS: TypedDocumentNode<
         createdAt
         seatNumber
         status
+      }
+    }
+  }
+`;
+
+export const UPDATE_USER: TypedDocumentNode<
+  IUpdateUserDetailsData,
+  MutationUpdateUserArgs
+> = gql`
+  mutation ($firstName: String, $lastName: String, $profileImageUrl: String) {
+    updateUser(
+      firstName: $firstName
+      lastName: $lastName
+      profileImageUrl: $profileImageUrl
+    ) {
+      userDetails {
+        firstName
+        lastName
+        profileImageUrl
       }
     }
   }

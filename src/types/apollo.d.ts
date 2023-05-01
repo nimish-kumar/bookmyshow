@@ -50,6 +50,6 @@ export interface IListBookingDetailsData {
   listBookingDetails: PaginatedBookingType;
 }
 
-export interface IUpdateUserDetails {
+export interface IUpdateUserDetailsData {
   updateUser: UpdateUserDetails;
 }
