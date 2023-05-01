@@ -1,32 +1,33 @@
+import { useQuery } from "@apollo/client";
 import { AuthContext } from "@context";
+import { GET_USER_DETAILS } from "@graphql";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Button, Icon } from "@rneui/themed";
 import { tw } from "@tailwind";
-import { IUserDetails } from "@types";
 import {
   emptyAsyncStorage,
   getAccessToken,
-  getUserDetails,
   googleSignOut,
   removeSecureStoreKeys,
 } from "@utils";
-import React, {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from "react";
-import { BackHandler, Image, Text, View } from "react-native";
+import React, { useCallback, useContext, useLayoutEffect } from "react";
+import {
+  ActivityIndicator,
+  BackHandler,
+  Image,
+  Text,
+  View,
+} from "react-native";
 
 export const Profile = () => {
   const { setLoggedIn } = useContext(AuthContext);
 
   const navigation = useNavigation();
-  const [userDetails, setUserDetails] = useState<IUserDetails>();
-  getUserDetails().then(({ userEmail, userName, profileImageUrl }) => {
-    const imageUrl = profileImageUrl !== "" ? profileImageUrl : null;
-    setUserDetails({ userName, userEmail, profileImageUrl: imageUrl });
-  });
+  const {
+    loading: loadingUserDetails,
+    data: userDetailsData,
+    error: userDetailsError,
+  } = useQuery(GET_USER_DETAILS);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,10 +47,23 @@ export const Profile = () => {
       return () => subscription.remove();
     }, [])
   );
+
+  if (loadingUserDetails) {
+    return (
+      <View style={tw`justify-center items-center min-h-full min-w-full`}>
+        <ActivityIndicator color="red" />
+      </View>
+    );
+  }
+  if (userDetailsError) {
+    throw Error("Error while fetching user details");
+  }
+  console.log("Data fetched --> ", userDetailsData?.getUserDetails);
   return (
     <View style={tw`h-full flex`}>
       <View style={tw`pt-40 absolute z-10 self-center`}>
-        {!userDetails?.profileImageUrl ? (
+        {!userDetailsData?.getUserDetails?.profileImageUrl ||
+        userDetailsData?.getUserDetails?.profileImageUrl !== "" ? (
           <View
             style={tw`w-40 h-40 rounded-full bg-pink justify-center items-center`}
           >
@@ -62,11 +76,12 @@ export const Profile = () => {
             />
           </View>
         ) : (
-          <View style={tw` justify-center items-center`}>
+          <View style={tw`justify-center items-center`}>
             <Image
               source={{
-                uri: userDetails.profileImageUrl,
+                uri: userDetailsData.getUserDetails.profileImageUrl,
               }}
+              progressiveRenderingEnabled
               resizeMode="contain"
               style={tw`w-30 h-30`}
             />
@@ -74,9 +89,11 @@ export const Profile = () => {
         )}
         <View style={tw`items-center mt-1`}>
           <Text style={tw`text-base font-roboto-medium`}>
-            {userDetails?.userName}
+            {`${userDetailsData?.getUserDetails?.firstName} ${userDetailsData?.getUserDetails.lastName}`}
           </Text>
-          <Text style={tw`font-roboto-regular`}>{userDetails?.userEmail}</Text>
+          <Text style={tw`font-roboto-regular`}>
+            {userDetailsData?.getUserDetails.email}
+          </Text>
         </View>
         <Button
           title="Logout"
