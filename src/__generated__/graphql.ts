@@ -408,6 +408,7 @@ export type UpdateUserDetails = {
 
 export type UserType = {
   __typename?: 'UserType';
+  email: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   profileImageUrl?: Maybe<Scalars['String']>;
