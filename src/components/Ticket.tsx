@@ -46,9 +46,6 @@ export const Ticket = ({
       </View>
       <View style={tw`w-2/3 justify-center ml-6`}>
         <Text
-          style={tw`font-roboto-bold text-xl text-green-600`}
-        >{`#${bookingId}`}</Text>
-        <Text
           style={tw`text-lg font-roboto-bold w-4/5 pb-1`}
           lineBreakMode="tail"
           numberOfLines={2}
