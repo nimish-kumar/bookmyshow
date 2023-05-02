@@ -61,7 +61,7 @@ const TabBarBtn = ({
   >
     <View
       style={[
-        tw`h-1/5 w-10 flex-1 rounded-xl -top-0.5`,
+        tw`h-1/5 w-10 flex-1 rounded-xl -top-0.4`,
         tw`${accessibilityState?.selected ? "bg-white" : "bg-pink"}`,
       ]}
     />
@@ -70,7 +70,7 @@ const TabBarBtn = ({
         type={iconType}
         name={iconName}
         iconStyle={tw`${
-          accessibilityState?.selected ? "text-white" : "text-white opacity-60"
+          accessibilityState?.selected ? "text-white" : "text-white opacity-65"
         }`}
       />
     </View>
