@@ -15,6 +15,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     loading: moviesLoading,
   } = useQuery(LIST_MOVIES_AND_FORMATS, {
     variables: { city: PUNE_CITY_ID, page: 1, limit: 5 },
+    fetchPolicy: "no-cache",
   });
   if (moviesLoading) {
     return <ActivityIndicator />;
