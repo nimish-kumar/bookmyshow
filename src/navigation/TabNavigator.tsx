@@ -43,6 +43,19 @@ export const TabNavigator = () => {
         tabBarLabel: () => null,
         tabBarActiveBackgroundColor: "#DC3558",
         tabBarStyle: tw`h-10`,
+
+        // Most important property, it unmounts screens
+        // on bottom tab which are not active
+        // by default it is false. The problem occurs when it
+        // is false.
+        // Consider screen A and B are in BottomTabNavigator and
+        // screen C is in NativeStackNavigator.
+        // Now you visited, A-> B->A---->C screen now if you try
+        // to go back to screen B from C, the screen will not mount again
+        // as it was already mounted when A->B happened but it never got
+        // unmounted when B->A happened. Thus, actions that are suppose to
+        // happen while mounting will not happen when you go from C to B.
+        unmountOnBlur: true,
       })}
       initialRouteName="Home"
     >
