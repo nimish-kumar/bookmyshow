@@ -1,9 +1,15 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AppBar, LayoutViewer } from "@components";
 import { BOOK_TICKETS, GET_SLOT_DETAILS } from "@graphql";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button, Icon } from "@rneui/themed";
+import { Button, Icon, Overlay } from "@rneui/themed";
 import { tw } from "@tailwind";
 import {
   IGrpDetails,
@@ -21,7 +27,12 @@ import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { TabNavigatorParamsList } from "src/navigation/TabNavigator";
 
+type TicketsNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<TabNavigatorParamsList, "Tickets">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 const TimingBtn = ({ time, setTimeSlot, type = "default" }: ITimingBtnProp) => {
   if (type === "selected")
     return (
@@ -55,6 +66,7 @@ const SubmitBtnNode = ({
     </Text>
   );
   const BtnLoader = () => <ActivityIndicator color="white" />;
+
   if (bookingTickets) return <BtnLoader />;
   if (bookingTicketsError) throw Error(bookingTicketsError.message);
   if (bookingTicketsData) {
@@ -63,10 +75,7 @@ const SubmitBtnNode = ({
   return <BtnPayText />;
 };
 export const SeatSelector = () => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, "SeatSelector">
-    >();
+  const navigation = useNavigation<TicketsNavigationProp>();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -86,6 +95,7 @@ export const SeatSelector = () => {
   const [selectedTimeSlotIdx, setTimeSlotIdx] = useState(
     slotList.findIndex((e) => e.slotId === selectedSlotId)
   );
+  const [overlay, setOverlay] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const [
@@ -136,6 +146,17 @@ export const SeatSelector = () => {
     setTotalCost(calculateTotalCost(groupDetailsArray, selectedSeats));
   }, [selectedSeats]);
 
+  useEffect(() => {
+    if (!bookingTickets && bookingTicketsData) {
+      setTimeout(() => {
+        navigation.navigate("Tickets");
+      }, 3000);
+    }
+    if (!bookingTickets && bookingTicketsError) {
+      setOverlay(false);
+    }
+  }, [bookingTickets]);
+
   if (error) {
     throw Error(error.message);
   }
@@ -172,23 +193,28 @@ export const SeatSelector = () => {
           </View>
         </View>
         {!loading ? (
-          <ScrollView style={tw`mb-23 mt-40`}>
-            <LayoutViewer
-              layout={layout}
-              selectedSeatChangeHandler={(seat) => {
-                setSelectedSeats((prevSelectedSeats) => {
-                  if (prevSelectedSeats.includes(seat)) {
-                    const seatIndex = prevSelectedSeats.indexOf(seat);
-                    return [
-                      ...prevSelectedSeats.slice(0, seatIndex),
-                      ...prevSelectedSeats.slice(seatIndex + 1),
-                    ];
-                  }
-                  return [...prevSelectedSeats, seat];
-                });
-              }}
-            />
-          </ScrollView>
+          <>
+            <Overlay isVisible={overlay} style={tw`min-h-full min-w-full`}>
+              <ActivityIndicator color="#DC3558" size="large" />
+            </Overlay>
+            <ScrollView style={tw`mb-23 mt-40`}>
+              <LayoutViewer
+                layout={layout}
+                selectedSeatChangeHandler={(seat) => {
+                  setSelectedSeats((prevSelectedSeats) => {
+                    if (prevSelectedSeats.includes(seat)) {
+                      const seatIndex = prevSelectedSeats.indexOf(seat);
+                      return [
+                        ...prevSelectedSeats.slice(0, seatIndex),
+                        ...prevSelectedSeats.slice(seatIndex + 1),
+                      ];
+                    }
+                    return [...prevSelectedSeats, seat];
+                  });
+                }}
+              />
+            </ScrollView>
+          </>
         ) : (
           <ActivityIndicator style={tw`mt-44`} color="red" size="large" />
         )}
@@ -215,13 +241,14 @@ export const SeatSelector = () => {
           </View>
           <View style={tw`min-w-full`}>
             <Button
-              buttonStyle={tw`bg-pink rounded-md h-12 items-center justify-center`}
+              buttonStyle={[
+                tw`rounded-md h-12 items-center justify-center`,
+                tw`${overlay ? "bg-dark-green" : "bg-pink"}`,
+              ]}
               disabled={totalCost === 0}
               onPress={() => {
+                setOverlay(true);
                 payTicketsHandler();
-                if (!bookingTickets && bookingTicketsData) {
-                  // Navigate to booked tickets screen
-                }
               }}
             >
               <SubmitBtnNode
