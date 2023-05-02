@@ -1,3 +1,5 @@
+// TODO: Profile screen looks dull make it better
+
 import { useQuery } from "@apollo/client";
 import { AuthContext } from "@context";
 import { GET_USER_DETAILS } from "@graphql";

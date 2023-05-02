@@ -1,3 +1,5 @@
+// TODO: Tab looks dull make it better
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";

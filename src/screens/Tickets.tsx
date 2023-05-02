@@ -1,3 +1,5 @@
+// TODO: Tickets screen looks dull make it better
+
 import { useLazyQuery } from "@apollo/client";
 import { AppBar, Ticket } from "@components";
 import { LIST_MOVIE_BOOKINGS } from "@graphql";
