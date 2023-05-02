@@ -1,5 +1,3 @@
-// TODO: Tab looks dull make it better
-
 import {
   BottomTabBarButtonProps,
   createBottomTabNavigator,
