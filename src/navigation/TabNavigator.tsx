@@ -55,14 +55,17 @@ const TabBarBtn = ({
   iconType,
   onPress,
 }: ITabProps) => (
-  <View style={tw`flex-1 justify-center items-center overflow-hidden`}>
+  <TouchableOpacity
+    onPress={onPress}
+    style={tw`flex-1 justify-center items-center overflow-hidden`}
+  >
     <View
       style={[
         tw`h-1/5 w-10 flex-1 rounded-xl -top-0.5`,
         tw`${accessibilityState?.selected ? "bg-white" : "bg-pink"}`,
       ]}
     />
-    <TouchableOpacity style={tw`mt-1 h-4/5`} onPress={onPress}>
+    <View style={tw`mt-1 h-4/5`}>
       <Icon
         type={iconType}
         name={iconName}
@@ -70,8 +73,8 @@ const TabBarBtn = ({
           accessibilityState?.selected ? "text-white" : "text-white opacity-60"
         }`}
       />
-    </TouchableOpacity>
-  </View>
+    </View>
+  </TouchableOpacity>
 );
 
 export const TabNavigator = () => {
@@ -85,7 +88,7 @@ export const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route, navigation }) => ({
-        tabBarStyle: tw`absolute bottom-4 left-4 right-4 rounded-xl h-12 flex-1 bg-pink`,
+        tabBarStyle: tw`absolute bottom-2 left-2 right-2 rounded-xl h-12 flex-1 bg-pink`,
 
         // Most important property, it unmounts screens
         // on bottom tab which are not active
@@ -102,9 +105,6 @@ export const TabNavigator = () => {
       })}
       initialRouteName="Home"
     >
-      {/* <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Tickets" component={Tickets} />
-      <Tab.Screen name="Profile" component={Profile} /> */}
       {tabs.map((tab) => {
         return (
           <Tab.Screen
