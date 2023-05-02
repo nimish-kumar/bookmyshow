@@ -35,15 +35,19 @@ export const Tickets = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && data) {
       setBookings((b) => {
-        if (b) return [...b, ...(data?.listBookingDetails.results || [])];
+        if (page !== 1 && b)
+          return [...b, ...(data?.listBookingDetails.results || [])];
         return [...(data?.listBookingDetails.results || [])];
       });
     }
   }, [loading]);
   useEffect(() => {
-    fetchBookings({ variables: { page, limit: 10 }, fetchPolicy: "no-cache" });
+    fetchBookings({
+      variables: { page, limit: 10 },
+      fetchPolicy: "no-cache",
+    });
   }, [page]);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -87,7 +91,7 @@ export const Tickets = () => {
         keyExtractor={(item) => item?.id || "key"}
         refreshing={loading}
         onEndReached={() => {
-          if (data?.listBookingDetails.count !== 0) setPage((p) => p + 1);
+          if (data?.listBookingDetails.nextPage) setPage((p) => p + 1);
         }}
         onEndReachedThreshold={1}
         scrollsToTop={false}
