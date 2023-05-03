@@ -2,7 +2,6 @@ import auth from "@react-native-firebase/auth";
 import {
   GoogleSignin,
   NativeModuleError,
-  statusCodes,
 } from "@react-native-google-signin/google-signin";
 
 export const googleSignIn = async () => {
@@ -15,23 +14,7 @@ export const googleSignIn = async () => {
     return auth().signInWithCredential(googleCredential);
   } catch (error) {
     const typedError = error as NativeModuleError;
-
-    switch (typedError.code) {
-      case statusCodes.SIGN_IN_CANCELLED:
-        // sign in was cancelled
-        break;
-      case statusCodes.IN_PROGRESS:
-        // operation (eg. sign in) already in progress
-        break;
-      case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-        // android only
-        break;
-      default:
-        return {
-          userInfo: null,
-          error: typedError,
-        };
-    }
+    throw Error(typedError.code);
   }
 };
 
@@ -45,23 +28,7 @@ export const googleSignInSilently = async () => {
     return auth().signInWithCredential(googleCredential);
   } catch (error) {
     const typedError = error as NativeModuleError;
-
-    switch (typedError.code) {
-      case statusCodes.SIGN_IN_CANCELLED:
-        // sign in was cancelled
-        break;
-      case statusCodes.IN_PROGRESS:
-        // operation (eg. sign in) already in progress
-        break;
-      case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-        // android only
-        break;
-      default:
-        return {
-          userInfo: null,
-          error: typedError,
-        };
-    }
+    throw Error(typedError.code);
   }
 };
 export const googleSignOut = async (token: string) => {
@@ -71,10 +38,6 @@ export const googleSignOut = async (token: string) => {
     return auth().signOut();
   } catch (error) {
     const typedError = error as NativeModuleError;
-
-    return {
-      userInfo: null,
-      error: typedError,
-    };
+    throw Error(typedError.code);
   }
 };
