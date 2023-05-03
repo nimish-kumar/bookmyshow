@@ -59,6 +59,7 @@ export type BookingSlotType = {
 
 export type BookingType = {
   __typename?: 'BookingType';
+  bookedAt?: Maybe<Scalars['DateTime']>;
   column: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
@@ -67,6 +68,7 @@ export type BookingType = {
   seatNumber: Scalars['Int'];
   slotGrp: SlotGroupType;
   status: MoviesBookingStatusChoices;
+  user?: Maybe<UserType>;
 };
 
 export type CityType = {
@@ -263,6 +265,7 @@ export type Mutation = {
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
+  updateUser?: Maybe<UpdateUserDetails>;
 };
 
 
@@ -280,6 +283,13 @@ export type MutationRefreshTokenArgs = {
 export type MutationTokenAuthArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  profileImageUrl?: InputMaybe<Scalars['String']>;
 };
 
 /** Obtain JSON Web Token mutation */
@@ -310,6 +320,7 @@ export type PaginatedMoviesListFormats = {
 export type Query = {
   __typename?: 'Query';
   getSlotDetails?: Maybe<BookingSlotType>;
+  getUserDetails?: Maybe<UserType>;
   listBookingDetails?: Maybe<PaginatedBookingType>;
   listCities?: Maybe<Array<Maybe<CityType>>>;
   listMovieLangByCity?: Maybe<PaginatedMoviesListFormats>;
@@ -389,4 +400,17 @@ export type TrailerUrlType = {
   id: Scalars['ID'];
   movie: MovieType;
   trailerUrl: Scalars['String'];
+};
+
+export type UpdateUserDetails = {
+  __typename?: 'UpdateUserDetails';
+  userDetails?: Maybe<UserType>;
+};
+
+export type UserType = {
+  __typename?: 'UserType';
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  profileImageUrl?: Maybe<Scalars['String']>;
 };

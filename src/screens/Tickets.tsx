@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { AppBar, Ticket } from "@components";
+import { AppBar, Loader, Ticket } from "@components";
 import { LIST_MOVIE_BOOKINGS } from "@graphql";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
@@ -11,7 +11,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { BackHandler, FlatList, ImageSourcePropType } from "react-native";
+import { ActivityIndicator, BackHandler, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BookingType } from "src/__generated__/graphql";
 
@@ -35,15 +35,19 @@ export const Tickets = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && data) {
       setBookings((b) => {
-        if (b) return [...b, ...(data?.listBookingDetails.results || [])];
+        if (page !== 1 && b)
+          return [...b, ...(data?.listBookingDetails.results || [])];
         return [...(data?.listBookingDetails.results || [])];
       });
     }
   }, [loading]);
   useEffect(() => {
-    fetchBookings({ variables: { page, limit: 10 }, fetchPolicy: "no-cache" });
+    fetchBookings({
+      variables: { page, limit: 10 },
+      fetchPolicy: "no-cache",
+    });
   }, [page]);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -57,16 +61,14 @@ export const Tickets = () => {
     <SafeAreaView>
       <AppBar title="Tickets" />
       <FlatList
-        style={tw`mb-16`}
+        contentContainerStyle={tw`pb-50 px-2 pt-2`}
         data={bookings}
-        ItemSeparatorComponent={() => <Divider style={tw`my-1`} />}
-        renderItem={({ item: booking, index }) => (
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <Divider style={tw`my-2`} />}
+        renderItem={({ item: booking }) => (
           <Ticket
-            bookingId={booking?.id || "-1"}
-            posterUrl={
-              (booking?.slotGrp.slot.movie.posterUrl ||
-                null) as ImageSourcePropType
-            }
+            bookedAt={booking?.bookedAt ?? dayjs().toString()}
+            cost={booking?.slotGrp.cost ?? -1}
             movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
             movieLang={booking?.slotGrp.slot.lang.name || "Hindi"}
             movieName={booking?.slotGrp.slot.movie.name || "Movie name"}
@@ -87,11 +89,19 @@ export const Tickets = () => {
         keyExtractor={(item) => item?.id || "key"}
         refreshing={loading}
         onEndReached={() => {
-          if (data?.listBookingDetails.count !== 0) setPage((p) => p + 1);
+          if (data?.listBookingDetails.nextPage) setPage((p) => p + 1);
         }}
-        onEndReachedThreshold={1}
+        ListFooterComponent={
+          loading && page !== 1 ? (
+            <Loader style={tw`justify-center items-center mt-4`} />
+          ) : (
+            <></>
+          )
+        }
+        onEndReachedThreshold={0.2}
         scrollsToTop={false}
       />
+      {loading && page === 1 && <ActivityIndicator size={50} color="red" />}
     </SafeAreaView>
   );
 };

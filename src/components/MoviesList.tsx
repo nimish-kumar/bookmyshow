@@ -4,9 +4,10 @@ import { tw } from "@tailwind";
 import { ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import { ActivityIndicator, FlatList, ImageSourcePropType } from "react-native";
+import { FlatList, Text } from "react-native";
 
 import { ActivityTile } from "./ActivityTile";
+import { Loader } from "./Loader";
 
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
   const {
@@ -15,9 +16,10 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     loading: moviesLoading,
   } = useQuery(LIST_MOVIES_AND_FORMATS, {
     variables: { city: PUNE_CITY_ID, page: 1, limit: 5 },
+    fetchPolicy: "no-cache",
   });
   if (moviesLoading) {
-    return <ActivityIndicator />;
+    return <Loader size="sm" style={tw`mt-8`} />;
   }
   if (moviesError) {
     throw Error(moviesError.message);
@@ -38,7 +40,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
-        imgSrc: movie?.posterUrl as ImageSourcePropType,
+        imgSrc: movie?.posterUrl ?? null,
         formats,
       };
     }) || [];
@@ -53,6 +55,13 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       formats,
     });
   };
+  if (movies.length === 0) {
+    return (
+      <Text style={tw`text-center mt-6 font-roboto-italic text-gray-500`}>
+        No movies available
+      </Text>
+    );
+  }
   return (
     <FlatList
       horizontal

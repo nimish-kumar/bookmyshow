@@ -14,6 +14,9 @@ export default function App() {
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Italic": require("./assets/fonts/Roboto-Italic.ttf"),
     "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+    "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
+    Montserrat: require("./assets/fonts/Montserrat.ttf"),
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return null;

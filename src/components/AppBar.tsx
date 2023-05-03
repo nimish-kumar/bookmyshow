@@ -32,7 +32,7 @@ const NonMemoizedAppBar = ({
       ) : null}
       <View style={tw`justify-center w-2/3`}>
         <Text
-          style={tw`text-base text-white `}
+          style={tw`text-lg text-white font-montserrat-bold`}
           numberOfLines={1}
           ellipsizeMode="tail"
         >

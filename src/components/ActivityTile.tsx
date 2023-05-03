@@ -19,7 +19,7 @@ export const ActivityTile = ({
         <Image
           style={[tw`h-54 w-32 rounded-lg`, imageStyle]}
           resizeMode="contain"
-          source={activityDetail.imgSrc}
+          source={{ uri: activityDetail.imgSrc }}
         />
       ) : (
         <View style={[tw`h-54 w-32 rounded-lg bg-gray-300`, imageStyle]} />

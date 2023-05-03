@@ -1,5 +1,6 @@
 import { TypedDocumentNode, gql } from "@apollo/client";
 import {
+  IGetUserDetailsData,
   IListBookingDetailsData,
   IMoviesListFormatsData,
   ISlotDetailsData,
@@ -100,11 +101,11 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
         slotGrp {
           name
           grpCode
+          cost
           slot {
             screeningDatetime
             movie {
               name
-              posterUrl
             }
             lang {
               name
@@ -124,7 +125,19 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
         seatNumber
         status
         row
+        bookedAt
       }
+    }
+  }
+`;
+
+export const GET_USER_DETAILS: TypedDocumentNode<IGetUserDetailsData> = gql`
+  query {
+    getUserDetails {
+      firstName
+      lastName
+      email
+      profileImageUrl
     }
   }
 `;

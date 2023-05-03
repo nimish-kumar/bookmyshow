@@ -15,10 +15,8 @@ export const SignIn = ({ handleLogin }: ISignInProps) => {
         onPress={handleLogin}
         buttonStyle={tw`h-12 w-full bg-white border border-black flex-row px-10 mt-10`}
       >
-        <View style={tw`flex-row justify-center`}>
-          <GoogleSvg height={20} width={20} />
-          <Text style={tw`px-8`}>Continue with Google</Text>
-        </View>
+        <GoogleSvg height={20} width={20} />
+        <Text style={tw`px-8`}>Continue with Google</Text>
       </Button>
     </View>
   );

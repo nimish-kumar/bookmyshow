@@ -8,11 +8,18 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { GRAPHQL_API_URL } from "@env";
 
-import { getAccessToken } from "./authentication";
+import { getAccessToken, hasTokenExpired } from "./authentication";
+import { googleSignInSilently } from "./firebase";
 
 const httpLink = new HttpLink({ uri: GRAPHQL_API_URL });
 const withToken = setContext(async () => {
-  const accessToken = await getAccessToken();
+  let accessToken = await getAccessToken();
+  if (accessToken && hasTokenExpired(accessToken)) {
+    const { user } = await googleSignInSilently();
+    if (user) {
+      accessToken = await user.getIdToken();
+    }
+  }
   return { accessToken };
 });
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -24,16 +31,12 @@ const authMiddleware = new ApolloLink((operation, forward) => {
         Authorization: accessToken ? `JWT ${accessToken}` : null,
       },
     };
-    console.log("URI ---->", GRAPHQL_API_URL);
-    console.log("Headers --->", newHeaders);
     return newHeaders;
   });
   return forward(operation);
 });
 const responseLogMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
-    console.log("Response error ---> ", response.errors);
-    console.log("Response data ---> ", response.data);
     return response;
   });
 });
