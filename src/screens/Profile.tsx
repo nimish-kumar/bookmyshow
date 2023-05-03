@@ -1,6 +1,7 @@
 // TODO: Profile screen looks dull make it better
 
 import { useQuery } from "@apollo/client";
+import { Loader } from "@components";
 import { AuthContext } from "@context";
 import { GET_USER_DETAILS } from "@graphql";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -13,7 +14,7 @@ import {
   removeSecureStoreKeys,
 } from "@utils";
 import React, { useCallback, useContext, useLayoutEffect } from "react";
-import { ActivityIndicator, BackHandler, Text, View } from "react-native";
+import { BackHandler, Text, View } from "react-native";
 
 export const Profile = () => {
   const { setLoggedIn } = useContext(AuthContext);
@@ -47,7 +48,7 @@ export const Profile = () => {
   if (loadingUserDetails) {
     return (
       <View style={tw`justify-center items-center min-h-full min-w-full`}>
-        <ActivityIndicator color="red" />
+        <Loader />
       </View>
     );
   }
