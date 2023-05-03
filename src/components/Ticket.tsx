@@ -14,8 +14,10 @@ interface ITicketProps {
   screenId: string;
   seatNumber: number;
   seatRow: string;
+  cost: number;
 }
 export const Ticket = ({
+  cost,
   movieName,
   movieLang,
   movieFormat,
@@ -78,10 +80,10 @@ export const Ticket = ({
             <Text
               style={tw`bg-red-600 px-2 text-ticket-yellow font-montserrat-bold`}
             >
-              ₹ 400000
+              {`₹ ${cost}`}
             </Text>
           </View>
-          <View style={tw`-ml-5 items-center justify-center`}>
+          <View style={tw`items-center justify-center`}>
             {[
               `${movieLang}`,
               `${movieFormat}`,

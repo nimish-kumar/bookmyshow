@@ -97,10 +97,10 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
       nextPage
       count
       results {
-        id
         slotGrp {
           name
           grpCode
+          cost
           slot {
             screeningDatetime
             movie {
