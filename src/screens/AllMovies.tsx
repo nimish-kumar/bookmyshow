@@ -16,7 +16,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { FlatList, ImageSourcePropType, View } from "react-native";
+import { FlatList, ImageSourcePropType, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MovieDetailsType } from "src/__generated__/graphql";
 import { TabNavigatorParamsList } from "src/navigation/TabNavigator";
@@ -88,6 +88,13 @@ export const AllMovies = () => {
   };
   if (moviesError) {
     throw Error(moviesError.message);
+  }
+  if (movies.length === 0) {
+    return (
+      <Text style={tw`text-center mt-6 font-roboto-italic text-gray-500`}>
+        No movies available
+      </Text>
+    );
   }
   return (
     <SafeAreaView>
