@@ -184,13 +184,16 @@ export const SlotSelector = () => {
       const minPrice = priceRanges[priceRangeIdx].minCost;
       setSlots((slot) => {
         if (slot) {
-          const theatreSlots = [...(slot?.theatreSlots || [])];
+          const theatreSlots = [
+            ...(groupedSlots.find((s) => s.date === slot.date)?.theatreSlots ??
+              []),
+          ];
           const costFilteredSlots = theatreSlots
             .map((e) => {
               const newSlots = e.timeSlots.filter(
                 (t) =>
                   (t.maxCost || Number.MIN_SAFE_INTEGER) <= maxPrice &&
-                  minPrice <= (t.minCost || Number.MAX_SAFE_INTEGER)
+                  minPrice >= (t.minCost || Number.MIN_SAFE_INTEGER)
               );
               return {
                 ...e,
