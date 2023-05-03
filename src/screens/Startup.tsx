@@ -25,11 +25,7 @@ export const Startup = () => {
   const [setUserDetails, { loading, data }] = useMutation(UPDATE_USER);
   useEffect(() => {
     GoogleSignin.configure({
-      scopes: [
-        "email",
-        "profile",
-        "https://www.googleapis.com/auth/user.gender.read",
-      ],
+      scopes: ["email", "profile"],
       webClientId: FIREBASE_WEB_CLIENT_ID,
     });
   }, []);
