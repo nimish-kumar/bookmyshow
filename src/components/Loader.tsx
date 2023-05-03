@@ -1,8 +1,8 @@
 import React from "react";
 import { ActivityIndicator, StyleProp, ViewStyle } from "react-native";
 interface ILoaderProps {
-  size: "sm" | "md" | "lg" | "xl";
-  style: StyleProp<ViewStyle>;
+  size?: "sm" | "md" | "lg" | "xl";
+  style?: StyleProp<ViewStyle>;
 }
 export const Loader = ({ size = "md", style }: ILoaderProps) => {
   if (size === "sm")
