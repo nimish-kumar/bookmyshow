@@ -13,7 +13,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { BackHandler, FlatList } from "react-native";
+import { ActivityIndicator, BackHandler, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BookingType } from "src/__generated__/graphql";
 
@@ -66,8 +66,8 @@ export const Tickets = () => {
         contentContainerStyle={tw`pb-50 px-2 pt-2`}
         data={bookings}
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <Divider style={tw`my-1`} />}
-        renderItem={({ item: booking, index }) => (
+        ItemSeparatorComponent={() => <Divider style={tw`my-2`} />}
+        renderItem={({ item: booking }) => (
           <Ticket
             cost={booking?.slotGrp.cost ?? -1}
             movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
@@ -92,9 +92,21 @@ export const Tickets = () => {
         onEndReached={() => {
           if (data?.listBookingDetails.nextPage) setPage((p) => p + 1);
         }}
-        onEndReachedThreshold={1}
+        ListFooterComponent={
+          loading && page !== 1 ? (
+            <ActivityIndicator
+              size={50}
+              color="red"
+              style={tw`justify-center items-center mt-4`}
+            />
+          ) : (
+            <></>
+          )
+        }
+        onEndReachedThreshold={0.2}
         scrollsToTop={false}
       />
+      {loading && page === 1 && <ActivityIndicator size={50} color="red" />}
     </SafeAreaView>
   );
 };
