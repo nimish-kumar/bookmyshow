@@ -61,7 +61,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
   };
   if (movies.length === 0) {
     return (
-      <Text style={tw`text-center mt-6 font-roboto-italic`}>
+      <Text style={tw`text-center mt-6 font-roboto-italic text-gray-500`}>
         No movies available
       </Text>
     );
