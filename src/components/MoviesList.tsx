@@ -4,7 +4,12 @@ import { tw } from "@tailwind";
 import { ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import { ActivityIndicator, FlatList, ImageSourcePropType } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ImageSourcePropType,
+  Text,
+} from "react-native";
 
 import { ActivityTile } from "./ActivityTile";
 
@@ -18,7 +23,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     fetchPolicy: "no-cache",
   });
   if (moviesLoading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator size={25} color="red" style={tw`mt-8`} />;
   }
   if (moviesError) {
     throw Error(moviesError.message);
@@ -54,6 +59,13 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       formats,
     });
   };
+  if (movies.length === 0) {
+    return (
+      <Text style={tw`text-center mt-6 font-roboto-italic`}>
+        No movies available
+      </Text>
+    );
+  }
   return (
     <FlatList
       horizontal
