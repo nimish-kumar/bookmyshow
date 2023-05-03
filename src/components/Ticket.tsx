@@ -74,7 +74,7 @@ const NonMemoizedTicket = ({
         </View>
         <View
           style={[
-            tw`w-2/5 flex-row justify-center items-center -ml-7`,
+            tw`w-2/5 flex-row justify-center items-center -ml-8`,
             { borderTopStartRadius: 1, borderTopEndRadius: 1 },
           ]}
         >
