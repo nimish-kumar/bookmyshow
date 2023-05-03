@@ -1,13 +1,12 @@
-import { Divider, Text } from "@rneui/themed";
+import { PopcornImage } from "@assets";
+import { Image } from "@rneui/themed";
 import { tw } from "@tailwind";
 import dayjs from "dayjs";
 import React from "react";
-import { Image, ImageSourcePropType, View } from "react-native";
+import { Text, View } from "react-native";
 interface ITicketProps {
-  bookingId: string;
   movieName: string;
   movieLang: string;
-  posterUrl: ImageSourcePropType;
   movieFormat: string;
   screeningDatetime: string;
   theatreArea: string;
@@ -17,10 +16,8 @@ interface ITicketProps {
   seatRow: string;
 }
 export const Ticket = ({
-  bookingId,
   movieName,
   movieLang,
-  posterUrl,
   movieFormat,
   screeningDatetime,
   theatreArea,
@@ -31,47 +28,74 @@ export const Ticket = ({
 }: ITicketProps) => {
   return (
     <View
-      style={tw`py-2 flex-row justify-between px-4 rounded-xl bg-green-100`}
+      style={tw`flex-row border border-black overflow-hidden bg-ticket-navy rounded-lg`}
     >
-      <View style={tw`items-center w-1/3`}>
-        {posterUrl ? (
-          <Image
-            source={posterUrl}
-            style={tw`h-50 w-30 rounded-lg`}
-            resizeMode="contain"
-          />
-        ) : (
-          <View style={tw`h-54 w-30 rounded-lg bg-gray-300`} />
-        )}
-      </View>
-      <View style={tw`w-2/3 justify-center ml-6`}>
-        <Text
-          style={tw`text-lg font-roboto-bold w-4/5 pb-1`}
-          lineBreakMode="tail"
-          numberOfLines={2}
+      <Image
+        source={PopcornImage}
+        style={tw`h-40 w-30 mt-8 -mb-12 -ml-14 -z-10`}
+      />
+      <View style={tw`ml-4 flex-row`}>
+        <View style={tw`w-3/5 mt-4`}>
+          <Text
+            style={tw`text-white text-sm font-montserrat`}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {`${movieName}`.toUpperCase()}
+          </Text>
+          <Text
+            style={tw`text-ticket-yellow text-3xl font-montserrat-bold  w-2/3`}
+          >
+            {`Movie Ticket`.toUpperCase()}
+          </Text>
+          <View style={tw`w-9/10`}>
+            <Text
+              style={tw`text-white text-xs font-montserrat-thin mt-1`}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >{`${theatreName}`}</Text>
+            <Text
+              style={tw`text-white text-xs font-montserrat-thin`}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {theatreArea}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={[
+            tw`w-2/5 flex-row -ml-5 border-l-2 border-white`,
+            { borderTopStartRadius: 1, borderTopEndRadius: 1 },
+          ]}
         >
-          {movieName}
-        </Text>
-        <Text style={tw`text-gray-500 text-sm font-roboto-bold pb-1`}>
-          {`${movieLang}, ${movieFormat}`}
-        </Text>
-        <Text style={tw`font-roboto-bold text-sm pb-1`}>
-          {dayjs(screeningDatetime).format("ddd, DD MMM   hh:mm A")}
-        </Text>
-        <Text style={tw`text-gray-500 text-xs`}>
-          {`${theatreName}, ${theatreArea}`}
-        </Text>
-        <Divider width={0.7} style={tw`my-2 w-3/5`} />
-        <Text style={tw`text-sm w-4/5 pb-1 font-roboto-bold`}>
-          {`${screenId}`.toUpperCase()}
-        </Text>
-        <Text
-          style={tw`text-sm w-4/5 pb-1 font-roboto-bold`}
-          lineBreakMode="tail"
-          numberOfLines={2}
-        >
-          {`${seatNumber}${seatRow}`}
-        </Text>
+          <View
+            style={[
+              { transform: [{ rotate: "-90deg" }] },
+              tw`-ml-6 justify-center`,
+            ]}
+          >
+            <Text
+              style={tw`bg-red-600 px-2 text-ticket-yellow font-montserrat-bold`}
+            >
+              ₹ 400000
+            </Text>
+          </View>
+          <View style={tw`-ml-5 items-center justify-center`}>
+            {[
+              `${movieLang}`,
+              `${movieFormat}`,
+              `screen ${screenId}`,
+              `${seatRow} ${seatNumber}`,
+              `${dayjs(screeningDatetime).format("DD MMM, YY")}`,
+              `${dayjs(screeningDatetime).format("hh:mm A")}`,
+            ].map((text, idx) => (
+              <Text style={tw`text-white text-xs font-montserrat`}>
+                {text.toUpperCase()}
+              </Text>
+            ))}
+          </View>
+        </View>
       </View>
     </View>
   );
