@@ -200,14 +200,12 @@ export const SlotSelector = () => {
                     (t.minCost || Number.MAX_SAFE_INTEGER) >= minFilterPrice)
               );
 
-              console.log("New slots", newSlots);
               return {
                 ...e,
                 timeSlots: newSlots,
               };
             })
             .filter((e) => e.timeSlots.length !== 0);
-          console.log("Filtered slots", costFilteredSlots);
           return { ...slot, theatreSlots: costFilteredSlots };
         }
         return null;

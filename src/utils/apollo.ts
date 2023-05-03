@@ -31,16 +31,12 @@ const authMiddleware = new ApolloLink((operation, forward) => {
         Authorization: accessToken ? `JWT ${accessToken}` : null,
       },
     };
-    console.log("BACKEND URI ---->", GRAPHQL_API_URL);
-    console.log("Headers --->", newHeaders);
     return newHeaders;
   });
   return forward(operation);
 });
 const responseLogMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
-    console.log("Response error ---> ", response.errors);
-    console.log("Response data ---> ", response.data);
     return response;
   });
 });

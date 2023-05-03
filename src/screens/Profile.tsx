@@ -55,7 +55,6 @@ export const Profile = () => {
   if (userDetailsError) {
     throw Error("Error while fetching user details");
   }
-  console.log("Data fetched --> ", userDetailsData?.getUserDetails);
   return (
     <View style={tw`h-full flex`}>
       <View style={tw`pt-40 absolute z-10 self-center`}>
