@@ -13,7 +13,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { BackHandler, FlatList, ImageSourcePropType, View } from "react-native";
+import { BackHandler, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BookingType } from "src/__generated__/graphql";
 
@@ -62,45 +62,39 @@ export const Tickets = () => {
   return (
     <SafeAreaView>
       <AppBar title="Tickets" />
-      <View style={tw``}>
-        <FlatList
-          contentContainerStyle={tw`pb-50`}
-          data={bookings}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Divider style={tw`my-1`} />}
-          renderItem={({ item: booking, index }) => (
-            <Ticket
-              bookingId={booking?.id || "-1"}
-              posterUrl={
-                (booking?.slotGrp.slot.movie.posterUrl ||
-                  null) as ImageSourcePropType
-              }
-              movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
-              movieLang={booking?.slotGrp.slot.lang.name || "Hindi"}
-              movieName={booking?.slotGrp.slot.movie.name || "Movie name"}
-              screenId={booking?.slotGrp.slot.screen.screenId || "Screen ID"}
-              screeningDatetime={
-                booking?.slotGrp.slot.screeningDatetime || dayjs().toString()
-              }
-              seatNumber={booking?.seatNumber || -1}
-              seatRow={booking?.row || "Seat row"}
-              theatreArea={
-                booking?.slotGrp.slot.screen.theatre.areaName || "Area name"
-              }
-              theatreName={
-                booking?.slotGrp.slot.screen.theatre.name || "Theatre name"
-              }
-            />
-          )}
-          keyExtractor={(item) => item?.id || "key"}
-          refreshing={loading}
-          onEndReached={() => {
-            if (data?.listBookingDetails.nextPage) setPage((p) => p + 1);
-          }}
-          onEndReachedThreshold={1}
-          scrollsToTop={false}
-        />
-      </View>
+      <FlatList
+        contentContainerStyle={tw`pb-50 px-2 pt-2`}
+        data={bookings}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <Divider style={tw`my-1`} />}
+        renderItem={({ item: booking, index }) => (
+          <Ticket
+            cost={booking?.slotGrp.cost ?? -1}
+            movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
+            movieLang={booking?.slotGrp.slot.lang.name || "Hindi"}
+            movieName={booking?.slotGrp.slot.movie.name || "Movie name"}
+            screenId={booking?.slotGrp.slot.screen.screenId || "Screen ID"}
+            screeningDatetime={
+              booking?.slotGrp.slot.screeningDatetime || dayjs().toString()
+            }
+            seatNumber={booking?.seatNumber || -1}
+            seatRow={booking?.row || "Seat row"}
+            theatreArea={
+              booking?.slotGrp.slot.screen.theatre.areaName || "Area name"
+            }
+            theatreName={
+              booking?.slotGrp.slot.screen.theatre.name || "Theatre name"
+            }
+          />
+        )}
+        keyExtractor={(item) => item?.id || "key"}
+        refreshing={loading}
+        onEndReached={() => {
+          if (data?.listBookingDetails.nextPage) setPage((p) => p + 1);
+        }}
+        onEndReachedThreshold={1}
+        scrollsToTop={false}
+      />
     </SafeAreaView>
   );
 };
