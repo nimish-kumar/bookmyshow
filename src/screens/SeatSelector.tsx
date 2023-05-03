@@ -192,7 +192,11 @@ export const SeatSelector = () => {
             </ScrollView>
           </View>
         </View>
-        {!loading ? (
+        {loading ? (
+          <View style={tw`flex-1 h-full pt-50`}>
+            <Loader />
+          </View>
+        ) : (
           <>
             <Overlay isVisible={overlay} style={tw`min-h-full min-w-full`}>
               <ActivityIndicator color="#DC3558" size="large" />
@@ -215,8 +219,6 @@ export const SeatSelector = () => {
               />
             </ScrollView>
           </>
-        ) : (
-          <Loader style={tw`mt-44`} />
         )}
         <View
           style={tw`z-2 absolute bottom-0 left-0 right-0 bg-white items-center flex-col`}

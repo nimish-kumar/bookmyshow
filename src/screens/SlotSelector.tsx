@@ -220,114 +220,123 @@ export const SlotSelector = () => {
     <SafeAreaView>
       <View style={tw`flex bg-neutral-200 min-h-full`}>
         <AppBar title={movieName} backButton backFunction={goBack} />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={tw`border-b bg-white border-gray-300 max-h-20`}
-        >
-          {datetimeArray.map((dayjs_dt, idx) => {
-            return (
-              <CalendarDateTile
-                key={idx}
-                datetime={dayjs_dt}
-                selectDateHandler={() => {
-                  setPriceRangeIdx(null);
-                  setSlots(
-                    groupedSlots.find(
-                      (e) => e.date === dayjs_dt.format("DD-MM-YYYY")
-                    ) ?? null
-                  );
-                }}
-                mode={
-                  groupedSlots.find(
-                    (s) => s.date === dayjs_dt.format("DD-MM-YYYY")
-                  )?.theatreSlots ?? null
-                    ? slots?.date === dayjs_dt.format("DD-MM-YYYY")
-                      ? "selected"
-                      : "default"
-                    : "disabled"
-                }
-              />
-            );
-          })}
-        </ScrollView>
-        <View style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}>
-          <View style={tw`flex-row w-4/5 items-center`}>
-            <Text style={tw`font-roboto-medium mr-2 text-xs`}>
-              {formats.find((e) => e.code === langFormat.code)?.lang}
-            </Text>
-            <Text style={[tw`self-center`, { fontSize: 5 }]}>{"\u2B24"}</Text>
-            <Text style={tw`font-roboto-medium ml-2 text-xs`}>
-              {langFormat.format}
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("FormatSelector", {
-                movieId,
-                movieName,
-                formats,
-              });
-            }}
-          >
-            <Text style={tw`text-pink font-roboto-regular`}>{"Change >"}</Text>
-          </TouchableOpacity>
-        </View>
+
         {(slotListLoading || !slots) && (
           <View style={tw`pt-20`}>
             <Loader />
           </View>
         )}
         {!slotListLoading && slots && (
-          <View style={tw`flex-1`}>
-            <FlatList
+          <>
+            <ScrollView
               horizontal
-              style={tw`bg-white pl-2 border-b border-gray-200 max-h-14`}
-              data={priceRanges}
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item: { minCost, maxCost }, index }) => (
-                <View style={tw`mr-2 my-3`}>
-                  <Badge
-                    badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
-                    onPress={() => priceRangeHandler(index)}
-                    mode={index === priceRangeIdx ? "selected" : "default"}
-                  />
-                </View>
-              )}
-            />
-
-            <FlatList
-              contentContainerStyle={tw`py-4 px-4`}
-              data={slots.theatreSlots}
-              renderItem={({ index, item }) => {
+              style={tw`border-b bg-white border-gray-300 max-h-20`}
+            >
+              {datetimeArray.map((dayjs_dt, idx) => {
                 return (
-                  <View key={index}>
-                    <SlotTile
-                      areaName={item.areaName}
-                      slots={item.timeSlots}
-                      theatreName={item.theatreName}
-                      slotSelectHandler={(timeSlotIdx, slotId) => {
-                        navigation.navigate("SeatSelector", {
-                          movieId,
-                          format: langFormat.format,
-                          lang: langFormat.code,
-                          slotId,
-                          movieName,
-                          slotList: item.timeSlots.map((e) => ({
-                            slotId: e.id,
-                            datetime: e.screeningDatetime,
-                          })),
-                          selectedSlotId: slotId,
-                          theatreName: item.theatreName,
-                          areaName: item.areaName,
-                        });
-                      }}
+                  <CalendarDateTile
+                    key={idx}
+                    datetime={dayjs_dt}
+                    selectDateHandler={() => {
+                      setPriceRangeIdx(null);
+                      setSlots(
+                        groupedSlots.find(
+                          (e) => e.date === dayjs_dt.format("DD-MM-YYYY")
+                        ) ?? null
+                      );
+                    }}
+                    mode={
+                      groupedSlots.find(
+                        (s) => s.date === dayjs_dt.format("DD-MM-YYYY")
+                      )?.theatreSlots ?? null
+                        ? slots?.date === dayjs_dt.format("DD-MM-YYYY")
+                          ? "selected"
+                          : "default"
+                        : "disabled"
+                    }
+                  />
+                );
+              })}
+            </ScrollView>
+            <View
+              style={tw`pl-4 py-2 bg-white border-b border-gray-300 flex-row`}
+            >
+              <View style={tw`flex-row w-4/5 items-center`}>
+                <Text style={tw`font-roboto-medium mr-2 text-xs`}>
+                  {formats.find((e) => e.code === langFormat.code)?.lang}
+                </Text>
+                <Text style={[tw`self-center`, { fontSize: 5 }]}>
+                  {"\u2B24"}
+                </Text>
+                <Text style={tw`font-roboto-medium ml-2 text-xs`}>
+                  {langFormat.format}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("FormatSelector", {
+                    movieId,
+                    movieName,
+                    formats,
+                  });
+                }}
+              >
+                <Text style={tw`text-pink font-roboto-regular`}>
+                  {"Change >"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={tw`flex-1`}>
+              <FlatList
+                horizontal
+                style={tw`bg-white pl-2 border-b border-gray-200 max-h-14`}
+                data={priceRanges}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item: { minCost, maxCost }, index }) => (
+                  <View style={tw`mr-2 my-3`}>
+                    <Badge
+                      badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
+                      onPress={() => priceRangeHandler(index)}
+                      mode={index === priceRangeIdx ? "selected" : "default"}
                     />
                   </View>
-                );
-              }}
-            />
-          </View>
+                )}
+              />
+
+              <FlatList
+                contentContainerStyle={tw`py-4 px-4`}
+                data={slots.theatreSlots}
+                renderItem={({ index, item }) => {
+                  return (
+                    <View key={index}>
+                      <SlotTile
+                        areaName={item.areaName}
+                        slots={item.timeSlots}
+                        theatreName={item.theatreName}
+                        slotSelectHandler={(timeSlotIdx, slotId) => {
+                          navigation.navigate("SeatSelector", {
+                            movieId,
+                            format: langFormat.format,
+                            lang: langFormat.code,
+                            slotId,
+                            movieName,
+                            slotList: item.timeSlots.map((e) => ({
+                              slotId: e.id,
+                              datetime: e.screeningDatetime,
+                            })),
+                            selectedSlotId: slotId,
+                            theatreName: item.theatreName,
+                            areaName: item.areaName,
+                          });
+                        }}
+                      />
+                    </View>
+                  );
+                }}
+              />
+            </View>
+          </>
         )}
       </View>
     </SafeAreaView>
