@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { AppBar, Ticket } from "@components";
+import { AppBar, Loader, Ticket } from "@components";
 import { LIST_MOVIE_BOOKINGS } from "@graphql";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
@@ -93,11 +93,7 @@ export const Tickets = () => {
         }}
         ListFooterComponent={
           loading && page !== 1 ? (
-            <ActivityIndicator
-              size={50}
-              color="red"
-              style={tw`justify-center items-center mt-4`}
-            />
+            <Loader style={tw`justify-center items-center mt-4`} />
           ) : (
             <></>
           )

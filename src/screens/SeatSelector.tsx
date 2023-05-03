@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { AppBar, LayoutViewer } from "@components";
+import { AppBar, LayoutViewer, Loader } from "@components";
 import { BOOK_TICKETS, GET_SLOT_DETAILS } from "@graphql";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
@@ -216,7 +216,7 @@ export const SeatSelector = () => {
             </ScrollView>
           </>
         ) : (
-          <ActivityIndicator style={tw`mt-44`} color="red" size="large" />
+          <Loader style={tw`mt-44`} />
         )}
         <View
           style={tw`z-2 absolute bottom-0 left-0 right-0 bg-white items-center flex-col`}

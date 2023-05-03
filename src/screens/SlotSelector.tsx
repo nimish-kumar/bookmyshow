@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { AppBar, Badge, CalendarDateTile, SlotTile } from "@components";
+import { AppBar, Badge, CalendarDateTile, Loader, SlotTile } from "@components";
 import { LIST_SLOTS } from "@graphql";
 import {
   RouteProp,
@@ -19,7 +19,6 @@ import React, {
   useState,
 } from "react";
 import {
-  ActivityIndicator,
   BackHandler,
   ScrollView,
   Text,
@@ -213,19 +212,13 @@ export const SlotSelector = () => {
   useEffect(() => {
     setSlots(groupedSlots[0]);
   }, [slotListLoading, langFormat]);
-  if (slotListLoading || !slots) {
-    return (
-      <SafeAreaView>
-        <ActivityIndicator />
-      </SafeAreaView>
-    );
-  }
+
   if (slotListError) {
     throw Error("APIError: Could not load LIST_SLOTS Query API");
   }
   return (
     <SafeAreaView>
-      <View style={tw`flex justify-center bg-neutral-200 min-h-full`}>
+      <View style={tw`flex bg-neutral-200 min-h-full`}>
         <AppBar title={movieName} backButton backFunction={goBack} />
         <ScrollView
           horizontal
@@ -280,53 +273,62 @@ export const SlotSelector = () => {
             <Text style={tw`text-pink font-roboto-regular`}>{"Change >"}</Text>
           </TouchableOpacity>
         </View>
-        <FlatList
-          horizontal
-          style={tw`bg-white pl-2 border-b border-gray-200 max-h-14`}
-          data={priceRanges}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item: { minCost, maxCost }, index }) => (
-            <View style={tw`mr-2 my-3`}>
-              <Badge
-                badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
-                onPress={() => priceRangeHandler(index)}
-                mode={index === priceRangeIdx ? "selected" : "default"}
-              />
-            </View>
-          )}
-        />
+        {(slotListLoading || !slots) && (
+          <View style={tw`pt-20`}>
+            <Loader />
+          </View>
+        )}
+        {!slotListLoading && slots && (
+          <View style={tw`flex-1`}>
+            <FlatList
+              horizontal
+              style={tw`bg-white pl-2 border-b border-gray-200 max-h-14`}
+              data={priceRanges}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item: { minCost, maxCost }, index }) => (
+                <View style={tw`mr-2 my-3`}>
+                  <Badge
+                    badgeText={`${`₹${minCost} - ₹${maxCost}`}`}
+                    onPress={() => priceRangeHandler(index)}
+                    mode={index === priceRangeIdx ? "selected" : "default"}
+                  />
+                </View>
+              )}
+            />
 
-        <FlatList
-          contentContainerStyle={tw`py-4 px-4`}
-          data={slots.theatreSlots}
-          renderItem={({ index, item }) => {
-            return (
-              <View key={index}>
-                <SlotTile
-                  areaName={item.areaName}
-                  slots={item.timeSlots}
-                  theatreName={item.theatreName}
-                  slotSelectHandler={(timeSlotIdx, slotId) => {
-                    navigation.navigate("SeatSelector", {
-                      movieId,
-                      format: langFormat.format,
-                      lang: langFormat.code,
-                      slotId,
-                      movieName,
-                      slotList: item.timeSlots.map((e) => ({
-                        slotId: e.id,
-                        datetime: e.screeningDatetime,
-                      })),
-                      selectedSlotId: slotId,
-                      theatreName: item.theatreName,
-                      areaName: item.areaName,
-                    });
-                  }}
-                />
-              </View>
-            );
-          }}
-        />
+            <FlatList
+              contentContainerStyle={tw`py-4 px-4`}
+              data={slots.theatreSlots}
+              renderItem={({ index, item }) => {
+                return (
+                  <View key={index}>
+                    <SlotTile
+                      areaName={item.areaName}
+                      slots={item.timeSlots}
+                      theatreName={item.theatreName}
+                      slotSelectHandler={(timeSlotIdx, slotId) => {
+                        navigation.navigate("SeatSelector", {
+                          movieId,
+                          format: langFormat.format,
+                          lang: langFormat.code,
+                          slotId,
+                          movieName,
+                          slotList: item.timeSlots.map((e) => ({
+                            slotId: e.id,
+                            datetime: e.screeningDatetime,
+                          })),
+                          selectedSlotId: slotId,
+                          theatreName: item.theatreName,
+                          areaName: item.areaName,
+                        });
+                      }}
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

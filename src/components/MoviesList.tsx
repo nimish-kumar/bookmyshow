@@ -4,14 +4,10 @@ import { tw } from "@tailwind";
 import { ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  ImageSourcePropType,
-  Text,
-} from "react-native";
+import { FlatList, ImageSourcePropType, Text } from "react-native";
 
 import { ActivityTile } from "./ActivityTile";
+import { Loader } from "./Loader";
 
 export const MoviesList = ({ navigation }: IMoviesListProps) => {
   const {
@@ -23,7 +19,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
     fetchPolicy: "no-cache",
   });
   if (moviesLoading) {
-    return <ActivityIndicator size={25} color="red" style={tw`mt-8`} />;
+    return <Loader size="sm" style={tw`mt-8`} />;
   }
   if (moviesError) {
     throw Error(moviesError.message);
