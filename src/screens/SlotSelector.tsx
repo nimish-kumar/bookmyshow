@@ -180,8 +180,8 @@ export const SlotSelector = () => {
   useEffect(() => {
     // Filter based on price range and movie da
     if (priceRangeIdx !== null && slots !== null) {
-      const maxPrice = priceRanges[priceRangeIdx].maxCost;
-      const minPrice = priceRanges[priceRangeIdx].minCost;
+      const maxFilterPrice = priceRanges[priceRangeIdx].maxCost;
+      const minFilterPrice = priceRanges[priceRangeIdx].minCost;
       setSlots((slot) => {
         if (slot) {
           const theatreSlots = [
@@ -192,15 +192,22 @@ export const SlotSelector = () => {
             .map((e) => {
               const newSlots = e.timeSlots.filter(
                 (t) =>
-                  (t.maxCost || Number.MIN_SAFE_INTEGER) <= maxPrice &&
-                  minPrice >= (t.minCost || Number.MIN_SAFE_INTEGER)
+                  ((t.maxCost || Number.MAX_SAFE_INTEGER) >= minFilterPrice &&
+                    maxFilterPrice >= (t.maxCost || Number.MIN_SAFE_INTEGER)) ||
+                  ((t.maxCost || Number.MIN_SAFE_INTEGER) >= maxFilterPrice &&
+                    minFilterPrice >= (t.minCost || Number.MAX_SAFE_INTEGER)) ||
+                  (maxFilterPrice >= (t.minCost || Number.MIN_SAFE_INTEGER) &&
+                    (t.minCost || Number.MAX_SAFE_INTEGER) >= minFilterPrice)
               );
+
+              console.log("New slots", newSlots);
               return {
                 ...e,
                 timeSlots: newSlots,
               };
             })
             .filter((e) => e.timeSlots.length !== 0);
+          console.log("Filtered slots", costFilteredSlots);
           return { ...slot, theatreSlots: costFilteredSlots };
         }
         return null;
