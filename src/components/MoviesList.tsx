@@ -4,7 +4,7 @@ import { tw } from "@tailwind";
 import { ILanguagesAndFormat, IMoviesListProps } from "@types";
 import { DEFAULT_MOVIE_LANG, PUNE_CITY_ID } from "@utils";
 import React from "react";
-import { FlatList, ImageSourcePropType, Text } from "react-native";
+import { FlatList, Text } from "react-native";
 
 import { ActivityTile } from "./ActivityTile";
 import { Loader } from "./Loader";
@@ -40,7 +40,7 @@ export const MoviesList = ({ navigation }: IMoviesListProps) => {
       return {
         id: parseInt(movie?.id || "-1", 10),
         title: movie?.name || "Movie title here",
-        imgSrc: movie?.posterUrl as ImageSourcePropType,
+        imgSrc: movie?.posterUrl ?? null,
         formats,
       };
     }) || [];
