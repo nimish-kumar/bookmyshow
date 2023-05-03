@@ -16,7 +16,7 @@ interface ITicketProps {
   seatRow: string;
   cost: number;
 }
-export const Ticket = ({
+const NonMemoizedTicket = ({
   cost,
   movieName,
   movieLang,
@@ -67,14 +67,16 @@ export const Ticket = ({
         </View>
         <View
           style={[
-            tw`w-2/5 flex-row -ml-5 border-l-2 border-white`,
+            tw`w-2/5 flex-row justify-center -ml-7`,
             { borderTopStartRadius: 1, borderTopEndRadius: 1 },
           ]}
         >
+          <View style={[tw`border-l border-dashed border-white`]} />
+
           <View
             style={[
               { transform: [{ rotate: "-90deg" }] },
-              tw`-ml-6 justify-center`,
+              tw`justify-center -ml-3`,
             ]}
           >
             <Text
@@ -83,7 +85,7 @@ export const Ticket = ({
               {`₹ ${cost}`}
             </Text>
           </View>
-          <View style={tw`items-center justify-center`}>
+          <View style={tw`items-center justify-center -ml-2`}>
             {[
               `${movieLang}`,
               `${movieFormat}`,
@@ -92,7 +94,7 @@ export const Ticket = ({
               `${dayjs(screeningDatetime).format("DD MMM, YY")}`,
               `${dayjs(screeningDatetime).format("hh:mm A")}`,
             ].map((text, idx) => (
-              <Text style={tw`text-white text-xs font-montserrat`}>
+              <Text style={tw`text-white text-xs font-montserrat`} key={idx}>
                 {text.toUpperCase()}
               </Text>
             ))}
@@ -102,3 +104,5 @@ export const Ticket = ({
     </View>
   );
 };
+
+export const Ticket = React.memo(NonMemoizedTicket);
