@@ -13,9 +13,12 @@ import { googleSignInSilently } from "./firebase";
 
 const httpLink = new HttpLink({ uri: GRAPHQL_API_URL });
 const withToken = setContext(async () => {
-  const accessToken = await getAccessToken();
+  let accessToken = await getAccessToken();
   if (accessToken && hasTokenExpired(accessToken)) {
-    googleSignInSilently();
+    const { user } = await googleSignInSilently();
+    if (user) {
+      accessToken = await user.getIdToken();
+    }
   }
   return { accessToken };
 });
