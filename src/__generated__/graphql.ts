@@ -59,6 +59,7 @@ export type BookingSlotType = {
 
 export type BookingType = {
   __typename?: 'BookingType';
+  bookedAt?: Maybe<Scalars['DateTime']>;
   column: Scalars['String'];
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
