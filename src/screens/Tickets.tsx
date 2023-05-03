@@ -69,6 +69,7 @@ export const Tickets = () => {
         ItemSeparatorComponent={() => <Divider style={tw`my-2`} />}
         renderItem={({ item: booking }) => (
           <Ticket
+            bookedAt={booking?.bookedAt ?? dayjs().toString()}
             cost={booking?.slotGrp.cost ?? -1}
             movieFormat={booking?.slotGrp.slot.format?.format || "2D"}
             movieLang={booking?.slotGrp.slot.lang.name || "Hindi"}

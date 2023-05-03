@@ -125,6 +125,7 @@ export const LIST_MOVIE_BOOKINGS: TypedDocumentNode<
         seatNumber
         status
         row
+        bookedAt
       }
     }
   }
