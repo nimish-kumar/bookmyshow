@@ -20,7 +20,7 @@ export default ({ config }) => ({
   },
   android: {
     package: "com.fasttech.bms",
-    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
+    googleServicesFile: "./google-services.json",
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#FFFFFF",
