@@ -2,7 +2,17 @@
 
 This repository contains an Expo project with Firebase Authentication implemented. It provides a basic setup for integrating Firebase Authentication into your Expo project, allowing users to sign up, sign in, and sign out using google account.
 
-## Getting Started
+## Table of contents
+
+- [BookMyShow clone](#bookmyshow-clone)
+  - [Table of contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Environment variables](#environment-variables)
+  - [Running the Project](#running-the-project)
+  - [Project Structure](#project-structure)
+  - [Contributing](#contributing)
+
+## [Getting Started](#getting-started)
 
 To get started with this project, follow the steps below:
 
@@ -31,23 +41,26 @@ To get started with this project, follow the steps below:
    to generate development build locally, as it uses [react-native-firebase](https://rnfirebase.io/) and this can be later used in further development of app.
 8. Once finished install the `apk file` on testing device.
 
-## Environment variables
+## [Environment variables](#environment-variables)
 
 Before running the project, make sure you have following environment variables in a .env file present in the root folder.
- - FIREBASE_WEB_CLIENT_ID: client > oauth_client > client_id of client_type 3. This can be found in `google-services.json`.
- - GRAPHQL_API_URL: Backend Graphql API url.
 
-## Running the Project
+- FIREBASE_WEB_CLIENT_ID: client > oauth_client > client_id of client_type 3. This can be found in `google-services.json`.
+- GRAPHQL_API_URL: Backend Graphql API url.
+
+## [Running the Project](#running-the-project)
 
 1.  Scan the QR code on expo app, generated using
-   ```bash
-   npx expo start --dev-client
-   ```
+
+```bash
+npx expo start --dev-client
+```
+
 2. After scanning the QR code, it should open the generated development build which we manually installed.
 
-| NOTE: If the development build fails locally the either comment out `google-services.json` in `.gitgnore` and make sure `google-services.json` is present in root directory  |
+| NOTE: If the development build fails locally due to `google-service.json` being not found by EAS, comment out `google-services.json` temporarily in `.gitgnore` and make sure `google-services.json` is present in root directory |
 
-## Project Structure
+## [Project Structure](#project-structure)
 
 The project follows [barrel exports](https://basarat.gitbook.io/typescript/main-1/barrel) as a standard. The structure is as follows:
 
@@ -62,17 +75,8 @@ The project follows [barrel exports](https://basarat.gitbook.io/typescript/main-
 - `src/tailwind`: Contains configuration related to tailwind package [twrnc](https://www.npmjs.com/package/twrnc).
 - `src/graphql`: Contains queries and mutations used in graphql.
 
-
-## Contributing
+## [Contributing](#contributing)
 
 Contributions to this project are welcome. If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
 When contributing, please follow the existing code style and ensure that your changes are well-documented and tested.
-
-
-
-
-
-
-
-
