@@ -16,3 +16,7 @@ web-build/
 # Secrets
 google-services.json
 .env
+
+# Build files/folders
+build
+*.apk
