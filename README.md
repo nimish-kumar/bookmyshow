@@ -16,14 +16,13 @@ This repository contains an Expo project with Firebase Authentication implemente
 ## [Demo](#demo)
 
 Log in
-[](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/signin.gif)
+![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/signin.gif)
 
 Log out
-[](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/logout.gif)
+![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/logout.gif)
 
 App flow
-[](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/appflow.gif)
-
+![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/appflow.gif)
 
 
 ## [Getting Started](#getting-started)
