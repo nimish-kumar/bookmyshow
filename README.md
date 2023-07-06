@@ -7,6 +7,9 @@ This repository contains an Expo project with Firebase Authentication implemente
 - [BookMyShow clone](#bookmyshow-clone)
   - [Table of contents](#table-of-contents)
   - [Demo](#demo)
+    - [Log in](#log-in)
+    - [Log out](#log-out)
+    - [Booking flow](#booking-flow)
   - [Getting Started](#getting-started)
   - [Environment variables](#environment-variables)
   - [Running the Project](#running-the-project)
@@ -15,13 +18,13 @@ This repository contains an Expo project with Firebase Authentication implemente
 
 ## [Demo](#demo)
 
-Log in
+### Log in
 ![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/signin.gif)
 
-Log out
+### Log out
 ![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/logout.gif)
 
-App flow
+### Booking flow
 ![](https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/appflow.gif)
 
 
