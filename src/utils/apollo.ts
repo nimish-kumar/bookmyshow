@@ -31,6 +31,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
         Authorization: accessToken ? `JWT ${accessToken}` : null,
       },
     };
+    
     return newHeaders;
   });
   return forward(operation);

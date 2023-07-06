@@ -6,11 +6,25 @@ This repository contains an Expo project with Firebase Authentication implemente
 
 - [BookMyShow clone](#bookmyshow-clone)
   - [Table of contents](#table-of-contents)
+  - [Demo](#demo)
   - [Getting Started](#getting-started)
   - [Environment variables](#environment-variables)
   - [Running the Project](#running-the-project)
   - [Project Structure](#project-structure)
   - [Contributing](#contributing)
+
+## [Demo](#demo)
+
+Log in
+[](demo/signin.gif)
+
+Log out
+[](demo/logout.gif)
+
+App flow
+[](demo/appflow.gif)
+
+
 
 ## [Getting Started](#getting-started)
 
