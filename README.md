@@ -26,7 +26,7 @@ This repository contains an Expo project with Firebase Authentication implemente
 
 
 ### Booking flow
-<img src="https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/demo.gif" width="216" height="468" />
+<img src="https://github.com/nimish-kumar/bookmyshow-clone/blob/main/demo/appflow.gif" width="216" height="468" />
 
 
 
