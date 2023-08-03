@@ -1,4 +1,4 @@
-# BookMyShow clone
+# BookMyShow
 
 This repository contains an Expo project with Firebase Authentication implemented. It provides a basic setup for integrating Firebase Authentication into your Expo project, allowing users to sign up, sign in, and sign out using google account.
 
